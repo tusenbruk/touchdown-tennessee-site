@@ -46,7 +46,7 @@ async function getProducts() {
         const maxPrice = prices.length ? Math.max(...prices) : 0;
 
         // Get unique sizes and colors
-        const sizes = [...new Set(variants.map((v) => v.name.split(" / ").pop()))].filter(Boolean).slice(0, 6);
+        const sizes: string[] = [...new Set(variants.map((v) => v.name.split(" / ").pop() || ""))].filter(Boolean).slice(0, 6);
         const colors = [...new Set(variants.map((v) => {
           const parts = v.name.split(" / ");
           return parts.length > 1 ? parts[1] : null;
@@ -156,8 +156,8 @@ export default async function MerchPage() {
 
                 {/* Sizes */}
                 <div style={{ display: "flex", gap: 4, flexWrap: "wrap" as const, marginBottom: 16 }}>
-                  {product.sizes.map((size) => (
-                    <span key={size as string} style={{ border: "1px solid #D4CEC7", padding: "3px 8px", fontSize: 10, color: "#555", letterSpacing: "0.06em" }}>{size as string}</span>
+                  {product.sizes.map((size: string) => (
+                    <span key={size} style={{ border: "1px solid #D4CEC7", padding: "3px 8px", fontSize: 10, color: "#555", letterSpacing: "0.06em" }}>{size}</span>
                   ))}
                 </div>
 
