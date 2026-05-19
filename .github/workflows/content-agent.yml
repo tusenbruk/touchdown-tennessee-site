@@ -1,0 +1,43 @@
+name: Content Agent
+
+on:
+  schedule:
+    # Game season: runs every 2 hours during US daytime (noon-midnight UTC = 8am-8pm ET)
+    - cron: '0 12,14,16,18,20,22 * * *'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r agent/requirements.txt
+
+      - name: Run content agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python agent/content-agent.py
+
+      - name: Commit and push new articles
+        run: |
+          git config user.name "TDT Content Agent"
+          git config user.email "agent@touchdowntennessee.com"
+          git add content/
+          # Only commit if there are new articles
+          if git diff --staged --quiet; then
+            echo "No new articles to commit."
+          else
+            git commit -m "Agent: new articles $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
