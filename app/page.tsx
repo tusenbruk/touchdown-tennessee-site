@@ -166,7 +166,11 @@ export default function Home() {
 
         {/* BOOKIE'S NOOK */}
         <div id="bookies-nook" style={{ marginBottom: 48 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "0 0 18px" }}>
+          {/* Bookie's Nook illustration */}
+          <div style={{ width: "100%", marginBottom: 0, borderTop: "2px solid #1A1208", overflow: "hidden" }}>
+            <Image src="/bookies-nook-art.png" alt="Bookie's Nook" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block", maxHeight: 320, objectFit: "cover", objectPosition: "top" }} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 18px" }}>
             <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Bookie&apos;s Nook</span>
             <div style={{ flex: 1, height: 1, background: "#1A1208" }} />
             <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Odds updated hourly · Bet responsibly</span>
