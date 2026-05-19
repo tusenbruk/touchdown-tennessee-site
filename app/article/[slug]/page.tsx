@@ -7,9 +7,10 @@ export const dynamic = "force-dynamic";
 export default async function ArticlePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const article = await getArticleBySlug(params.slug);
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
   const deskColor = article.desk === "titans" ? "#4B92DB" : "#FF6600";
@@ -51,7 +52,6 @@ export default async function ArticlePage({
       {/* ARTICLE */}
       <div style={{ maxWidth: 740, margin: "48px auto", padding: "0 40px" }}>
 
-        {/* Desk badge */}
         <div style={{ marginBottom: 20, display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ border: `1.5px solid ${deskColor}`, color: deskColor, fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>{deskLabel}</span>
           {article.tags.slice(0, 2).map((tag) => (
@@ -59,13 +59,10 @@ export default async function ArticlePage({
           ))}
         </div>
 
-        {/* Headline */}
         <h2 style={{ fontSize: 42, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 16 }}>{article.title}</h2>
 
-        {/* Deck */}
         <p style={{ fontSize: 18, color: "#555", lineHeight: 1.5, fontStyle: "italic", marginBottom: 20, borderLeft: `3px solid ${deskColor}`, paddingLeft: 16 }}>{article.deck}</p>
 
-        {/* Byline */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32, paddingBottom: 20, borderBottom: "1px solid #D4CEC7" }}>
           <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#1A1208", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 13, fontWeight: 700 }}>
             {article.author.split(" ").map((n) => n[0]).join("")}
@@ -76,13 +73,11 @@ export default async function ArticlePage({
           </div>
         </div>
 
-        {/* Body */}
         <div
           dangerouslySetInnerHTML={{ __html: article.body || "" }}
           style={{ fontSize: 17, lineHeight: 1.75, color: "#1A1208" }}
         />
 
-        {/* Bottom rule */}
         <div style={{ marginTop: 48, borderTop: "2px solid #1A1208", paddingTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Link href="/" style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#8B7355" }}>← Back to Home</Link>
           <span style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>Touchdown Tennessee · Independent Editorial</span>
