@@ -2,8 +2,8 @@ name: Content Agent
 
 on:
   schedule:
-    # Game season: runs every 2 hours during US daytime (noon-midnight UTC = 8am-8pm ET)
-    - cron: '0 12,14,16,18,20,22 * * *'
+    # Once daily at 6am ET (11:00 UTC) - increase to hourly during game season
+    - cron: '0 11 * * *'
   workflow_dispatch: # Allow manual trigger from GitHub UI
 
 jobs:

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Touchdown Tennessee — Content Agent
-Fetches live scores/news from ESPN, generates articles via Claude API,
-writes markdown files to /content for Vercel to deploy.
+Runs once daily. Pulls ESPN data, checks existing articles to avoid
+duplication, and falls back to historical/analytical content when
+there's nothing new to cover.
 """
 
 import os
@@ -18,117 +19,112 @@ client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 CONTENT_DIR = Path(__file__).parent.parent / "content" / "articles"
 CONTENT_DIR.mkdir(parents=True, exist_ok=True)
 
+# ── WRITERS ──────────────────────────────────────────────────────────────────
+
 WRITERS = {
     "huck_denton": {
         "name": "Huck Denton",
-        "bio": "Maryville native. Has watched Tennessee football since Majors. Doesn't panic, doesn't celebrate early.",
         "voice": """
-You are Huck Denton — a Tennessee lifer who grew up in Maryville and has watched Vols football
-for 40 years. You know every recruit, every coordinator change, every heartbreak since 1990.
-You are deadpan, specific, and never easily impressed. You tell stories sideways — you'll start
-with a detail about a Tuesday practice before getting to the point. Dry humor, zero hype,
-deep institutional knowledge. You sound like someone who has seen too much to get excited
-but still shows up every Saturday. Short sentences. Specific details. Never generic.
+You are Huck Denton — a Tennessee lifer who grew up in Maryville and has watched Vols
+football for 40 years. Deadpan, specific, never easily impressed. You tell stories
+sideways — start with a detail before getting to the point. Dry humor, zero hype,
+deep institutional knowledge. Short sentences. Specific details. Never generic.
         """
     },
     "cal_merritt": {
         "name": "Cal Merritt",
-        "bio": "Former walk-on. Now watches more film than anyone in the press box.",
         "voice": """
-You are Cal Merritt — you played college ball as a walk-on linebacker, didn't make it past
-training camp, and now channel all of that into film study and analytics. You are direct,
-confident, occasionally funny, and you cite specific plays and numbers. You have no patience
-for vague takes. You back everything up. You're the guy at the bar who actually knows what
-a Cover 2 shell looks like and why it matters. Clear, punchy, analytical. Sometimes a dry
-one-liner at the end. Never preachy.
+You are Cal Merritt — former walk-on linebacker, now watches more film than anyone
+in the press box. Direct, confident, occasionally funny. You cite specific plays and
+numbers. No patience for vague takes. Clear, punchy, analytical. Sometimes a dry
+one-liner at the end.
         """
     },
     "ned_bowman": {
         "name": "Ned Bowman",
-        "bio": "Has strong opinions. Will share them whether you asked or not.",
         "voice": """
 You are Ned Bowman — a veteran SEC media personality in the mold of Paul Finebaum.
-You have been covering SEC football for 30 years and you have heard every excuse, every
-spin, every press conference non-answer. You are provocative but not reckless — you make
-a strong argument and defend it. You love a good caller analogy. You ask the uncomfortable
-question other writers won't. You're not a troll — you genuinely care about Tennessee football
-— but you will absolutely call out the coaching staff, the AD, or the fan base when warranted.
-Conversational, punchy, opinionated. The kind of take that makes people call in to argue.
+30 years covering SEC football. Provocative but not reckless. You ask the uncomfortable
+question. Conversational, punchy, opinionated. The kind of take that makes people
+call in to argue.
         """
     },
     "ray_pickard": {
         "name": "Ray Pickard",
-        "bio": "Nashville born. Titans beat since 2003. Skeptical of management. Loyal to the fanbase.",
         "voice": """
-You are Ray Pickard — you've covered the Titans since they were still figuring out Nashville.
-You've seen the Music City Miracle in person. You are gruff, honest, and allergic to corporate
-spin. You trust the players more than the front office. You write short sentences. You don't
-bury the lead. You feel like a guy who files copy from a folding table in the press box and
-has seen three ownership groups come and go. Direct, working-class, no-nonsense. The fan
-can tell you respect them.
+You are Ray Pickard — covered the Titans since they were still figuring out Nashville.
+Gruff, honest, allergic to spin. Trust the players more than the front office.
+Short sentences. Don't bury the lead. Direct, working-class, no-nonsense.
         """
     },
 }
 
-# Writer assignment by desk
 DESK_WRITERS = {
     "vols": ["huck_denton", "cal_merritt", "ned_bowman"],
     "titans": ["ray_pickard", "cal_merritt", "ned_bowman"],
 }
 
-EDITORIAL_VOICE = """
-Format: Return valid JSON only with these fields:
-{
-  "title": "Article headline — punchy, specific, under 12 words",
-  "deck": "One sentence summary, 20-30 words, italic-worthy",
-  "body": "Full article body in markdown. 300-500 words. Use ## for subheadings if needed.",
-  "slug": "url-friendly-slug-from-title",
-  "desk": "vols or titans",
-  "tags": ["tag1", "tag2"]
-}
+# ── HISTORICAL TOPICS (fallback when no news) ─────────────────────────────
 
-Style rules for all writers:
-- Lead with noun + verb. No "It was a..." or "In a game that..."
-- One sentence = one job. Short paragraphs.
-- Concrete over clever. Active verbs. Few adjectives.
-- No filler phrases. No grand wrap-ups.
-- End with a small truth or the next question.
-"""
+VOLS_HISTORICAL_TOPICS = [
+    "The 1998 National Championship season — what made that team different",
+    "Peyton Manning's four years at Tennessee — the legacy he left",
+    "The history of the Third Saturday in October rivalry with Alabama",
+    "General Robert Neyland's coaching philosophy and how it still influences Tennessee football",
+    "The legend of Johnny Majors and his return to Tennessee as head coach",
+    "Condredge Holloway — Tennessee's first Black starting quarterback and what he faced",
+    "The Vol Walk tradition — how it started and what it means to the program",
+    "Tennessee's greatest NFL draft classes — which decade produced the most talent",
+    "The history of Rocky Top — how a song became an identity",
+    "Doug Dickey vs. Bill Battle — the coaching transition that changed the program",
+    "Tennessee's undefeated 1951 season under General Neyland",
+    "Heath Shuler — the greatest NFL bust to come out of Knoxville",
+    "How Tennessee's checker end zone became one of college football's iconic images",
+    "The 2001 Peach Bowl — Tennessee's last great bowl win before the drought",
+    "Alvin Harper, Carl Pickens, and the great Tennessee wide receiver tradition",
+]
 
+TITANS_HISTORICAL_TOPICS = [
+    "The Music City Miracle — the play, the call, and what it meant for Nashville",
+    "Steve McNair's MVP season and why he was the right quarterback for that team",
+    "Eddie George — the Heisman winner who became the heart of the Titans",
+    "How Nashville became an NFL city — the story of the Oilers' move from Houston",
+    "The 1999 Super Bowl run — how far the Titans came and how close they got",
+    "Frank Wycheck — the tight end who threw the most famous lateral in NFL history",
+    "Jeff Fisher's tenure — what he built and why it eventually fell apart",
+    "Kevin Dyson at the one-yard line — the play that ended it all",
+    "The Titans' drafting history — hits, misses, and what they reveal about the front office",
+    "Mike Munchak — Hall of Fame lineman, underwhelming head coach",
+    "Derrick Henry's record-breaking 2020 season and what it said about the Titans' identity",
+    "The Bud Adams era — the owner who brought football to Tennessee",
+    "Tennessee's passion for the Titans vs the Vols — which fanbase runs deeper",
+    "Marcus Mariota — the promise, the injuries, and the quiet exit",
+    "Nissan Stadium's history and the long-overdue new stadium project",
+]
+
+import random
+
+# ── ESPN DATA ─────────────────────────────────────────────────────────────
 
 def fetch_espn_scores(sport="football", league="college-football"):
-    """Fetch live/recent scores from ESPN API."""
     url = f"https://site.api.espn.com/apis/site/v2/sports/{sport}/{league}/scoreboard"
     try:
         r = requests.get(url, timeout=10)
         r.raise_for_status()
-        data = r.json()
-        events = data.get("events", [])
-        tennessee_games = []
-        for event in events:
-            name = event.get("name", "").lower()
-            if "tennessee" in name:
-                tennessee_games.append({
-                    "name": event.get("name"),
-                    "date": event.get("date"),
-                    "status": event.get("status", {}).get("type", {}).get("description"),
-                    "competitions": event.get("competitions", [{}])[0],
-                })
-        return tennessee_games
+        events = r.json().get("events", [])
+        return [e for e in events if "tennessee" in e.get("name", "").lower()]
     except Exception as e:
         print(f"ESPN fetch error: {e}")
         return []
 
-
-def fetch_espn_news(team="tennessee-volunteers"):
-    """Fetch latest news for a team."""
-    url = f"https://site.api.espn.com/apis/site/v2/sports/football/college-football/news"
+def fetch_espn_news(league="college-football"):
+    url = f"https://site.api.espn.com/apis/site/v2/sports/football/{league}/news"
     try:
-        r = requests.get(url, params={"limit": 5}, timeout=10)
+        r = requests.get(url, params={"limit": 10}, timeout=10)
         r.raise_for_status()
         articles = r.json().get("articles", [])
         return [
-            {"headline": a.get("headline"), "description": a.get("description"), "published": a.get("published")}
+            {"headline": a.get("headline"), "description": a.get("description")}
             for a in articles
             if "tennessee" in (a.get("headline", "") + a.get("description", "")).lower()
         ][:3]
@@ -136,54 +132,88 @@ def fetch_espn_news(team="tennessee-volunteers"):
         print(f"ESPN news fetch error: {e}")
         return []
 
+# ── EXISTING ARTICLE TITLES (dedup check) ────────────────────────────────
 
-def fetch_titans_news():
-    """Fetch Titans news."""
-    url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news"
-    try:
-        r = requests.get(url, params={"limit": 10}, timeout=10)
-        r.raise_for_status()
-        articles = r.json().get("articles", [])
-        return [
-            {"headline": a.get("headline"), "description": a.get("description"), "published": a.get("published")}
-            for a in articles
-            if "titan" in (a.get("headline", "") + a.get("description", "")).lower()
-        ][:3]
-    except Exception as e:
-        print(f"Titans news fetch error: {e}")
-        return []
+def get_existing_titles():
+    titles = []
+    for f in CONTENT_DIR.glob("*.md"):
+        if f.name == ".gitkeep":
+            continue
+        try:
+            text = f.read_text(encoding="utf-8")
+            for line in text.split("\n"):
+                if line.startswith("title:"):
+                    title = line.replace("title:", "").strip().strip('"')
+                    titles.append(title.lower())
+                    break
+        except Exception:
+            pass
+    return titles
 
+# ── ARTICLE GENERATION ────────────────────────────────────────────────────
 
-def generate_article(context: dict, desk: str) -> dict:
-    """Generate an article using Claude API with a specific writer voice."""
+OUTPUT_FORMAT = """
+Return ONLY valid JSON with these exact fields — no preamble, no markdown fences:
+{
+  "title": "Punchy headline under 12 words",
+  "deck": "One sentence summary, 20-30 words",
+  "body": "Full article in markdown, 350-500 words, use ## subheadings",
+  "slug": "url-friendly-slug",
+  "desk": "vols or titans",
+  "tags": ["tag1", "tag2", "tag3"]
+}
+
+Style rules:
+- Lead with noun + verb. Never start with "It was" or "In a game that"
+- One sentence = one job. Short paragraphs.
+- Concrete over clever. Active verbs.
+- End with a small truth or the next question.
+"""
+
+def generate_article(desk: str, context: dict, topic_type: str = "news") -> dict:
     import random
     writer_key = random.choice(DESK_WRITERS[desk])
     writer = WRITERS[writer_key]
 
-    prompt = f"""
+    if topic_type == "historical":
+        topic = context.get("topic", "Tennessee football history")
+        prompt = f"""
 You are {writer['name']} writing for Touchdown Tennessee ({desk.upper()} DESK).
 
-YOUR VOICE AND PERSONALITY:
 {writer['voice']}
 
-Here is the latest data to write about:
+Write a feature piece about this historical topic:
+"{topic}"
+
+This is NOT a news article. This is editorial — a historical analysis, a retrospective,
+a piece that puts something in context. Write it like a long memory with a point.
+The reader knows the basics. Give them something they haven't thought about.
+
+{OUTPUT_FORMAT}
+"""
+    else:
+        prompt = f"""
+You are {writer['name']} writing for Touchdown Tennessee ({desk.upper()} DESK).
+
+{writer['voice']}
+
+Current data:
 {json.dumps(context, indent=2)}
 
-Write one article based on the most interesting/newsworthy item in this data.
-If there are recent scores, lead with the result and analysis.
-If it's news/roster/recruiting, write an analysis piece.
-If there's nothing current, write a preview or analytical take on the upcoming schedule.
+Write one article about the most interesting item in this data.
+If it's a score, lead with the result and analysis.
+If it's news, write an analysis piece.
 
-{EDITORIAL_VOICE}
+{OUTPUT_FORMAT}
 """
+
     message = client.messages.create(
-        model="claude-sonnet-4-5",
+        model="claude-sonnet-4-20250514",
         max_tokens=1500,
         messages=[{"role": "user", "content": prompt}]
     )
 
     raw = message.content[0].text.strip()
-    # Strip markdown code fences if present
     if raw.startswith("```"):
         raw = raw.split("```")[1]
         if raw.startswith("json"):
@@ -194,13 +224,23 @@ If there's nothing current, write a preview or analytical take on the upcoming s
     result["author"] = writer["name"]
     return result
 
+def is_duplicate(title: str, existing_titles: list) -> bool:
+    """Check if a similar article already exists."""
+    title_lower = title.lower()
+    # Check for key word overlap
+    title_words = set(title_lower.split()) - {"the", "a", "an", "is", "in", "of", "and", "for", "to", "how", "why", "what"}
+    for existing in existing_titles:
+        existing_words = set(existing.split()) - {"the", "a", "an", "is", "in", "of", "and", "for", "to", "how", "why", "what"}
+        overlap = title_words & existing_words
+        if len(overlap) >= 3:
+            return True
+    return False
 
-def write_article(article: dict):
-    """Write article as markdown file."""
+def write_article(article: dict) -> str:
     now = datetime.now(timezone.utc)
     date_str = now.strftime("%Y-%m-%d")
     timestamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-    slug = article.get("slug", "article").lower().replace(" ", "-")
+    slug = article.get("slug", "article").lower().replace(" ", "-")[:80]
     filename = f"{date_str}-{slug}.md"
 
     author = article.get("author", "Staff Writer")
@@ -214,68 +254,73 @@ tags: {json.dumps(article.get('tags', []))}
 ---
 
 """
-    body = article.get("body", "")
-    content = frontmatter + body
-
+    content = frontmatter + article.get("body", "")
     filepath = CONTENT_DIR / filename
     filepath.write_text(content, encoding="utf-8")
     print(f"Written: {filepath}")
     return filename
 
+# ── MAIN ─────────────────────────────────────────────────────────────────
 
 def main():
-    print(f"[{datetime.now()}] Touchdown Tennessee agent starting...")
+    print(f"[{datetime.now()}] TDT Content Agent starting...")
+    existing_titles = get_existing_titles()
+    print(f"Found {len(existing_titles)} existing articles")
 
-    # --- VOLS ---
-    print("Fetching Vols data...")
+    # ── VOLS ──
+    print("\n--- VOLS ---")
     vols_scores = fetch_espn_scores("football", "college-football")
-    vols_news = fetch_espn_news()
+    vols_news = fetch_espn_news("college-football")
 
-    vols_context = {
-        "desk": "vols",
-        "recent_scores": vols_scores,
-        "recent_news": vols_news,
-        "current_date": datetime.now(timezone.utc).isoformat(),
-    }
+    try:
+        if vols_news or vols_scores:
+            context = {"desk": "vols", "scores": vols_scores, "news": vols_news, "date": datetime.now(timezone.utc).isoformat()}
+            article = generate_article("vols", context, "news")
 
-    if vols_news or vols_scores:
-        print("Generating Vols article...")
-        try:
-            vols_article = generate_article(vols_context, "vols")
-            vols_article["desk"] = "vols"
-            filename = write_article(vols_article)
-            print(f"Vols article written: {filename}")
-        except Exception as e:
-            print(f"Vols article error: {e}")
-    else:
-        print("No Vols data found — skipping.")
+            if is_duplicate(article["title"], existing_titles):
+                print(f"Duplicate detected: '{article['title']}' — switching to historical")
+                topic = random.choice(VOLS_HISTORICAL_TOPICS)
+                article = generate_article("vols", {"topic": topic}, "historical")
 
-    # --- TITANS ---
-    print("Fetching Titans data...")
+            filename = write_article(article)
+            print(f"Vols article: {filename}")
+        else:
+            print("No news — going historical")
+            topic = random.choice(VOLS_HISTORICAL_TOPICS)
+            article = generate_article("vols", {"topic": topic}, "historical")
+            filename = write_article(article)
+            print(f"Vols historical: {filename}")
+    except Exception as e:
+        print(f"Vols error: {e}")
+
+    # ── TITANS ──
+    print("\n--- TITANS ---")
     titans_scores = fetch_espn_scores("football", "nfl")
-    titans_news = fetch_titans_news()
+    titans_news = fetch_espn_news("nfl")
+    titans_news = [n for n in titans_news if "titan" in (n.get("headline","") + n.get("description","")).lower()]
 
-    titans_context = {
-        "desk": "titans",
-        "recent_scores": [g for g in titans_scores if "titan" in g.get("name", "").lower()],
-        "recent_news": titans_news,
-        "current_date": datetime.now(timezone.utc).isoformat(),
-    }
+    try:
+        if titans_news or titans_scores:
+            context = {"desk": "titans", "scores": titans_scores, "news": titans_news, "date": datetime.now(timezone.utc).isoformat()}
+            article = generate_article("titans", context, "news")
 
-    if titans_news or titans_scores:
-        print("Generating Titans article...")
-        try:
-            titans_article = generate_article(titans_context, "titans")
-            titans_article["desk"] = "titans"
-            filename = write_article(titans_article)
-            print(f"Titans article written: {filename}")
-        except Exception as e:
-            print(f"Titans article error: {e}")
-    else:
-        print("No Titans data found — skipping.")
+            if is_duplicate(article["title"], existing_titles):
+                print(f"Duplicate detected: '{article['title']}' — switching to historical")
+                topic = random.choice(TITANS_HISTORICAL_TOPICS)
+                article = generate_article("titans", {"topic": topic}, "historical")
 
-    print(f"[{datetime.now()}] Agent complete.")
+            filename = write_article(article)
+            print(f"Titans article: {filename}")
+        else:
+            print("No news — going historical")
+            topic = random.choice(TITANS_HISTORICAL_TOPICS)
+            article = generate_article("titans", {"topic": topic}, "historical")
+            filename = write_article(article)
+            print(f"Titans historical: {filename}")
+    except Exception as e:
+        print(f"Titans error: {e}")
 
+    print(f"\n[{datetime.now()}] Agent complete.")
 
 if __name__ == "__main__":
     main()
