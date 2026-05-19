@@ -23,6 +23,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5612762298444240"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body style={{ margin: 0, padding: 0 }}>{children}</body>
     </html>
   );
