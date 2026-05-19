@@ -152,6 +152,12 @@ export default function Home() {
           <div style={{ flex: 1, height: 1, background: "#4B92DB" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee Titans · NFL</span>
         </div>
+
+        {/* Titans hero illustration */}
+        <div style={{ width: "100%", marginBottom: 24, maxHeight: 300, overflow: "hidden", borderBottom: "3px solid #4B92DB" }}>
+          <Image src="/titans-hero.png" alt="Nashville Titans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
+        </div>
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 40 }}>
           {titansArticles.map((a,i)=>(
             <div key={i} style={{ borderTop: "2px solid #4B92DB", paddingTop: 14 }}>
@@ -206,8 +212,8 @@ export default function Home() {
 
       {/* NEWSLETTER — ticket stub as background accent */}
       <div style={{ background: "#1A1208", color: "#fff", padding: "0", margin: "0 0 40px", position: "relative" as const, overflow: "hidden" }}>
-        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "40%", opacity: 0.08 }}>
-          <Image src="/ticket.png" alt="" width={800} height={450} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left" }} />
+        <div style={{ position: "absolute", right: -20, top: "50%", transform: "translateY(-50%)", width: "45%", opacity: 0.12 }}>
+          <Image src="/titans-ticket.png" alt="" width={900} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>
