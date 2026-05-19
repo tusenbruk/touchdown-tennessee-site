@@ -10,27 +10,29 @@ export default function Home() {
     { badge: "Camp", title: "OTA Observations: The Quarterback Situation, Plainly Stated", deck: "No spin. Here is what the depth chart looks like and what it means.", date: "May 15" },
   ];
 
+  const odds = [
+    { game: "Tennessee vs Alabama", date: "Sep 20", spread: "TN -3.5", ml: "+160 / -185", ou: "47.5", best: "DraftKings", bestSpread: "-3.5 (-108)" },
+    { game: "Titans vs Jaguars", date: "Sep 14", spread: "TN +1.5", ml: "+130 / -155", ou: "41.5", best: "FanDuel", bestSpread: "+1.5 (-110)" },
+    { game: "Tennessee vs Georgia", date: "Oct 4", spread: "TN +7", ml: "+240 / -295", ou: "44", best: "BetMGM", bestSpread: "+7.5 (-110)" },
+  ];
+
   const Badge = ({ label, color }: { label: string; color: string }) => (
     <span style={{ border: `1.5px solid ${color}`, color, fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>{label}</span>
   );
 
-  // Brass rule divider (dashed, from design sheet)
   const BrassRule = () => (
-    <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "0 0 0" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
       <div style={{ flex: 1, borderTop: "1px dashed #8B7355", opacity: 0.5 }} />
       <div style={{ width: 4, height: 4, background: "#8B7355", borderRadius: "50%", opacity: 0.5 }} />
       <div style={{ flex: 1, borderTop: "1px dashed #8B7355", opacity: 0.5 }} />
     </div>
   );
 
-  // Ticket perforation divider
-  const TicketRule = () => (
-    <div style={{ 
-      borderTop: "2px dashed #fff", 
-      opacity: 0.2, 
-      margin: "0 0 24px",
-      backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(255,255,255,0.1) 8px, rgba(255,255,255,0.1) 10px)"
-    }} />
+  // AdSense placeholder
+  const AdSlot = ({ label }: { label: string }) => (
+    <div style={{ background: "#FAFAF8", border: "1px dashed #D4CEC7", display: "flex", alignItems: "center", justifyContent: "center", padding: "16px", margin: "24px 0" }}>
+      <span style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#C0B9AF" }}>Advertisement · {label}</span>
+    </div>
   );
 
   return (
@@ -54,22 +56,27 @@ export default function Home() {
           <div style={{ fontSize: 11, fontWeight: 700, border: "1.5px solid #1A1208", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", letterSpacing: "0.05em" }}>TT</div>
           <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
         </div>
-        <div style={{ height: 1, background: "#1A1208", marginTop: 16, marginBottom: 0 }} />
+        <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
         <div style={{ height: 3, background: "#1A1208", marginTop: 2 }} />
       </div>
 
       {/* NAV */}
-      <nav style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7", marginTop: 0 }}>
-        {[["Vols Desk","#FF6600"],["Titans Desk","#4B92DB"],["Film Room","#1A1208"],["Recruiting","#1A1208"],["Rocky Top","#1A1208"],["Newsletter","#1A1208"]].map(([label, color], i) => (
-          <a key={i} href="#" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
+      <nav style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7" }}>
+        {[["Vols Desk","#FF6600"],["Titans Desk","#4B92DB"],["Film Room","#1A1208"],["Recruiting","#1A1208"],["Bookie's Nook","#1A1208"],["Newsletter","#1A1208"]].map(([label, color], i) => (
+          <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
         ))}
       </nav>
+
+      {/* AD SLOT — below nav */}
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
+        <AdSlot label="728×90 Leaderboard" />
+      </div>
 
       {/* MAIN */}
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
 
         {/* HERO */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", marginTop: 32, paddingBottom: 32 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", paddingBottom: 32 }}>
           <div style={{ paddingRight: 32, borderRight: "1px solid #D4CEC7" }}>
             <div style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 }}>
               <Badge label="Vols Desk" color="#FF6600" /><span>Game Preview</span>
@@ -96,6 +103,10 @@ export default function Home() {
                 <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>Final</div>
               </div>
             ))}
+            {/* Sidebar ad */}
+            <div style={{ background: "#FAFAF8", border: "1px dashed #D4CEC7", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px 0", marginTop: 8 }}>
+              <span style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#C0B9AF" }}>Ad · 300×250</span>
+            </div>
           </div>
         </div>
 
@@ -118,6 +129,9 @@ export default function Home() {
         </div>
         <div style={{ margin: "24px 0" }}><BrassRule /></div>
 
+        {/* AD SLOT — mid page */}
+        <AdSlot label="728×90 Mid-Page" />
+
         {/* TITANS */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "24px 0 18px" }}>
           <Badge label="Titans Desk" color="#4B92DB" />
@@ -136,13 +150,60 @@ export default function Home() {
           ))}
         </div>
 
+        {/* BOOKIE'S NOOK */}
+        <div id="bookies-nook" style={{ marginBottom: 48 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "0 0 18px" }}>
+            <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Bookie&apos;s Nook</span>
+            <div style={{ flex: 1, height: 1, background: "#1A1208" }} />
+            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Odds updated hourly · Bet responsibly</span>
+          </div>
+
+          {/* Odds table */}
+          <div style={{ border: "1px solid #D4CEC7", overflow: "hidden" }}>
+            {/* Table header */}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.2fr 0.8fr 1.4fr", background: "#1A1208", color: "#fff", padding: "10px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, gap: 12 }}>
+              <span>Matchup</span>
+              <span>Spread</span>
+              <span>Moneyline</span>
+              <span>O/U</span>
+              <span>Best Line</span>
+            </div>
+            {odds.map((o, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.2fr 0.8fr 1.4fr", padding: "14px 16px", borderTop: i === 0 ? "none" : "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 12, alignItems: "center" }}>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{o.game}</div>
+                  <div style={{ fontSize: 11, color: "#8B7355", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>{o.date}</div>
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 600 }}>{o.spread}</div>
+                <div style={{ fontSize: 13, color: "#555" }}>{o.ml}</div>
+                <div style={{ fontSize: 14, fontWeight: 600 }}>{o.ou}</div>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#FF6600" }}>{o.best}</div>
+                  <div style={{ fontSize: 11, color: "#555" }}>{o.bestSpread}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Affiliate links */}
+          <div style={{ display: "flex", gap: 12, marginTop: 14, flexWrap: "wrap" as const }}>
+            {["DraftKings","FanDuel","BetMGM","Caesars"].map((book) => (
+              <a key={book} href="#" style={{ border: "1.5px solid #1A1208", padding: "6px 14px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#1A1208" }}>
+                Bet {book} →
+              </a>
+            ))}
+          </div>
+          <div style={{ fontSize: 10, color: "#aaa", marginTop: 8, letterSpacing: "0.05em" }}>
+            21+ only. Gambling problem? Call 1-800-GAMBLER. Affiliate links may earn commission.
+          </div>
+        </div>
+
       </div>
 
-      {/* NEWSLETTER — with ticket perforation border */}
+      {/* NEWSLETTER */}
       <div style={{ background: "#1A1208", color: "#fff", padding: "36px 40px", textAlign: "center", margin: "0 0 40px", position: "relative" as const }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Rocky Top Digest</h3>
-        <TicketRule />
         <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>Game-week analysis, delivered Friday morning. No filler.</p>
         <div style={{ display: "flex", maxWidth: 380, margin: "0 auto" }}>
           <input type="email" placeholder="your@email.com" style={{ flex: 1, padding: "10px 14px", fontSize: 13, border: "1px solid #333", background: "#2a2010", color: "#fff", outline: "none" }} />
