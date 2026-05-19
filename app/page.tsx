@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getAllArticles, Article } from "@/lib/articles";
+import NewsletterForm from "./components/NewsletterForm";
 
 export const dynamic = "force-dynamic";
 
@@ -249,10 +250,7 @@ export default async function Home() {
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>
           <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Rocky Top Digest</h3>
           <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>Game-week analysis, delivered Friday morning. No filler.</p>
-          <div style={{ display: "flex", maxWidth: 380, margin: "0 auto" }}>
-            <input type="email" placeholder="your@email.com" style={{ flex: 1, padding: "10px 14px", fontSize: 13, border: "1px solid #333", background: "#2a2010", color: "#fff", outline: "none" }} />
-            <button style={{ padding: "10px 18px", background: "#FF6600", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: "pointer" }}>Subscribe</button>
-          </div>
+          <NewsletterForm />
         </div>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
       </div>
