@@ -150,8 +150,8 @@ export default async function Home() {
           <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>University of Tennessee Volunteers</span>
         </div>
-        <div style={{ width: "100%", marginBottom: 24, maxHeight: 280, overflow: "hidden" }}>
-          <Image src="/family.png" alt="Vols fans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", objectPosition: "top" }} />
+        <div style={{ width: "100%", marginBottom: 24 }}>
+          <Image src="/family.png" alt="Vols fans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 8 }}>
           {displayVols.map((a,i)=>(
@@ -171,7 +171,7 @@ export default async function Home() {
       </div>
 
       {/* CAMPUS DIVIDER */}
-      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 180 }}>
+      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 240 }}>
         <Image src="/campus-divider.png" alt="UT Campus" width={1800} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
       </div>
 
@@ -184,7 +184,7 @@ export default async function Home() {
           <div style={{ flex: 1, height: 1, background: "#4B92DB" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee Titans · NFL</span>
         </div>
-        <div style={{ width: "100%", marginBottom: 24, maxHeight: 300, overflow: "hidden", borderBottom: "3px solid #4B92DB" }}>
+        <div style={{ width: "100%", marginBottom: 24, borderBottom: "3px solid #4B92DB" }}>
           <Image src="/titans-hero.png" alt="Nashville Titans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 40 }}>
