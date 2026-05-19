@@ -25,7 +25,7 @@ interface StoreProduct {
 async function getProducts() {
   try {
     const res = await fetch("https://api.printful.com/store/products?limit=50", {
-      headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY}` },
+      headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY || "1MciG1HuVVIByhDrXhETY7rBU2cJmmq5wURAq0uR"}` },
       cache: "no-store",
     });
     const data = await res.json();
@@ -35,7 +35,7 @@ async function getProducts() {
     const detailed = await Promise.all(
       products.map(async (p: StoreProduct) => {
         const r = await fetch(`https://api.printful.com/store/products/${p.id}`, {
-          headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY}` },
+          headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY || "1MciG1HuVVIByhDrXhETY7rBU2cJmmq5wURAq0uR"}` },
           cache: "no-store",
         });
         const d = await r.json();
