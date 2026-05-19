@@ -1,27 +1,25 @@
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const slug = "2026-05-19-tennessee-opens-with-furman-while-georgia-dodges-fcs-embarrassment";
   const GITHUB_API = "https://api.github.com/repos/tusenbruk/touchdown-tennessee-site/contents/content/articles";
-  
+
   const headers: Record<string, string> = {
-    Accept: "application/vnd.github.v3+json",
+    Accept: "application/vnd.github.v3.raw",
   };
-  
   if (process.env.GITHUB_TOKEN) {
     headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
   }
 
-  try {
-    const res = await fetch(GITHUB_API, { headers });
-    const status = res.status;
-    const body = await res.json();
-    
-    return Response.json({
-      status,
-      hasToken: !!process.env.GITHUB_TOKEN,
-      files: Array.isArray(body) ? body.map((f: {name: string}) => f.name) : body,
-    });
-  } catch (e) {
-    return Response.json({ error: String(e) });
-  }
+  const url = `${GITHUB_API}/${slug}.md`;
+  const res = await fetch(url, { headers });
+  const status = res.status;
+  const text = await res.text();
+
+  return Response.json({
+    url,
+    status,
+    hasToken: !!process.env.GITHUB_TOKEN,
+    preview: text.slice(0, 300),
+  });
 }
