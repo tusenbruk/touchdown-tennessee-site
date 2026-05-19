@@ -92,8 +92,8 @@ export default async function Home() {
 
       {/* NAV */}
       <nav style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7" }}>
-        {[["Vols Desk","#FF6600"],["Vols Roster","#FF6600"],["Titans Desk","#4B92DB"],["Titans Roster","#4B92DB"],["Bookie's Nook","#1A1208"],["Newsletter","#1A1208"]].map(([label, color], i) => (
-          <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : label === "Vols Roster" ? "/vols/roster" : label === "Titans Roster" ? "/titans/roster" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
+        {[["Vols Desk","#FF6600"],["Vols Roster","#FF6600"],["Titans Desk","#4B92DB"],["Titans Roster","#4B92DB"],["Bookie's Nook","#1A1208"],["Shop","#FF6600"],["Newsletter","#1A1208"]].map(([label, color], i) => (
+          <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : label === "Vols Roster" ? "/vols/roster" : label === "Titans Roster" ? "/titans/roster" : label === "Shop" ? "/merch" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
         ))}
       </nav>
 
