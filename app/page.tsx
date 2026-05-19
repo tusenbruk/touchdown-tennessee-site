@@ -4,8 +4,8 @@ import { getAllArticles, Article } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const allArticles = getAllArticles();
+export default async function Home() {
+  const allArticles = await getAllArticles();
   const volsArticles = allArticles.filter((a) => a.desk === "vols").slice(0, 3);
   const titansArticles = allArticles.filter((a) => a.desk === "titans").slice(0, 3);
   const heroArticle = allArticles[0];
