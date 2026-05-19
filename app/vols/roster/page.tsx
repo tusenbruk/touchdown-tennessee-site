@@ -16,7 +16,7 @@ interface Player {
   height: number;
   weight: number;
   experience: { displayValue: string };
-  hometown?: string;
+  birthPlace?: { city?: string; state?: string; displayText?: string };
   headshot?: { href: string };
 }
 
@@ -105,7 +105,7 @@ export default async function VolsRosterPage() {
             {/* Table */}
             <div style={{ border: "1px solid #D4CEC7", overflow: "hidden" }}>
               {/* Header row */}
-              <div style={{ display: "grid", gridTemplateColumns: "48px 48px 1fr 80px 80px 80px 100px", background: "#1A1208", color: "#fff", padding: "8px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "48px 48px 1fr 80px 80px 80px 100px 140px", background: "#1A1208", color: "#fff", padding: "8px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", gap: 8 }}>
                 <span>#</span>
                 <span>Photo</span>
                 <span>Name</span>
@@ -113,10 +113,11 @@ export default async function VolsRosterPage() {
                 <span>Ht</span>
                 <span>Wt</span>
                 <span>Year</span>
+                <span>Hometown</span>
               </div>
 
               {group.items.map((player, i) => (
-                <div key={player.id} style={{ display: "grid", gridTemplateColumns: "48px 48px 1fr 80px 80px 80px 100px", padding: "10px 16px", borderTop: "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 8, alignItems: "center" }}>
+                <div key={player.id} style={{ display: "grid", gridTemplateColumns: "48px 48px 1fr 80px 80px 80px 100px 140px", padding: "10px 16px", borderTop: "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 8, alignItems: "center" }}>
                   <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600" }}>{player.jersey || "—"}</span>
                   <div style={{ width: 36, height: 36, borderRadius: "50%", overflow: "hidden", background: "#F0EDE8", flexShrink: 0 }}>
                     {player.headshot?.href ? (
@@ -132,6 +133,7 @@ export default async function VolsRosterPage() {
                   <span style={{ fontSize: 12, color: "#555" }}>{formatHeight(player.height)}</span>
                   <span style={{ fontSize: 12, color: "#555" }}>{player.weight ? `${player.weight} lbs` : "—"}</span>
                   <span style={{ fontSize: 12, color: "#555" }}>{player.experience?.displayValue || "—"}</span>
+                  <span style={{ fontSize: 11, color: "#555" }}>{player.birthPlace?.displayText || (player.birthPlace?.city ? `${player.birthPlace.city}, ${player.birthPlace.state}` : "—")}</span>
                 </div>
               ))}
             </div>
