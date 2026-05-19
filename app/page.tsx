@@ -1,16 +1,44 @@
 import Image from "next/image";
+import Link from "next/link";
+import { getAllArticles, Article } from "@/lib/articles";
+
+export const revalidate = 3600; // Revalidate every hour
 
 export default function Home() {
-  const volsArticles = [
-    { badge: "Film Room", title: "The Route Combination Killing SEC Defenses", deck: "Tennessee's crossing concept is open every week. Here's why coordinators aren't adjusting.", date: "May 18" },
-    { badge: "Recruiting", title: "Four-Star WR Commits — What It Means for 2027", deck: "The Vols landed their second top-50 receiver in the class. The depth chart implications start now.", date: "May 17" },
-    { badge: "Analysis", title: "Spring Practice Winners and One Lingering Question", deck: "Three players who helped themselves. One position group that still doesn't have an answer.", date: "May 16" },
+  const allArticles = getAllArticles();
+  const volsArticles = allArticles.filter((a) => a.desk === "vols").slice(0, 3);
+  const titansArticles = allArticles.filter((a) => a.desk === "titans").slice(0, 3);
+  const heroArticle = allArticles[0];
+
+  // Fallback placeholder articles if no content yet
+  const volsFallback = [
+    { slug: "#", badge: "Film Room", title: "The Route Combination Killing SEC Defenses", deck: "Tennessee's crossing concept is open every week.", date: "May 18", author: "Cal Merritt" },
+    { slug: "#", badge: "Recruiting", title: "Four-Star WR Commits — What It Means for 2027", deck: "The Vols landed their second top-50 receiver in the class.", date: "May 17", author: "Huck Denton" },
+    { slug: "#", badge: "Analysis", title: "Spring Practice Winners and One Lingering Question", deck: "Three players who helped themselves.", date: "May 16", author: "Ned Bowman" },
   ];
-  const titansArticles = [
-    { badge: "Gamebook", title: "Containing the Edge Where Everyone Can Rush", deck: "The Titans' defensive scheme is built for one thing. Sunday showed whether it holds up.", date: "May 18" },
-    { badge: "Draft", title: "Draft Capital and What Nashville Does With It", deck: "Three picks in the top 60. A GM who trades up. A fanbase that wants answers by September.", date: "May 17" },
-    { badge: "Camp", title: "OTA Observations: The Quarterback Situation, Plainly Stated", deck: "No spin. Here is what the depth chart looks like and what it means.", date: "May 15" },
+  const titansFallback = [
+    { slug: "#", badge: "Gamebook", title: "Containing the Edge Where Everyone Can Rush", deck: "The Titans' defensive scheme is built for one thing.", date: "May 18", author: "Ray Pickard" },
+    { slug: "#", badge: "Draft", title: "Draft Capital and What Nashville Does With It", deck: "Three picks in the top 60.", date: "May 17", author: "Ray Pickard" },
+    { slug: "#", badge: "Camp", title: "OTA Observations: The Quarterback Situation, Plainly Stated", deck: "No spin. Here is what the depth chart looks like.", date: "May 15", author: "Cal Merritt" },
   ];
+
+  const displayVols = volsArticles.length > 0 ? volsArticles.map((a) => ({
+    slug: `/article/${a.slug}`,
+    badge: a.tags[0] || "Analysis",
+    title: a.title,
+    deck: a.deck,
+    date: new Date(a.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    author: a.author,
+  })) : volsFallback;
+
+  const displayTitans = titansArticles.length > 0 ? titansArticles.map((a) => ({
+    slug: `/article/${a.slug}`,
+    badge: a.tags[0] || "Analysis",
+    title: a.title,
+    deck: a.deck,
+    date: new Date(a.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    author: a.author,
+  })) : titansFallback;
 
   const odds = [
     { game: "Tennessee vs Alabama", date: "Sep 20", spread: "TN -3.5", ml: "+160 / -185", ou: "47.5", best: "DraftKings", bestSpread: "-3.5 (-108)" },
@@ -41,7 +69,7 @@ export default function Home() {
 
       {/* TOP BAR */}
       <div style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-        <span>Tuesday, May 19, 2026</span>
+        <span>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</span>
         <span>Tennessee Football · Vols · Titans · Rocky Top</span>
         <span>Independent Editorial</span>
       </div>
@@ -68,32 +96,35 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* AD SLOT */}
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
         <AdSlot label="728×90 Leaderboard" />
-      </div>
 
-      {/* MAIN */}
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
-
-        {/* HERO — Playcall illustration as feature image */}
+        {/* HERO */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", paddingBottom: 32 }}>
           <div style={{ paddingRight: 32, borderRight: "1px solid #D4CEC7" }}>
             <div style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 }}>
-              <Badge label="Vols Desk" color="#FF6600" /><span>Game Preview</span>
+              <Badge label="Vols Desk" color="#FF6600" /><span>Latest</span>
               <div style={{ flex: 1, height: 1, background: "#FF6600", opacity: 0.3 }} />
             </div>
-            {/* Playcall illustration */}
             <div style={{ position: "relative", width: "100%", marginBottom: 20, borderBottom: "3px solid #FF6600" }}>
               <Image src="/playcall.png" alt="The Callman at Neyland" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} priority />
             </div>
-            <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 14 }}>Patience in the Trenches:<br />How Tennessee Wins the Line</h2>
-            <p style={{ fontSize: 16, color: "#555", lineHeight: 1.55, fontStyle: "italic", marginBottom: 16 }}>The Volunteers&apos; offensive line is the story no one is telling. Through four weeks, they have surrendered two sacks. The numbers say something is different this year.</p>
+            {heroArticle ? (
+              <Link href={`/article/${heroArticle.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 14 }}>{heroArticle.title}</h2>
+                <p style={{ fontSize: 16, color: "#555", lineHeight: 1.55, fontStyle: "italic", marginBottom: 16 }}>{heroArticle.deck}</p>
+              </Link>
+            ) : (
+              <>
+                <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 14 }}>Patience in the Trenches: How Tennessee Wins the Line</h2>
+                <p style={{ fontSize: 16, color: "#555", lineHeight: 1.55, fontStyle: "italic", marginBottom: 16 }}>The Volunteers&apos; offensive line is the story no one is telling.</p>
+              </>
+            )}
             <BrassRule />
-            <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", marginTop: 10 }}>By Staff Writer · May 19, 2026 · 4 min read</div>
+            <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", marginTop: 10 }}>
+              By {heroArticle?.author || "Staff Writer"} · {heroArticle ? new Date(heroArticle.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "May 19, 2026"}
+            </div>
           </div>
-
-          {/* SIDEBAR */}
           <div style={{ paddingLeft: 28 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" as const, borderBottom: "2px solid #1A1208", paddingBottom: 5, marginBottom: 12 }}>Latest Scores</div>
             {[{badge:"VOLS",color:"#FF6600",score:"28 – 14",game:"Tennessee over Florida · SEC Week 4"},{badge:"TITANS",color:"#4B92DB",score:"21 – 17",game:"Tennessee over Jacksonville · Week 3"}].map((s,i)=>(
@@ -112,67 +143,66 @@ export default function Home() {
           </div>
         </div>
 
-        {/* VOLS SECTION */}
+        {/* VOLS */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "36px 0 18px" }}>
           <Badge label="Vols Desk" color="#FF6600" />
           <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>University of Tennessee Volunteers</span>
         </div>
-
-        {/* Family illustration above Vols articles */}
-        <div style={{ position: "relative", width: "100%", marginBottom: 24, maxHeight: 280, overflow: "hidden" }}>
+        <div style={{ width: "100%", marginBottom: 24, maxHeight: 280, overflow: "hidden" }}>
           <Image src="/family.png" alt="Vols fans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", objectPosition: "top" }} />
         </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 8 }}>
-          {volsArticles.map((a,i)=>(
-            <div key={i} style={{ borderTop: "2px solid #FF6600", paddingTop: 14 }}>
-              <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8 }}>{a.title}</h3>
-              <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
-              <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", display: "flex", gap: 8, alignItems: "center" }}>
-                <Badge label={a.badge} color="#FF6600" /><span>·</span><span>{a.date}</span>
+          {displayVols.map((a,i)=>(
+            <Link key={i} href={a.slug} style={{ textDecoration: "none", color: "inherit" }}>
+              <div style={{ borderTop: "2px solid #FF6600", paddingTop: 14 }}>
+                <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8 }}>{a.title}</h3>
+                <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
+                <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", display: "flex", gap: 8, alignItems: "center" }}>
+                  <Badge label={a.badge} color="#FF6600" /><span>·</span><span>{a.date}</span>
+                </div>
+                <div style={{ fontSize: 11, color: "#8B7355", marginTop: 6 }}>By {a.author}</div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-
-        {/* Campus divider — full width */}
+        <div style={{ margin: "24px 0" }}><BrassRule /></div>
       </div>
 
-      <div style={{ width: "100%", margin: "32px 0 0", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 180 }}>
+      {/* CAMPUS DIVIDER */}
+      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 180 }}>
         <Image src="/campus-divider.png" alt="UT Campus" width={1800} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
       </div>
 
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
         <AdSlot label="728×90 Mid-Page" />
 
-        {/* TITANS SECTION */}
+        {/* TITANS */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "8px 0 18px" }}>
           <Badge label="Titans Desk" color="#4B92DB" />
           <div style={{ flex: 1, height: 1, background: "#4B92DB" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee Titans · NFL</span>
         </div>
-
-        {/* Titans hero illustration */}
         <div style={{ width: "100%", marginBottom: 24, maxHeight: 300, overflow: "hidden", borderBottom: "3px solid #4B92DB" }}>
           <Image src="/titans-hero.png" alt="Nashville Titans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 40 }}>
-          {titansArticles.map((a,i)=>(
-            <div key={i} style={{ borderTop: "2px solid #4B92DB", paddingTop: 14 }}>
-              <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8 }}>{a.title}</h3>
-              <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
-              <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", display: "flex", gap: 8, alignItems: "center" }}>
-                <Badge label={a.badge} color="#4B92DB" /><span>·</span><span>{a.date}</span>
+          {displayTitans.map((a,i)=>(
+            <Link key={i} href={a.slug} style={{ textDecoration: "none", color: "inherit" }}>
+              <div style={{ borderTop: "2px solid #4B92DB", paddingTop: 14 }}>
+                <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8 }}>{a.title}</h3>
+                <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
+                <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", display: "flex", gap: 8, alignItems: "center" }}>
+                  <Badge label={a.badge} color="#4B92DB" /><span>·</span><span>{a.date}</span>
+                </div>
+                <div style={{ fontSize: 11, color: "#8B7355", marginTop: 6 }}>By {a.author}</div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
         {/* BOOKIE'S NOOK */}
         <div id="bookies-nook" style={{ marginBottom: 48 }}>
-          {/* Bookie's Nook illustration */}
           <div style={{ width: "100%", marginBottom: 0, borderTop: "2px solid #1A1208", overflow: "hidden" }}>
             <Image src="/bookies-nook-art.png" alt="Bookie's Nook" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block", maxHeight: 320, objectFit: "cover", objectPosition: "top" }} />
           </div>
@@ -210,7 +240,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* NEWSLETTER — ticket stub as background accent */}
+      {/* NEWSLETTER */}
       <div style={{ background: "#1A1208", color: "#fff", padding: "0", margin: "0 0 40px", position: "relative" as const, overflow: "hidden" }}>
         <div style={{ position: "absolute", right: -20, top: "50%", transform: "translateY(-50%)", width: "45%", opacity: 0.12 }}>
           <Image src="/titans-ticket.png" alt="" width={900} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
