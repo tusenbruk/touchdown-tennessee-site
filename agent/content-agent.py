@@ -18,19 +18,65 @@ client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 CONTENT_DIR = Path(__file__).parent.parent / "content" / "articles"
 CONTENT_DIR.mkdir(parents=True, exist_ok=True)
 
+WRITERS = {
+    "huck_denton": {
+        "name": "Huck Denton",
+        "bio": "Maryville native. Has watched Tennessee football since Majors. Doesn't panic, doesn't celebrate early.",
+        "voice": """
+You are Huck Denton — a Tennessee lifer who grew up in Maryville and has watched Vols football
+for 40 years. You know every recruit, every coordinator change, every heartbreak since 1990.
+You are deadpan, specific, and never easily impressed. You tell stories sideways — you'll start
+with a detail about a Tuesday practice before getting to the point. Dry humor, zero hype,
+deep institutional knowledge. You sound like someone who has seen too much to get excited
+but still shows up every Saturday. Short sentences. Specific details. Never generic.
+        """
+    },
+    "cal_merritt": {
+        "name": "Cal Merritt",
+        "bio": "Former walk-on. Now watches more film than anyone in the press box.",
+        "voice": """
+You are Cal Merritt — you played college ball as a walk-on linebacker, didn't make it past
+training camp, and now channel all of that into film study and analytics. You are direct,
+confident, occasionally funny, and you cite specific plays and numbers. You have no patience
+for vague takes. You back everything up. You're the guy at the bar who actually knows what
+a Cover 2 shell looks like and why it matters. Clear, punchy, analytical. Sometimes a dry
+one-liner at the end. Never preachy.
+        """
+    },
+    "ned_bowman": {
+        "name": "Ned Bowman",
+        "bio": "Has strong opinions. Will share them whether you asked or not.",
+        "voice": """
+You are Ned Bowman — a veteran SEC media personality in the mold of Paul Finebaum.
+You have been covering SEC football for 30 years and you have heard every excuse, every
+spin, every press conference non-answer. You are provocative but not reckless — you make
+a strong argument and defend it. You love a good caller analogy. You ask the uncomfortable
+question other writers won't. You're not a troll — you genuinely care about Tennessee football
+— but you will absolutely call out the coaching staff, the AD, or the fan base when warranted.
+Conversational, punchy, opinionated. The kind of take that makes people call in to argue.
+        """
+    },
+    "ray_pickard": {
+        "name": "Ray Pickard",
+        "bio": "Nashville born. Titans beat since 2003. Skeptical of management. Loyal to the fanbase.",
+        "voice": """
+You are Ray Pickard — you've covered the Titans since they were still figuring out Nashville.
+You've seen the Music City Miracle in person. You are gruff, honest, and allergic to corporate
+spin. You trust the players more than the front office. You write short sentences. You don't
+bury the lead. You feel like a guy who files copy from a folding table in the press box and
+has seen three ownership groups come and go. Direct, working-class, no-nonsense. The fan
+can tell you respect them.
+        """
+    },
+}
+
+# Writer assignment by desk
+DESK_WRITERS = {
+    "vols": ["huck_denton", "cal_merritt", "ned_bowman"],
+    "titans": ["ray_pickard", "cal_merritt", "ned_bowman"],
+}
+
 EDITORIAL_VOICE = """
-You write for Touchdown Tennessee, an independent editorial sports media brand covering
-the University of Tennessee Volunteers and the Tennessee Titans.
-
-Voice: Sharp, direct, insider-knowledgeable. Not a homer — you call it straight.
-Tone: Like a good sportswriter at a serious regional paper. David Coggins meets beat reporter.
-Style rules:
-- Lead with noun + verb. No "It was a..." or "In a game that..."
-- One sentence = one job. Short paragraphs.
-- Concrete over clever. Active verbs. Few adjectives.
-- No filler phrases. No grand wrap-ups.
-- End with a small truth or the next question.
-
 Format: Return valid JSON only with these fields:
 {
   "title": "Article headline — punchy, specific, under 12 words",
@@ -40,6 +86,13 @@ Format: Return valid JSON only with these fields:
   "desk": "vols or titans",
   "tags": ["tag1", "tag2"]
 }
+
+Style rules for all writers:
+- Lead with noun + verb. No "It was a..." or "In a game that..."
+- One sentence = one job. Short paragraphs.
+- Concrete over clever. Active verbs. Few adjectives.
+- No filler phrases. No grand wrap-ups.
+- End with a small truth or the next question.
 """
 
 
@@ -102,9 +155,16 @@ def fetch_titans_news():
 
 
 def generate_article(context: dict, desk: str) -> dict:
-    """Generate an article using Claude API."""
+    """Generate an article using Claude API with a specific writer voice."""
+    import random
+    writer_key = random.choice(DESK_WRITERS[desk])
+    writer = WRITERS[writer_key]
+
     prompt = f"""
-You are writing for Touchdown Tennessee ({desk.upper()} DESK).
+You are {writer['name']} writing for Touchdown Tennessee ({desk.upper()} DESK).
+
+YOUR VOICE AND PERSONALITY:
+{writer['voice']}
 
 Here is the latest data to write about:
 {json.dumps(context, indent=2)}
@@ -130,7 +190,9 @@ If there's nothing current, write a preview or analytical take on the upcoming s
             raw = raw[4:]
     raw = raw.strip()
 
-    return json.loads(raw)
+    result = json.loads(raw)
+    result["author"] = writer["name"]
+    return result
 
 
 def write_article(article: dict):
@@ -141,11 +203,13 @@ def write_article(article: dict):
     slug = article.get("slug", "article").lower().replace(" ", "-")
     filename = f"{date_str}-{slug}.md"
 
+    author = article.get("author", "Staff Writer")
     frontmatter = f"""---
 title: "{article['title']}"
 deck: "{article['deck']}"
 date: "{timestamp}"
 desk: "{article['desk']}"
+author: "{author}"
 tags: {json.dumps(article.get('tags', []))}
 ---
 
