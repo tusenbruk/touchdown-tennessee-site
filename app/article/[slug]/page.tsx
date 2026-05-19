@@ -1,11 +1,8 @@
-import { getArticleBySlug, getAllSlugs } from "@/lib/articles";
+import { getArticleBySlug } from "@/lib/articles";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-export async function generateStaticParams() {
-  const slugs = getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function ArticlePage({
   params,

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllArticles, Article } from "@/lib/articles";
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   const allArticles = getAllArticles();
