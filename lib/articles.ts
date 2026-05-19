@@ -4,10 +4,15 @@ import html from "remark-html";
 
 const GITHUB_API = "https://api.github.com/repos/tusenbruk/touchdown-tennessee-site/contents/content/articles";
 
-const ghHeaders = () => ({
-  Accept: "application/vnd.github.v3+json",
-  ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
-});
+function ghHeaders() {
+  const h: Record<string, string> = {
+    Accept: "application/vnd.github.v3.raw",
+  };
+  if (process.env.GITHUB_TOKEN) {
+    h.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+  return h;
+}
 
 export interface Article {
   slug: string;
@@ -21,14 +26,16 @@ export interface Article {
 }
 
 async function fetchFileContent(filename: string): Promise<string | null> {
+  const url = `${GITHUB_API}/${filename}`;
   try {
-    const res = await fetch(`${GITHUB_API}/${filename}`, {
-      headers: { ...ghHeaders(), Accept: "application/vnd.github.v3.raw" },
-      next: { revalidate: 300 },
-    });
-    if (!res.ok) return null;
+    const res = await fetch(url, { headers: ghHeaders(), cache: "no-store" });
+    if (!res.ok) {
+      console.error(`fetchFileContent failed: ${res.status} for ${url}`);
+      return null;
+    }
     return await res.text();
-  } catch {
+  } catch (e) {
+    console.error(`fetchFileContent error for ${url}:`, e);
     return null;
   }
 }
@@ -36,8 +43,8 @@ async function fetchFileContent(filename: string): Promise<string | null> {
 export async function getAllArticles(): Promise<Article[]> {
   try {
     const res = await fetch(GITHUB_API, {
-      headers: ghHeaders(),
-      next: { revalidate: 300 },
+      headers: { Accept: "application/vnd.github.v3+json", ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) },
+      cache: "no-store",
     });
     if (!res.ok) return [];
     const files = await res.json();
@@ -72,12 +79,15 @@ export async function getAllArticles(): Promise<Article[]> {
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  console.log(`getArticleBySlug called for: ${slug}`);
+  const text = await fetchFileContent(`${slug}.md`);
+  if (!text) {
+    console.error(`No content returned for slug: ${slug}`);
+    return null;
+  }
   try {
-    const text = await fetchFileContent(`${slug}.md`);
-    if (!text) return null;
     const { data, content } = matter(text);
     const processed = await remark().use(html).process(content);
-
     return {
       slug,
       title: data.title || "Untitled",
@@ -89,7 +99,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       body: processed.toString(),
     };
   } catch (e) {
-    console.error("getArticleBySlug error:", e);
+    console.error(`getArticleBySlug parse error for ${slug}:`, e);
     return null;
   }
 }
