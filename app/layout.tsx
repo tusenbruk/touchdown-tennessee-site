@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { CartProvider } from "./components/CartContext";
 
 export const metadata: Metadata = {
   title: "Touchdown Tennessee — Independent Tennessee Football Editorial",
-  description: "Independent editorial coverage of the Tennessee Volunteers and Tennessee Titans. Vols Desk, Titans Desk, Film Room, Recruiting, and the Bookie's Nook.",
+  description: "Independent editorial coverage of the Tennessee Volunteers and Tennessee Titans.",
   openGraph: {
     title: "Touchdown Tennessee",
     description: "Independent editorial coverage of the Tennessee Volunteers and Tennessee Titans.",
@@ -17,11 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -31,7 +28,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body style={{ margin: 0, padding: 0 }}>{children}</body>
+      <body style={{ margin: 0, padding: 0 }}>
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }
