@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: "/tdt-favicon.png",
+    apple: "/tdt-favicon.png",
   },
 };
 

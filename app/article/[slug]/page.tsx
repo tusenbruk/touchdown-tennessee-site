@@ -61,7 +61,7 @@ export default async function ArticlePage({
         <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
           <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-          <div style={{ fontSize: 11, fontWeight: 700, border: "1.5px solid #1A1208", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center" }}>TT</div>
+          <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 36, width: "auto", display: "block" }} />
           <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
         </div>
         <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
