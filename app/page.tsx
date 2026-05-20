@@ -235,7 +235,7 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", gap: 12, marginTop: 14 }}>
+          <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" as const }}>
             {["DraftKings","FanDuel","BetMGM","Caesars"].map((book) => (
               <a key={book} href="#" style={{ border: "1.5px solid #1A1208", padding: "6px 14px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#1A1208" }}>Bet {book} →</a>
             ))}
@@ -259,15 +259,16 @@ export default async function Home() {
       </div>
 
       {/* FOOTER */}
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
-        <footer style={{ borderTop: "3px solid #1A1208", padding: "20px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <footer style={{ borderTop: "3px solid #1A1208", padding: "20px 24px" }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", flexWrap: "wrap" as const, justifyContent: "space-between", alignItems: "center", gap: 12 }}>
           <div style={{ fontSize: 14, letterSpacing: "0.04em", fontWeight: 700 }}>Touchdown Tennessee</div>
           <div style={{ display: "flex", gap: 18, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
             <span>About</span><span>Contact</span><span>Advertise</span>
           </div>
-          <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>Independent editorial · Not affiliated with UT or NFL</div>
-        </footer>
-      </div>
+          <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#8B7355" }}>Independent editorial · Not affiliated with UT or NFL</div>
+        </div>
+        <div style={{ textAlign: "center" as const, marginTop: 12, fontSize: 10, color: "#D4CEC7", letterSpacing: "0.08em" }}>touchdowntennessee.com</div>
+      </footer>
 
     </main>
   );

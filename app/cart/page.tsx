@@ -1,4 +1,5 @@
 "use client";
+import MobileNavBar from "@/app/components/MobileNavBar";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -29,27 +30,7 @@ export default function CartPage() {
 
   return (
     <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
-      <div style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-        <Link href="/merch" style={{ textDecoration: "none", color: "#8B7355" }}>← Continue Shopping</Link>
-        <span>Rocky Top Collection</span>
-        <Link href="/" style={{ textDecoration: "none", color: "#8B7355" }}>Home</Link>
-      </div>
-
-      <div style={{ textAlign: "center", padding: "20px 40px 0" }}>
-        <div style={{ height: 3, background: "#1A1208", marginBottom: 2 }} />
-        <div style={{ height: 1, background: "#1A1208", marginBottom: 16 }} />
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <h1 style={{ fontSize: 48, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
-        </Link>
-        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-          <img src="/tdt-logo.png" alt="TDT" style={{ height: 36, width: "auto" }} />
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-        </div>
-        <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
-        <div style={{ height: 3, background: "#1A1208", marginTop: 2 }} />
-      </div>
+      <MobileNavBar backHref="/merch" backLabel="← Shop" rightHref="/" rightLabel="Home" />
 
       <div style={{ maxWidth: 800, margin: "48px auto", padding: "0 40px" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>

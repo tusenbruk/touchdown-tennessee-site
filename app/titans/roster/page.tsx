@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Masthead from "@/app/components/Masthead";
+import Footer from "@/app/components/Footer";
 import Image from "next/image";
 
 export const dynamic = "force-dynamic";
@@ -56,29 +58,7 @@ export default async function TitansRosterPage() {
   return (
     <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
 
-      {/* TOP BAR */}
-      <div style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8B7355" }}>
-        <Link href="/" style={{ textDecoration: "none", color: "#8B7355" }}>← Touchdown Tennessee</Link>
-        <span>Tennessee Football · Vols · Titans · Rocky Top</span>
-        <span>Independent Editorial</span>
-      </div>
-
-      {/* MASTHEAD */}
-      <div style={{ textAlign: "center", padding: "20px 40px 0" }}>
-        <div style={{ height: 3, background: "#1A1208", marginBottom: 2 }} />
-        <div style={{ height: 1, background: "#1A1208", marginBottom: 16 }} />
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <h1 style={{ fontSize: 48, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
-        </Link>
-        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase", color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-          <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 36, width: "auto", display: "block" }} />
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-        </div>
-        <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
-        <div style={{ height: 3, background: "#1A1208", marginTop: 2 }} />
-      </div>
+      <Masthead backLink={{ href: "/", label: "← Home" }} />
 
       {/* BANNER */}
       <div style={{ width: "100%", maxHeight: 300, overflow: "hidden", borderBottom: "3px solid #4B92DB" }}>
