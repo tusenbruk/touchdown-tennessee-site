@@ -8,7 +8,8 @@ export const dynamic = "force-dynamic";
 // Banner images by desk
 const VOLS_BANNERS = [
   "/vols-stadium-charge.png",
-  "/vols-rifleman.png",
+  "/vols-rifleman-1794.png",
+  "/vols-runningback-2.png",
   "/volwalk-banner.png",
   "/family.png",
 ];

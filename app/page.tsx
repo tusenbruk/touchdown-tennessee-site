@@ -149,6 +149,7 @@ export default async function Home() {
           <Badge label="Vols Desk" color="#FF6600" />
           <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>University of Tennessee Volunteers</span>
+          <img src="/vols-rifleman-1794.png" alt="Vol" style={{ height: 80, width: "auto", display: "block", marginRight: -8 }} />
         </div>
         <div style={{ width: "100%", marginBottom: 24 }}>
           <Image src="/family.png" alt="Vols fans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
