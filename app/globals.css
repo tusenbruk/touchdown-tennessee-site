@@ -1,26 +1,69 @@
-@import "tailwindcss";
+* { box-sizing: border-box; }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@media (max-width: 768px) {
+  .hamburger { display: flex !important; }
+  .desktop-nav { display: none !important; }
+  .top-bar-center { display: none !important; }
+  .top-bar-right { display: none !important; }
+  .top-bar { padding: 6px 16px !important; }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  .masthead-title { font-size: 36px !important; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hero-sidebar { display: none !important; }
+
+  .article-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-container {
+    padding: 0 16px !important;
+  }
+
+  /* Merch grid */
+  div[style*="repeat(3, 1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Roster table */
+  div[style*="48px 48px 1fr"] {
+    grid-template-columns: 36px 1fr 60px 80px !important;
+    font-size: 11px !important;
+  }
+
+  /* Bookie nook table */
+  div[style*="2fr 1fr 1.2fr"] {
+    grid-template-columns: 1.5fr 1fr 1fr !important;
+    font-size: 11px !important;
+  }
+
+  /* Product detail */
+  div[style*="gridTemplateColumns: \"1fr 1fr\""] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cart grid */
+  div[style*="80px 1fr auto"] {
+    grid-template-columns: 60px 1fr auto !important;
+  }
+
+  /* Archive grid */
+  div[style*="120px 1fr 160px"] {
+    grid-template-columns: 1fr !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 480px) {
+  .masthead-title { font-size: 28px !important; }
+
+  div[style*="repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  div[style*="repeat(2, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
 }

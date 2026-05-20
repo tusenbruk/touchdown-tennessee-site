@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllArticles, Article } from "@/lib/articles";
 import NewsletterForm from "./components/NewsletterForm";
+import MobileNav from "./components/MobileNav";
 
 export const dynamic = "force-dynamic";
 
@@ -69,17 +70,18 @@ export default async function Home() {
     <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
 
       {/* TOP BAR */}
-      <div style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-        <span>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</span>
-        <span>Tennessee Football · Vols · Titans · Rocky Top</span>
-        <span>Independent Editorial</span>
+      <div className="top-bar" style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
+        <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+        <span className="top-bar-center">Tennessee Football · Vols · Titans · Rocky Top</span>
+        <span className="top-bar-right">Independent Editorial</span>
+        <MobileNav />
       </div>
 
       {/* MASTHEAD */}
       <div style={{ textAlign: "center", padding: "20px 40px 0" }}>
         <div style={{ height: 3, background: "#1A1208", marginBottom: 2 }} />
         <div style={{ height: 1, background: "#1A1208", marginBottom: 16 }} />
-        <h1 style={{ fontSize: 64, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
+        <h1 className="masthead-title" style={{ fontSize: 64, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
         <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
           <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
@@ -91,17 +93,17 @@ export default async function Home() {
       </div>
 
       {/* NAV */}
-      <nav style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7" }}>
+      <nav className="desktop-nav" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7", overflowX: "auto" as const }}>
         {[["Vols Desk","#FF6600"],["Vols Roster","#FF6600"],["Titans Desk","#4B92DB"],["Titans Roster","#4B92DB"],["Bookie's Nook","#1A1208"],["Shop","#FF6600"],["Archive","#1A1208"]].map(([label, color], i) => (
           <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : label === "Vols Roster" ? "/vols/roster" : label === "Titans Roster" ? "/titans/roster" : label === "Shop" ? "/merch" : label === "Archive" ? "/archive" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
         ))}
       </nav>
 
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
+      <div className="main-container" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
         <AdSlot label="728×90 Leaderboard" />
 
         {/* HERO */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", paddingBottom: 32 }}>
+        <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", paddingBottom: 32 }}>
           <div style={{ paddingRight: 32, borderRight: "1px solid #D4CEC7" }}>
             <div style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 }}>
               <Badge label="Vols Desk" color="#FF6600" /><span>Latest</span>
@@ -126,7 +128,7 @@ export default async function Home() {
               By {heroArticle?.author || "Staff Writer"} · {heroArticle ? new Date(heroArticle.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "May 19, 2026"}
             </div>
           </div>
-          <div style={{ paddingLeft: 28 }}>
+          <div className="hero-sidebar" style={{ paddingLeft: 28 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" as const, borderBottom: "2px solid #1A1208", paddingBottom: 5, marginBottom: 12 }}>Latest Scores</div>
             {[{badge:"VOLS",color:"#FF6600",score:"28 – 14",game:"Tennessee over Florida · SEC Week 4"},{badge:"TITANS",color:"#4B92DB",score:"21 – 17",game:"Tennessee over Jacksonville · Week 3"}].map((s,i)=>(
               <div key={i} style={{ borderBottom: "1px solid #D4CEC7", paddingBottom: 10, marginBottom: 10 }}>

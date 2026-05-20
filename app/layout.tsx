@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CartProvider } from "./components/CartContext";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Touchdown Tennessee — Independent Tennessee Football Editorial",
