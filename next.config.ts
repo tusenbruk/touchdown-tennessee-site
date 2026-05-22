@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return [
+      {
+        source: "/arcade",
+        destination: "/touchdown-tennessee.html",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
