@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Bookie's Nook", color: "#1A1208", href: "/#bookies-nook" },
   { label: "Shop", color: "#FF6600", href: "/merch" },
   { label: "Archive", color: "#1A1208", href: "/archive" },
+  { label: "Arcade", color: "#FF6600", href: "/arcade" },
   { label: "Cart", color: "#1A1208", href: "/cart" },
 ];
 
