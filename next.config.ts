@@ -4,7 +4,11 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/arcade",
+        source: "/rifleman",
+        destination: "/tennessee-rifleman.html",
+      },
+      {
+        source: "/catwalk",
         destination: "/touchdown-tennessee.html",
       },
     ];
