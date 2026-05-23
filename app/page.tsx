@@ -263,7 +263,7 @@ export default async function Home() {
         <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", flexWrap: "wrap" as const, justifyContent: "space-between", alignItems: "center", gap: 12 }}>
           <div style={{ fontSize: 14, letterSpacing: "0.04em", fontWeight: 700 }}>Touchdown Tennessee</div>
           <div style={{ display: "flex", gap: 18, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-            <span>About</span><span>Contact</span><span>Advertise</span>
+            <a href="/about" style={{color:"#8B7355",textDecoration:"none"}}>About</a><a href="/contact" style={{color:"#8B7355",textDecoration:"none"}}>Contact</a><a href="/contact#advertising" style={{color:"#8B7355",textDecoration:"none"}}>Advertise</a>
           </div>
           <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#8B7355" }}>Independent editorial · Not affiliated with UT or NFL</div>
         </div>
