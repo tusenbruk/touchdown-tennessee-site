@@ -245,9 +245,10 @@ export default async function Home() {
         <div style={{ margin: "24px 0" }}><BrassRule /></div>
       </div>
 
-      {/* CAMPUS DIVIDER */}
-      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 240 }}>
-        <Image src="/campus-divider.png" alt="UT Campus" width={1800} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
+      {/* CAMPUS DIVIDER — Neyland Stadium aerial, Neomrbungle / CC BY-SA 3.0 */}
+      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 240, position: "relative" }}>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Neyland_and_downtown_aerial.JPG" alt="Neyland Stadium aerial view" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", maxHeight: 240 }} />
+        <div style={{ position: "absolute", bottom: 4, right: 8, fontSize: 9, color: "rgba(255,255,255,0.6)", letterSpacing: "0.04em" }}>Photo: Neomrbungle / CC BY-SA 3.0</div>
       </div>
 
       <div id="titans" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
@@ -259,8 +260,10 @@ export default async function Home() {
           <div style={{ flex: 1, height: 1, background: "#4B92DB" }} />
           <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee Titans · NFL</span>
         </div>
-        <div style={{ width: "100%", marginBottom: 24, borderBottom: "3px solid #4B92DB" }}>
-          <Image src="/titans-hero.png" alt="Nashville Titans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
+        {/* Nissan Stadium (now Geodis Park era), public domain / CC0 */}
+        <div style={{ width: "100%", marginBottom: 24, borderBottom: "3px solid #4B92DB", position: "relative" }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/LP_Field_2009_crop.jpg" alt="Nissan Stadium, home of the Tennessee Titans" style={{ width: "100%", height: "auto", display: "block", maxHeight: 320, objectFit: "cover" }} />
+          <div style={{ position: "absolute", bottom: 4, right: 8, fontSize: 9, color: "rgba(255,255,255,0.6)", letterSpacing: "0.04em" }}>Public domain</div>
         </div>
 
         {/* TITANS ARTICLE CARDS WITH IMAGE THUMBNAILS */}
