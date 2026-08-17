@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getAllArticles, Article } from "@/lib/articles";
 import NewsletterForm from "./components/NewsletterForm";
 import MobileNav from "./components/MobileNav";
-import NewsTicker from "./components/NewsTicker";
 
 export const dynamic = "force-dynamic";
 
@@ -66,9 +65,9 @@ export default async function Home() {
     desk: a.desk,
     image: a.desk === "titans" ? TITANS_CARD_IMAGES[i % TITANS_CARD_IMAGES.length] : VOLS_CARD_IMAGES[i % VOLS_CARD_IMAGES.length],
   })) : [
-    { slug: "#", title: "Nico Iamaleava Is the Most Dangerous Quarterback in the SEC", deck: "No one is accounting for his mobility. That is a mistake.", author: "Ned Bowman", desk: "vols" as const, image: VOLS_CARD_IMAGES[0] },
-    { slug: "#", title: "The Titans Don't Need to Win the AFC South to Matter This Year", deck: "A six-win season with the right losses teaches you more.", author: "Ray Pickard", desk: "titans" as const, image: TITANS_CARD_IMAGES[0] },
-    { slug: "#", title: "Stop Counting Out Tennessee as a College Football Playoff Team", deck: "The schedule is winnable and the talent is there.", author: "Huck Denton", desk: "vols" as const, image: VOLS_CARD_IMAGES[1] },
+    { slug: "#", title: "MacIntyre vs. Brandon: Tennessee Still Has No Starter Named", deck: "Heupel has a Week 1 game in three weeks and no one under center. That is a real problem.", author: "Cal Merritt", desk: "vols" as const, image: VOLS_CARD_IMAGES[0] },
+    { slug: "#", title: "The Titans Don't Need to Win the AFC South to Matter This Year", deck: "A seven-win season with the right games teaches you more than it costs.", author: "Ray Pickard", desk: "titans" as const, image: TITANS_CARD_IMAGES[0] },
+    { slug: "#", title: "Cam Ward's Preseason Debut Was Ugly. That Is Not the Whole Story.", deck: "5 of 12 against backup defenders. The Daboll system takes time. Here is why that matters.", author: "Ned Bowman", desk: "titans" as const, image: VOLS_CARD_IMAGES[1] },
   ];
 
   const odds = [
@@ -137,9 +136,6 @@ export default async function Home() {
           <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : label === "Vols Roster" ? "/vols/roster" : label === "Titans Roster" ? "/titans/roster" : label === "Shop" ? "/merch" : label === "Archive" ? "/archive" : label === "Arcade" ? "/arcade" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
         ))}
       </nav>
-
-      {/* BREAKING NEWS TICKER */}
-      <NewsTicker />
 
       <div className="main-container" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
         <AdSlot label="728×90 Leaderboard" />

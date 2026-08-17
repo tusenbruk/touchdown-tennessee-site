@@ -27,7 +27,7 @@ And he was. Three seasons starting. A Tennessee record for total offense that st
 
 ## The Legacy We Built On Top of Him
 
-Tennessee spent the next fifty years celebrating quarterback excellence — Heath Shuler, Peyton Manning, Erik Ainge, now Nico Iamaleava. That lineage has a foundation, and the foundation's name is Condredge Holloway.
+Tennessee spent the next fifty years celebrating quarterback excellence — Heath Shuler, Peyton Manning, Erik Ainge, and the quarterbacks who followed. That lineage has a foundation, and the foundation's name is Condredge Holloway.
 
 But foundations are underground. You don't see them. You just benefit from them.
 
