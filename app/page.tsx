@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getAllArticles, Article } from "@/lib/articles";
+import { getLatestScores, getOddsBoard } from "@/lib/espn";
 import NewsletterForm from "./components/NewsletterForm";
 import MobileNav from "./components/MobileNav";
 
@@ -19,7 +20,11 @@ const TITANS_CARD_IMAGES = [
 ];
 
 export default async function Home() {
-  const allArticles = await getAllArticles();
+  const [allArticles, latestScores, oddsBoard] = await Promise.all([
+    getAllArticles(),
+    getLatestScores(),
+    getOddsBoard(),
+  ]);
   const volsArticles = allArticles.filter((a) => a.desk === "vols").slice(0, 3);
   const titansArticles = allArticles.filter((a) => a.desk === "titans").slice(0, 3);
   const heroArticle = allArticles[0];
@@ -68,12 +73,6 @@ export default async function Home() {
     { slug: "#", title: "MacIntyre vs. Brandon: Tennessee Still Has No Starter Named", deck: "Heupel has a Week 1 game in three weeks and no one under center. That is a real problem.", author: "Cal Merritt", desk: "vols" as const, image: VOLS_CARD_IMAGES[0] },
     { slug: "#", title: "The Titans Don't Need to Win the AFC South to Matter This Year", deck: "A seven-win season with the right games teaches you more than it costs.", author: "Ray Pickard", desk: "titans" as const, image: TITANS_CARD_IMAGES[0] },
     { slug: "#", title: "Cam Ward's Preseason Debut Was Ugly. That Is Not the Whole Story.", deck: "5 of 12 against backup defenders. The Daboll system takes time. Here is why that matters.", author: "Ned Bowman", desk: "titans" as const, image: VOLS_CARD_IMAGES[1] },
-  ];
-
-  const odds = [
-    { game: "Tennessee vs Alabama", date: "Sep 20", spread: "TN -3.5", ml: "+160 / -185", ou: "47.5", best: "DraftKings", bestSpread: "-3.5 (-108)" },
-    { game: "Titans vs Jaguars", date: "Sep 14", spread: "TN +1.5", ml: "+130 / -155", ou: "41.5", best: "FanDuel", bestSpread: "+1.5 (-110)" },
-    { game: "Tennessee vs Georgia", date: "Oct 4", spread: "TN +7", ml: "+240 / -295", ou: "44", best: "BetMGM", bestSpread: "+7.5 (-110)" },
   ];
 
   const Badge = ({ label, color }: { label: string; color: string }) => (
@@ -170,14 +169,14 @@ export default async function Home() {
           {/* SIDEBAR: Scores + Social CTA */}
           <div className="hero-sidebar" style={{ paddingLeft: 28 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" as const, borderBottom: "2px solid #1A1208", paddingBottom: 5, marginBottom: 12 }}>Latest Scores</div>
-            {[{badge:"VOLS",color:"#FF6600",score:"28 – 14",game:"Tennessee over Florida · SEC Week 4"},{badge:"TITANS",color:"#4B92DB",score:"21 – 17",game:"Tennessee over Jacksonville · Week 3"}].map((s,i)=>(
+            {latestScores.map((s,i)=>(
               <div key={i} style={{ borderBottom: "1px solid #D4CEC7", paddingBottom: 10, marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <Badge label={s.badge} color={s.color} />
-                  <span style={{ fontWeight: 700, fontSize: 20 }}>{s.score}</span>
+                  <span style={{ fontWeight: 700, fontSize: s.status === "Upcoming" ? 15 : 20 }}>{s.score}</span>
                 </div>
                 <div style={{ fontSize: 12, color: "#666", marginTop: 3 }}>{s.game}</div>
-                <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>Final</div>
+                <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: s.live ? "#C00" : "#8B7355", fontWeight: s.live ? 700 : 400 }}>{s.live ? "● Live" : s.status}</div>
               </div>
             ))}
 
@@ -333,14 +332,14 @@ export default async function Home() {
           <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 18px" }}>
             <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Bookie&apos;s Nook</span>
             <div style={{ flex: 1, height: 1, background: "#1A1208" }} />
-            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Odds updated hourly · Bet responsibly</span>
+            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>{oddsBoard.live ? "Live lines via ESPN · refreshed every 5 min" : "Last verified lines · live feed reconnecting"} · Bet responsibly</span>
           </div>
           <div style={{ border: "1px solid #D4CEC7", overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.2fr 0.8fr 1.4fr", background: "#1A1208", color: "#fff", padding: "10px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, gap: 12 }}>
-              <span>Matchup</span><span>Spread</span><span>Moneyline</span><span>O/U</span><span>Best Line</span>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1.2fr 0.8fr 1.2fr", background: "#1A1208", color: "#fff", padding: "10px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, gap: 12 }}>
+              <span>Matchup</span><span>Spread</span><span>Moneyline</span><span>O/U</span><span>Book</span>
             </div>
-            {odds.map((o, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.2fr 0.8fr 1.4fr", padding: "14px 16px", borderTop: i === 0 ? "none" : "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 12, alignItems: "center" }}>
+            {oddsBoard.rows.map((o, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1.2fr 0.8fr 1.2fr", padding: "14px 16px", borderTop: i === 0 ? "none" : "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 12, alignItems: "center" }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{o.game}</div>
                   <div style={{ fontSize: 11, color: "#8B7355", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>{o.date}</div>
@@ -348,19 +347,38 @@ export default async function Home() {
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{o.spread}</div>
                 <div style={{ fontSize: 13, color: "#555" }}>{o.ml}</div>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{o.ou}</div>
-                <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#FF6600" }}>{o.best}</div>
-                  <div style={{ fontSize: 11, color: "#555" }}>{o.bestSpread}</div>
-                </div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#FF6600" }}>{o.book}</div>
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" as const }}>
-            {["DraftKings","FanDuel","BetMGM","Caesars"].map((book) => (
-              <a key={book} href="#" style={{ border: "1.5px solid #1A1208", padding: "6px 14px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#1A1208" }}>Bet {book} →</a>
+          <div style={{ fontSize: 10, color: "#aaa", marginTop: 12 }}>Lines are informational, move constantly, and are shown as reported by the listed book. 21+ only. Gambling problem? Call 1-800-GAMBLER.</div>
+        </div>
+
+        {/* AROUND THE WEB */}
+        <div style={{ marginBottom: 48 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
+            <span style={{ border: "1.5px solid #8B7355", color: "#8B7355", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Reading Room</span>
+            <div style={{ flex: 1, height: 1, background: "#8B7355", opacity: 0.4 }} />
+            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee coverage elsewhere · links open in a new tab</span>
+          </div>
+          <div className="reading-room-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+            {[
+              { name: "ESPN · Vols", desc: "Scores, stats, and national coverage of Tennessee football.", url: "https://www.espn.com/college-football/team/_/id/2633/tennessee-volunteers", color: "#FF6600" },
+              { name: "ESPN · Titans", desc: "Titans news, depth chart, and game coverage.", url: "https://www.espn.com/nfl/team/_/name/ten/tennessee-titans", color: "#4B92DB" },
+              { name: "GoVols247", desc: "Recruiting intel and Vols insider reporting from 247Sports.", url: "https://247sports.com/college/tennessee/", color: "#FF6600" },
+              { name: "Barstool CFB", desc: "The unfiltered college football takes. You know what you're getting.", url: "https://www.barstoolsports.com/topics/college-football", color: "#1A1208" },
+              { name: "Bleacher Report · Vols", desc: "B/R's Tennessee stream — highlights and the national angle.", url: "https://bleacherreport.com/tennessee-volunteers-football", color: "#FF6600" },
+              { name: "Bleacher Report · Titans", desc: "B/R's Titans stream — trades, rumors, and film breakdowns.", url: "https://bleacherreport.com/tennessee-titans", color: "#4B92DB" },
+            ].map((s, i) => (
+              <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="article-card" style={{ textDecoration: "none", color: "inherit", border: "1px solid #D4CEC7", borderTop: `3px solid ${s.color}`, padding: "14px 16px", background: "#fff", display: "block" }}>
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+                  <span style={{ fontWeight: 700, fontSize: 14 }}>{s.name}</span>
+                  <span style={{ fontSize: 11, color: "#8B7355" }}>↗</span>
+                </div>
+                <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5 }}>{s.desc}</p>
+              </a>
             ))}
           </div>
-          <div style={{ fontSize: 10, color: "#aaa", marginTop: 8 }}>21+ only. Gambling problem? Call 1-800-GAMBLER. Affiliate links may earn commission.</div>
         </div>
       </div>
 
