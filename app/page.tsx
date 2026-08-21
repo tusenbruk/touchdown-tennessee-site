@@ -4,6 +4,8 @@ import { getAllArticles, Article } from "@/lib/articles";
 import { getLatestScores, getOddsBoard } from "@/lib/espn";
 import NewsletterForm from "./components/NewsletterForm";
 import MobileNav from "./components/MobileNav";
+import { NAV_ITEMS } from "./components/nav-items";
+import { getCatalog } from "@/lib/printful";
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +22,13 @@ const TITANS_CARD_IMAGES = [
 ];
 
 export default async function Home() {
-  const [allArticles, latestScores, oddsBoard] = await Promise.all([
+  const [allArticles, latestScores, oddsBoard, catalog] = await Promise.all([
     getAllArticles(),
     getLatestScores(),
     getOddsBoard(),
+    getCatalog(),
   ]);
+  const shopProducts = catalog.slice(0, 6);
   const volsArticles = allArticles.filter((a) => a.desk === "vols").slice(0, 3);
   const titansArticles = allArticles.filter((a) => a.desk === "titans").slice(0, 3);
   const heroArticle = allArticles[0];
@@ -140,14 +144,64 @@ export default async function Home() {
         <div className="masthead-rule masthead-rule-heavy" />
       </div>
 
-      {/* NAV */}
+      {/* NAV — rendered from the shared nav module */}
       <nav className="desktop-nav" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7", overflowX: "auto" as const }}>
-        {[["Vols Desk","#FF6600"],["Vols Roster","#FF6600"],["Titans Desk","#4B92DB"],["Titans Roster","#4B92DB"],["Bookie's Nook","#1A1208"],["Shop","#FF6600"],["Archive","#1A1208"],["Arcade","#FF6600"]].map(([label, color], i) => (
-          <a key={i} href={label === "Bookie's Nook" ? "#bookies-nook" : label === "Vols Roster" ? "/vols/roster" : label === "Titans Roster" ? "/titans/roster" : label === "Shop" ? "/merch" : label === "Archive" ? "/archive" : label === "Arcade" ? "/arcade" : "#"} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined }}>{label}</a>
+        {NAV_ITEMS.map((item, i) => (
+          <a key={i} href={item.href} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color: item.color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined, whiteSpace: "nowrap" as const }}>{item.label}</a>
         ))}
       </nav>
 
+      {/* ANNOUNCEMENT BAR */}
+      <div style={{ background: "#1A1208", color: "#F5EFE4", textAlign: "center", padding: "8px 16px", fontSize: 10, letterSpacing: "0.24em", textTransform: "uppercase" as const, fontWeight: 700 }}>
+        Free US shipping over $75 · New drop every Thursday
+      </div>
+
       <div className="main-container" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
+
+        {/* THE SHOP */}
+        <div style={{ margin: "32px 0 8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+            <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Shop</span>
+            <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
+            <Link href="/merch" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase" as const, textDecoration: "none", color: "#1A1208", fontWeight: 700 }}>Shop All →</Link>
+          </div>
+          {shopProducts.length > 0 ? (
+            <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
+              {shopProducts.map((p) => (
+                <Link key={p.id} href={`/merch/${p.id}`} className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+                  <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
+                    <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", overflow: "hidden", aspectRatio: "1/1" as const, marginBottom: 12 }}>
+                      <img src={p.thumbnail} alt={p.name} className="card-image" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{p.name}</h3>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>{p.samePrice ? `$${p.minPrice}` : `from $${p.minPrice}`}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
+              {["The Frontier Tee", "Blount College 1794 Crest", "Smokies Poster Print"].map((name, i) => (
+                <Link key={i} href="/merch" className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+                  <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
+                    <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", aspectRatio: "1/1" as const, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10 }}>
+                      <img src="/tdt-logo.png" alt="" style={{ width: "55%", height: "auto", opacity: 0.25 }} />
+                      <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C0B9AF", fontWeight: 700 }}>Dropping Soon</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{name}</h3>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>$—</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+        <div style={{ margin: "16px 0 0" }}><BrassRule /></div>
+
         <AdSlot label="728×90 Leaderboard" />
 
         {/* HERO */}

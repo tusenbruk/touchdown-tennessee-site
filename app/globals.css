@@ -112,6 +112,23 @@
   transform: translateY(-1px);
 }
 
+/* Sticky mobile add-to-cart bar — hidden on desktop */
+.mobile-sticky-cart {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 2px solid #1A1208;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  z-index: 50;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 768px) {
+  .mobile-sticky-cart { display: block; }
+}
+
 /* Hot take card hover */
 .hot-take-card {
   transition: transform 0.2s ease;

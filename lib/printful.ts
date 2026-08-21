@@ -25,33 +25,92 @@ export interface PrintfulVariant {
   is_enabled: boolean;
 }
 
-// Get all store products
-export async function getStoreProducts(): Promise<PrintfulProduct[]> {
-  try {
-    const res = await fetch(`${PRINTFUL_API}/store/products?limit=50`, {
-      headers: pfHeaders(),
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.result || [];
-  } catch {
-    return [];
-  }
+// ---- Cached catalog (5-minute revalidate) ----
+// One products-list fetch + parallel detail fetches. This is the single
+// source for /merch, the homepage shop section, and the product API route —
+// replacing the old per-page no-store N+1 fetches.
+
+const CATALOG_REVALIDATE = 300;
+
+export interface ProductDetail {
+  id: number;
+  name: string;
+  thumbnail_url: string;
+  variants: { id: number; name: string; retail_price: string }[];
 }
 
-// Get single product with variants
-export async function getStoreProduct(id: string): Promise<PrintfulProduct | null> {
+export interface CatalogProduct {
+  id: number;
+  name: string;
+  thumbnail: string;
+  minPrice: string;
+  maxPrice: string;
+  samePrice: boolean;
+  sizes: string[];
+  colors: string[];
+  variantCount: number;
+}
+
+export async function getProductDetail(id: string | number): Promise<ProductDetail | null> {
   try {
     const res = await fetch(`${PRINTFUL_API}/store/products/${id}`, {
       headers: pfHeaders(),
-      cache: "no-store",
+      next: { revalidate: CATALOG_REVALIDATE },
     });
     if (!res.ok) return null;
     const data = await res.json();
-    return data.result?.sync_product || null;
+    const sp = data.result?.sync_product;
+    if (!sp?.id) return null;
+    const variants = (data.result?.sync_variants || []) as { id: number; name: string; retail_price: string }[];
+    return {
+      id: sp.id,
+      name: sp.name,
+      thumbnail_url: sp.thumbnail_url,
+      variants: variants.map((v) => ({ id: v.id, name: v.name, retail_price: v.retail_price })),
+    };
   } catch {
     return null;
+  }
+}
+
+export async function getCatalog(): Promise<CatalogProduct[]> {
+  try {
+    const res = await fetch(`${PRINTFUL_API}/store/products?limit=50`, {
+      headers: pfHeaders(),
+      next: { revalidate: CATALOG_REVALIDATE },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const products = (data.result || []) as { id: number }[];
+
+    const detailed = await Promise.all(
+      products.map(async (p) => {
+        const d = await getProductDetail(p.id);
+        if (!d) return null;
+        const prices = d.variants.map((v) => parseFloat(v.retail_price)).filter(Boolean);
+        const minPrice = prices.length ? Math.min(...prices) : 0;
+        const maxPrice = prices.length ? Math.max(...prices) : 0;
+        const sizes = [...new Set(d.variants.map((v) => v.name.split(" / ").pop() || ""))].filter(Boolean).slice(0, 6);
+        const colors = [...new Set(d.variants.map((v) => {
+          const parts = v.name.split(" / ");
+          return parts.length > 1 ? parts[1] : null;
+        }))].filter(Boolean).slice(0, 5) as string[];
+        return {
+          id: d.id,
+          name: d.name,
+          thumbnail: d.thumbnail_url,
+          minPrice: minPrice.toFixed(2),
+          maxPrice: maxPrice.toFixed(2),
+          samePrice: minPrice === maxPrice,
+          sizes,
+          colors,
+          variantCount: d.variants.length,
+        };
+      })
+    );
+    return detailed.filter(Boolean) as CatalogProduct[];
+  } catch {
+    return [];
   }
 }
 

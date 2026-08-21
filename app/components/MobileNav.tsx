@@ -3,17 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const NAV_ITEMS = [
-  { label: "Vols Desk", color: "#FF6600", href: "/#vols" },
-  { label: "Vols Roster", color: "#FF6600", href: "/vols/roster" },
-  { label: "Titans Desk", color: "#4B92DB", href: "/#titans" },
-  { label: "Titans Roster", color: "#4B92DB", href: "/titans/roster" },
-  { label: "Bookie's Nook", color: "#1A1208", href: "/#bookies-nook" },
-  { label: "Shop", color: "#FF6600", href: "/merch" },
-  { label: "Archive", color: "#1A1208", href: "/archive" },
-  { label: "Arcade", color: "#FF6600", href: "/arcade" },
-  { label: "Cart", color: "#1A1208", href: "/cart" },
-];
+import { NAV_ITEMS } from "./nav-items";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);

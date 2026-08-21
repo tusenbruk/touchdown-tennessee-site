@@ -2,6 +2,7 @@ import Link from "next/link";
 import Masthead from "@/app/components/Masthead";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
+import { getCatalog } from "@/lib/printful";
 
 export const dynamic = "force-dynamic";
 
@@ -10,72 +11,8 @@ export const metadata = {
   description: "Independent Tennessee football merchandise. Original designs, built for fans — not the bookstore.",
 };
 
-interface SyncVariant {
-  id: number;
-  name: string;
-  retail_price: string;
-}
-
-interface StoreProduct {
-  id: number;
-  name: string;
-  thumbnail_url: string;
-  variants: number;
-  synced: number;
-}
-
-async function getProducts() {
-  try {
-    const res = await fetch("https://api.printful.com/store/products?limit=50", {
-      headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY ?? ""}` },
-      cache: "no-store",
-    });
-    const data = await res.json();
-    const products = data.result || [];
-
-    // Get full details for each product
-    const detailed = await Promise.all(
-      products.map(async (p: StoreProduct) => {
-        const r = await fetch(`https://api.printful.com/store/products/${p.id}`, {
-          headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY ?? ""}` },
-          cache: "no-store",
-        });
-        const d = await r.json();
-        const sp = d.result?.sync_product;
-        const variants: SyncVariant[] = d.result?.sync_variants || [];
-        const prices = variants.map((v) => parseFloat(v.retail_price)).filter(Boolean);
-        const minPrice = prices.length ? Math.min(...prices) : 0;
-        const maxPrice = prices.length ? Math.max(...prices) : 0;
-
-        // Get unique sizes and colors
-        const sizes: string[] = [...new Set(variants.map((v) => v.name.split(" / ").pop() || ""))].filter(Boolean).slice(0, 6);
-        const colors = [...new Set(variants.map((v) => {
-          const parts = v.name.split(" / ");
-          return parts.length > 1 ? parts[1] : null;
-        }))].filter(Boolean).slice(0, 5);
-
-        return {
-          id: sp?.id,
-          name: sp?.name,
-          thumbnail: sp?.thumbnail_url,
-          minPrice: minPrice.toFixed(2),
-          maxPrice: maxPrice.toFixed(2),
-          samePrice: minPrice === maxPrice,
-          sizes,
-          colors,
-          variantCount: variants.length,
-        };
-      })
-    );
-
-    return detailed.filter((p) => p.id);
-  } catch {
-    return [];
-  }
-}
-
 export default async function MerchPage() {
-  const products = await getProducts();
+  const products = await getCatalog();
 
   return (
     <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
@@ -152,6 +89,39 @@ export default async function MerchPage() {
             ))}
           </div>
         )}
+
+        {/* TASTELESS TENNESSEE */}
+        <div id="tasteless" style={{ background: "#1A1208", margin: "0 -40px 48px", padding: "36px 40px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+            <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>Tasteless Tennessee</span>
+            <div style={{ flex: 1, height: 1, background: "#FF6600", opacity: 0.4 }} />
+            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#8a8074" }}>Rival-flavored · Zero class · All original</span>
+          </div>
+          <p style={{ color: "#C9BFAF", fontSize: 14, fontStyle: "italic", maxWidth: 560, lineHeight: 1.6, marginBottom: 24 }}>
+            The line your mother-in-law won&apos;t get for Christmas. Strong opinions about certain reptiles, elephants, and bulldogs — expressed in 100% original artwork, no rival trademarks harmed.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+            {[
+              { name: "Gator Tears Sweet Tea Glass", tag: "For sipping in October" },
+              { name: "Elephant Graveyard Cap", tag: "Third Saturday state of mind" },
+              { name: "Bulldog Obedience School Tee", tag: "Sit. Stay. Lose." },
+            ].map((p, i) => (
+              <div key={i} style={{ border: "2px solid #FF6600", padding: 0 }}>
+                <div style={{ aspectRatio: "1/1" as const, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10, background: "rgba(255,102,0,0.06)" }}>
+                  <span style={{ fontSize: 34 }}>🔥</span>
+                  <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#8a8074", fontWeight: 700 }}>Dropping Soon</span>
+                </div>
+                <div style={{ padding: "12px 14px", borderTop: "1px solid rgba(255,102,0,0.4)" }}>
+                  <div style={{ color: "#fff", fontSize: 15, fontWeight: 700, lineHeight: 1.25, marginBottom: 4 }}>{p.name}</div>
+                  <div style={{ color: "#8a8074", fontSize: 11, fontStyle: "italic" }}>{p.tag}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p style={{ color: "#6a6156", fontSize: 10, marginTop: 18, lineHeight: 1.6 }}>
+            All in good fun. Designs reference rivalry culture generically and use no rival school or team trademarks.
+          </p>
+        </div>
 
         {/* LEGAL */}
         <div style={{ borderTop: "1px solid #D4CEC7", paddingTop: 24, marginBottom: 48 }}>

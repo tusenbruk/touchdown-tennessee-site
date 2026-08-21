@@ -287,6 +287,7 @@
 <div id="gameover" class="overlay hidden">
   <h2 id="gameoverTitle">HUNT OVER</h2>
   <div id="finalScore">0</div>
+  <div id="rewardBox" style="display:none;background:rgba(255,130,0,0.15);border:3px solid #FF8200;border-radius:10px;padding:10px 18px;margin:0 auto 12px;max-width:440px;color:#FFD89E;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;letter-spacing:1px;"></div>
   <pre class="trail-report" id="trailReport"></pre>
   <div class="hof">
     <div class="hof-title">★ HALL OF FAME ★</div>
@@ -2816,6 +2817,30 @@ function endGame() {
 
   const ejected = endReason === 'ejected';
   document.getElementById('gameoverTitle').textContent = ejected ? 'EJECTED!' : 'HUNT OVER';
+
+  // Big hunts earn a single-use shop discount, minted server-side.
+  const rewardBox = document.getElementById('rewardBox');
+  rewardBox.style.display = 'none';
+  if (!ejected && score >= 3000) {
+    rewardBox.style.display = 'block';
+    rewardBox.textContent = 'ALL-SEC SCORE! Claiming your shop reward…';
+    fetch('/api/arcade/code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ score })
+    })
+      .then(r => r.json().then(d => ({ ok: r.ok, d })))
+      .then(({ ok, d }) => {
+        if (ok && d.code) {
+          rewardBox.innerHTML = '🏆 15% OFF THE SHOP — CODE: <span style="color:#FFF;font-size:18px;letter-spacing:3px;">' +
+            escapeHtml(d.code) + '</span><br><span style="font-weight:normal;font-size:11px;">Single use · expires in ' +
+            (d.expiresHours || 48) + ' hours · <a href="/merch" style="color:#FF8200;">redeem at the shop →</a></span>';
+        } else {
+          rewardBox.textContent = (d && d.error) ? d.error : 'Reward unavailable right now — but that score still counts.';
+        }
+      })
+      .catch(() => { rewardBox.textContent = 'Reward unavailable right now — but that score still counts.'; });
+  }
 
   const total = stats.hits + stats.misses + stats.smokey;
   const accuracy = total > 0 ? Math.round((stats.hits / total) * 100) : 0;

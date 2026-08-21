@@ -154,8 +154,53 @@ export default function ProductPage() {
               <div>✓ Ships in 3–5 business days</div>
               <div>✓ Printed on demand</div>
             </div>
-            <p style={{ fontSize: 10, color: "#bbb", marginTop: 20, lineHeight: 1.6 }}>Independent editorial brand. Not affiliated with the University of Tennessee or Tennessee Titans.</p>
+
+            {/* SIZE GUIDE */}
+            {sizes.length > 0 && (
+              <details style={{ borderTop: "1px solid #D4CEC7", marginTop: 16, paddingTop: 16 }}>
+                <summary style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, cursor: "pointer", color: "#1A1208" }}>Size Guide</summary>
+                <div style={{ overflowX: "auto" as const }}>
+                  <table style={{ width: "100%", marginTop: 12, fontSize: 12, color: "#555", borderCollapse: "collapse" as const }}>
+                    <thead>
+                      <tr style={{ borderBottom: "2px solid #1A1208", textAlign: "left" as const }}>
+                        <th style={{ padding: "6px 8px" }}>Size</th><th style={{ padding: "6px 8px" }}>Chest (in)</th><th style={{ padding: "6px 8px" }}>Length (in)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[["S","34–37","28"],["M","38–41","29"],["L","42–45","30"],["XL","46–49","31"],["2XL","50–53","32"],["3XL","54–57","33"]].map((row) => (
+                        <tr key={row[0]} style={{ borderBottom: "1px solid #EEE" }}>
+                          {row.map((cell, i) => <td key={i} style={{ padding: "6px 8px" }}>{cell}</td>)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p style={{ fontSize: 11, color: "#8B7355", marginTop: 8 }}>Typical unisex garment measurements — the exact chart for this item is on its Printful size tab in your confirmation email. Between sizes? Size up.</p>
+              </details>
+            )}
+
+            {/* SHIPPING & RETURNS */}
+            <div style={{ borderTop: "1px solid #D4CEC7", marginTop: 16, paddingTop: 16, fontSize: 12, color: "#555", lineHeight: 1.7 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#1A1208", marginBottom: 6 }}>Shipping &amp; Returns</div>
+              Free US standard shipping on orders over $75, otherwise $5.95 (or $12.95 express). Wrong size or misprint? We reprint or refund — keep the original.
+            </div>
+
+            <p style={{ fontSize: 10, color: "#bbb", marginTop: 20, lineHeight: 1.6 }}>Independent fan publication and brand. Not affiliated with, sponsored by, or endorsed by the University of Tennessee or the NFL.</p>
           </div>
+        </div>
+      </div>
+
+      {/* STICKY MOBILE ADD-TO-CART */}
+      <div className="mobile-sticky-cart">
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.2, maxWidth: 160, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" as const }}>{product.name}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#FF6600" }}>${price.toFixed(2)}</div>
+          </div>
+          <button onClick={handleAddToCart}
+            style={{ flex: 1, maxWidth: 220, padding: "12px 16px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+            {added ? "✓ Added" : "Add to Cart"}
+          </button>
         </div>
       </div>
     </main>
