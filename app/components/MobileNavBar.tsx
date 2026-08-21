@@ -18,7 +18,7 @@ export default function MobileNavBar({
     <>
       <div className="top-bar" style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
         <Link href={backHref} style={{ textDecoration: "none", color: "#8B7355" }}>{backLabel}</Link>
-        <span className="top-bar-center">Rocky Top Collection</span>
+        <span className="top-bar-center">The Frontier Collection</span>
         {rightHref && <Link href={rightHref} className="top-bar-right" style={{ textDecoration: "none", color: "#8B7355" }}>{rightLabel}</Link>}
         <MobileNav />
       </div>

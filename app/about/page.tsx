@@ -48,7 +48,7 @@ export default function AboutPage() {
           <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>Independence</h3>
 
           <p style={{ marginBottom: 20 }}>
-            Touchdown Tennessee is independently owned and operated. We are not a licensed affiliate of the University of Tennessee or the Tennessee Titans. Our merchandise line — the Rocky Top Collection — uses original designs and does not incorporate any officially licensed marks or logos.
+            Touchdown Tennessee is independently owned and operated. We are not a licensed affiliate of the University of Tennessee or the Tennessee Titans. Our merchandise line — the Frontier Collection — uses original designs and does not incorporate any officially licensed marks or logos.
           </p>
 
           <p style={{ marginBottom: 20 }}>

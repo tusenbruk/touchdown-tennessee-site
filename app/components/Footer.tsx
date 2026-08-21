@@ -7,7 +7,7 @@ export default function Footer({ showNewsletter = true }: { showNewsletter?: boo
       {showNewsletter && (
         <div style={{ background: "#1A1208", color: "#fff", padding: "36px 24px", textAlign: "center", position: "relative" as const, overflow: "hidden" }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
-          <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Rocky Top Digest</h3>
+          <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Saturday Digest</h3>
           <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>Game-week analysis, delivered Friday morning. No filler.</p>
           <NewsletterForm />
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
@@ -46,8 +46,8 @@ export default function Footer({ showNewsletter = true }: { showNewsletter?: boo
             <Link href="/merch" style={{ color: "#8B7355", textDecoration: "none" }}>Shop</Link>
             <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" style={{ color: "#8B7355", textDecoration: "none" }}>@TDTennessee</a>
           </div>
-          <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#8B7355", maxWidth: 260 }}>
-            Independent editorial · Not affiliated with UT or NFL
+          <div style={{ fontSize: 10, letterSpacing: "0.08em", color: "#8B7355", maxWidth: 320 }}>
+            Independent fan publication and brand. Not affiliated with, sponsored by, or endorsed by the University of Tennessee or the NFL.
           </div>
         </div>
         <div style={{ textAlign: "center", marginTop: 12, fontSize: 10, color: "#D4CEC7", letterSpacing: "0.08em" }}>

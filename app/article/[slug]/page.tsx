@@ -60,7 +60,7 @@ export default async function ArticlePage({
       {/* TOP BAR */}
       <div style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
         <Link href="/" style={{ textDecoration: "none", color: "#8B7355" }}>← Touchdown Tennessee</Link>
-        <span>Tennessee Football · Vols · Titans · Rocky Top</span>
+        <span>Tennessee Football · Knoxville to Nashville</span>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span>Independent Editorial</span>
           <div style={{ display: "flex", gap: 10 }}>

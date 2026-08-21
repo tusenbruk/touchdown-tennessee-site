@@ -6,8 +6,8 @@ import Image from "next/image";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Rocky Top Collection | Touchdown Tennessee",
-  description: "Independent Tennessee football merchandise. The Rocky Top Collection — built for fans, not the bookstore.",
+  title: "The Frontier Collection | Touchdown Tennessee",
+  description: "Independent Tennessee football merchandise. Original designs, built for fans — not the bookstore.",
 };
 
 interface SyncVariant {
@@ -27,7 +27,7 @@ interface StoreProduct {
 async function getProducts() {
   try {
     const res = await fetch("https://api.printful.com/store/products?limit=50", {
-      headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY || "1MciG1HuVVIByhDrXhETY7rBU2cJmmq5wURAq0uR"}` },
+      headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY ?? ""}` },
       cache: "no-store",
     });
     const data = await res.json();
@@ -37,7 +37,7 @@ async function getProducts() {
     const detailed = await Promise.all(
       products.map(async (p: StoreProduct) => {
         const r = await fetch(`https://api.printful.com/store/products/${p.id}`, {
-          headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY || "1MciG1HuVVIByhDrXhETY7rBU2cJmmq5wURAq0uR"}` },
+          headers: { Authorization: `Bearer ${process.env.PRINTFUL_API_KEY ?? ""}` },
           cache: "no-store",
         });
         const d = await r.json();
@@ -84,7 +84,7 @@ export default async function MerchPage() {
 
       {/* BANNER */}
       <div style={{ width: "100%", maxHeight: 280, overflow: "hidden", borderBottom: "3px solid #FF6600" }}>
-        <Image src="/vols-stadium-charge.png" alt="Rocky Top Collection" width={1800} height={600} style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", objectPosition: "center 40%" }} priority />
+        <Image src="/vols-stadium-charge.png" alt="The Frontier Collection" width={1800} height={600} style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", objectPosition: "center 40%" }} priority />
       </div>
 
       {/* HEADER */}
@@ -93,7 +93,7 @@ export default async function MerchPage() {
           <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Shop</span>
           <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
         </div>
-        <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.1, marginBottom: 8 }}>The Rocky Top Collection</h2>
+        <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.1, marginBottom: 8 }}>The Frontier Collection</h2>
         <p style={{ fontSize: 16, color: "#666", fontStyle: "italic", lineHeight: 1.6, marginBottom: 8, maxWidth: 640 }}>
           Independent editorial gear. No licensed marks. No bookstore markup. Built for fans who actually watch the tape.
         </p>
@@ -162,7 +162,7 @@ export default async function MerchPage() {
 
         <div style={{ borderTop: "2px solid #1A1208", paddingTop: 20, marginBottom: 40, display: "flex", justifyContent: "space-between" }}>
           <Link href="/" style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#8B7355" }}>← Back to Home</Link>
-          <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>The Rocky Top Collection</span>
+          <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>The Frontier Collection</span>
         </div>
       </div>
     </main>

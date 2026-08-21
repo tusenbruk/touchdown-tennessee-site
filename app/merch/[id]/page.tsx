@@ -101,7 +101,7 @@ export default function ProductPage() {
           </div>
 
           <div style={{ paddingTop: 8 }}>
-            <div style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, fontWeight: 700 }}>Rocky Top Collection</div>
+            <div style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, fontWeight: 700 }}>The Frontier Collection</div>
             <h2 style={{ fontSize: 32, fontWeight: 900, lineHeight: 1.1, marginBottom: 16 }}>{product.name}</h2>
             <div style={{ fontSize: 28, fontWeight: 700, color: "#FF6600", marginBottom: 28 }}>${price.toFixed(2)}</div>
 

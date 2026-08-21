@@ -46,7 +46,7 @@ export default function ContactPage() {
           <div style={{ borderTop: "2px solid #1A1208", paddingTop: 20 }}>
             <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8, letterSpacing: "0.04em" }}>Shop & Orders</h3>
             <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, marginBottom: 12 }}>
-              Questions about the Rocky Top Collection, orders, or returns.
+              Questions about the Frontier Collection, orders, or returns.
             </p>
             <a href="mailto:shop@touchdowntennessee.com" style={{ fontSize: 13, color: "#1A1208", textDecoration: "none", fontWeight: 600 }}>
               shop@touchdowntennessee.com

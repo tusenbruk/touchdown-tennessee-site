@@ -28,7 +28,7 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         ) : (
           <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
         )}
-        <span className="top-bar-center">Tennessee Football · Vols · Titans · Rocky Top</span>
+        <span className="top-bar-center">Tennessee Football · Knoxville to Nashville</span>
         <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {rightLink ? (
             <Link href={rightLink.href} style={{ textDecoration: "none", color: "#8B7355" }}>{rightLink.label}</Link>

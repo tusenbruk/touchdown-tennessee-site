@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-const KEY = process.env.PRINTFUL_API_KEY || "1MciG1HuVVIByhDrXhETY7rBU2cJmmq5wURAq0uR";
+const KEY = process.env.PRINTFUL_API_KEY ?? "";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
