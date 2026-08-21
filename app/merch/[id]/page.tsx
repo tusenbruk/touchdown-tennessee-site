@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getProductDetail } from "@/lib/printful";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/seo";
 import ProductClient from "./ProductClient";
 
 export const dynamic = "force-dynamic";
@@ -16,8 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const minPrice = prices.length ? Math.min(...prices) : undefined;
   const description = `${product.name} — original Touchdown Tennessee design${minPrice ? `, from $${minPrice.toFixed(2)}` : ""}. Independent Tennessee football merchandise.`;
   return {
-    title: `${product.name} | Touchdown Tennessee`,
+    title: product.name,
     description,
+    alternates: { canonical: `/merch/${product.id}` },
     openGraph: {
       title: product.name,
       description,
@@ -32,6 +35,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const product = await getProductDetail(id);
+  // Real 404 for a product Printful doesn't know — but only when we can
+  // actually ask Printful; without an API key everything would wrongly 404.
+  if (!product && process.env.PRINTFUL_API_KEY) notFound();
 
   const prices = product?.variants.map((v) => parseFloat(v.retail_price)).filter(Boolean) ?? [];
   const minPrice = prices.length ? Math.min(...prices) : 0;
@@ -56,7 +62,19 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   return (
     <>
       {jsonLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLdString(
+              jsonLd,
+              breadcrumbJsonLd([
+                { name: "Home", path: "/" },
+                { name: "Shop", path: "/merch" },
+                { name: product!.name, path: `/merch/${product!.id}` },
+              ])
+            ),
+          }}
+        />
       )}
       <ProductClient />
     </>

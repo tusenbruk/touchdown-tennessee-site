@@ -2,8 +2,9 @@ import Masthead from "@/app/components/Masthead";
 import Link from "next/link";
 
 export const metadata = {
-  title: "About | Touchdown Tennessee",
-  description: "Touchdown Tennessee is an independent editorial sports media brand covering the University of Tennessee Volunteers and the Tennessee Titans.",
+  title: "About",
+  description: "Touchdown Tennessee is an independent fan brand making original Tennessee football designs — apparel, prints, and gifts, plus free daily games.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -21,50 +22,41 @@ export default function AboutPage() {
 
         <div style={{ fontSize: 17, lineHeight: 1.75, color: "#1A1208" }}>
           <p style={{ marginBottom: 20 }}>
-            Touchdown Tennessee is an independent editorial sports media brand covering the University of Tennessee Volunteers and the Tennessee Titans. We are not affiliated with, endorsed by, or connected to the University of Tennessee, the NFL, or the Tennessee Titans organization.
+            Touchdown Tennessee is an independent fan brand making original Tennessee football designs — apparel, prints, stickers, and gifts. We are not affiliated with, sponsored by, or endorsed by the University of Tennessee, the NFL, or the Tennessee Titans organization.
           </p>
 
           <p style={{ marginBottom: 20 }}>
-            Tennessee has two serious football programs and one of the most passionate fan bases in American sport. We believe it deserves independent, editorially sharp coverage that isn't filtered through official channels or beholden to access journalism.
+            Tennessee has one of the most passionate football cultures in America, and most of what you can buy to show it comes off the same licensed rack. We make the other thing: artwork with a point of view, drawn from the state itself — the mountains, the river, the frontier heritage, Saturday in Knoxville and Sunday in Nashville.
           </p>
 
-          <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>Our Coverage</h3>
+          <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>How the Shop Works</h3>
 
           <p style={{ marginBottom: 20 }}>
-            Touchdown Tennessee covers both programs under one roof — the Vols Desk for University of Tennessee football, and the Titans Desk for NFL coverage. Our editorial voice is direct, analytically grounded, and written for fans who actually watch the tape.
+            Every design is our own original artwork — no licensed logos, no trademarks, no jersey imitations. Products are printed on demand and typically ship within 3–5 business days of ordering. Wrong size or misprint? We reprint or refund, and you keep the original. Read more about <Link href="/guides/independent-tennessee-football-apparel" style={{ color: "#FF6600", textDecoration: "underline" }}>what independent means</Link>.
           </p>
+
+          <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>The Game Room</h3>
 
           <p style={{ marginBottom: 20 }}>
-            Content is published daily and covers game previews and recaps, recruiting analysis, film room breakdowns, roster moves, historical features, and the Bookie's Nook odds section.
+            The site also hosts free games — <Link href="/games/tennessee-football-trivia" style={{ color: "#FF6600", textDecoration: "underline" }}>daily Tennessee football trivia</Link>, the <Link href="/games/saturday-score" style={{ color: "#FF6600", textDecoration: "underline" }}>Saturday Score</Link> puzzle, and two arcade games. No login, no charge; progress lives on your device. Big arcade scores earn single-use shop discounts.
           </p>
-
-          <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>Our Writers</h3>
-
-          <p style={{ marginBottom: 12 }}><strong>Huck Denton</strong> — Vols Desk. Maryville native, 40 years watching Tennessee football. Deadpan and specific.</p>
-          <p style={{ marginBottom: 12 }}><strong>Cal Merritt</strong> — Film Room. Former walk-on. Watches more tape than anyone in the press box.</p>
-          <p style={{ marginBottom: 12 }}><strong>Ned Bowman</strong> — SEC Analysis. Veteran media voice. Will ask the question nobody else will.</p>
-          <p style={{ marginBottom: 20 }}><strong>Ray Pickard</strong> — Titans Desk. Has covered Nashville football since the franchise arrived. Gruff, honest, loyal to the fanbase.</p>
 
           <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>Independence</h3>
 
           <p style={{ marginBottom: 20 }}>
-            Touchdown Tennessee is independently owned and operated. We are not a licensed affiliate of the University of Tennessee or the Tennessee Titans. Our merchandise line — the Frontier Collection — uses original designs and does not incorporate any officially licensed marks or logos.
-          </p>
-
-          <p style={{ marginBottom: 20 }}>
-            Our site is supported by display advertising and affiliate partnerships. The Bookie's Nook section contains affiliate links to licensed sports betting operators. We earn a commission when readers sign up through our links. Gambling content is intended for adults 21+ in jurisdictions where sports betting is legal.
+            Touchdown Tennessee is independently owned and operated. Our collections — starting with the Frontier Collection — use original designs and do not incorporate any officially licensed marks or logos. If you want official gear, the university bookstore is the right place; if you want something nobody else in your section is wearing, that&apos;s us.
           </p>
 
           <h3 style={{ fontSize: 22, fontWeight: 700, margin: "32px 0 12px" }}>Contact</h3>
 
           <p style={{ marginBottom: 20 }}>
-            For editorial inquiries, advertising, or general questions, visit our <Link href="/contact" style={{ color: "#FF6600", textDecoration: "underline" }}>Contact page</Link>.
+            For order questions, wholesale, or anything else, visit our <Link href="/contact" style={{ color: "#FF6600", textDecoration: "underline" }}>Contact page</Link>.
           </p>
         </div>
 
         <div style={{ borderTop: "2px solid #1A1208", paddingTop: 20, marginTop: 48, display: "flex", justifyContent: "space-between" }}>
           <Link href="/" style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase" as const, textDecoration: "none", color: "#8B7355" }}>← Back to Home</Link>
-          <span style={{ fontSize: 11, color: "#8B7355", letterSpacing: "0.08em" }}>Touchdown Tennessee · Independent Editorial</span>
+          <span style={{ fontSize: 11, color: "#8B7355", letterSpacing: "0.08em" }}>Touchdown Tennessee · Original Goods</span>
         </div>
       </div>
     </main>

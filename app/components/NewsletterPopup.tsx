@@ -50,9 +50,9 @@ export default function NewsletterPopup() {
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", textTransform: "uppercase", color: "#FF6600", marginBottom: 10 }}>
           10% off your first order
         </div>
-        <h3 style={{ fontSize: 24, margin: "0 0 8px", letterSpacing: "0.04em" }}>Join the Saturday Digest</h3>
+        <h3 style={{ fontSize: 24, margin: "0 0 8px", letterSpacing: "0.04em" }}>Join the Drop List</h3>
         <p style={{ fontSize: 13, fontStyle: "italic", color: "#aaa", lineHeight: 1.6, margin: "0 0 18px" }}>
-          Game-week analysis every Friday — and code <span style={{ color: "#FF6600", fontWeight: 700, fontStyle: "normal", letterSpacing: "0.08em" }}>WELCOME10</span> for 10% off the shop.
+          First look at every Thursday drop — and code <span style={{ color: "#FF6600", fontWeight: 700, fontStyle: "normal", letterSpacing: "0.08em" }}>WELCOME10</span> for 10% off the shop.
         </p>
         <NewsletterForm />
       </div>

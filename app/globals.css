@@ -169,6 +169,9 @@
   .hero-grid {
     grid-template-columns: 1fr !important;
   }
+  .games-grid {
+    grid-template-columns: 1fr !important;
+  }
   .hero-sidebar { display: none !important; }
 
   .article-grid {

@@ -29,7 +29,7 @@ export default function NewsletterForm() {
   if (status === "success") {
     return (
       <p style={{ textAlign: "center", color: "#FF6600", fontSize: 15, fontStyle: "italic" }}>
-        You&apos;re in. Friday morning, the Saturday Digest lands in your inbox.
+        You&apos;re in. First look at every drop, straight to your inbox.
       </p>
     );
   }

@@ -25,7 +25,7 @@ export async function POST(request: Request) {
           send_welcome_email: true,
           utm_source: "touchdowntennessee.com",
           utm_medium: "organic",
-          utm_campaign: "saturday-digest",
+          utm_campaign: "drop-list",
         }),
       }
     );

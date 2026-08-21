@@ -4,6 +4,11 @@ import SuccessClient from "./SuccessClient";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Order Confirmed",
+  robots: { index: false, follow: false },
+};
+
 interface SummaryLine {
   name: string;
   quantity: number;

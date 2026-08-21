@@ -1,11 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Article markdown is read from the filesystem at runtime; make sure the
-  // content directory is traced into the serverless output for every route.
-  outputFileTracingIncludes: {
-    "/*": ["./content/articles/**/*"],
-  },
   images: {
     remotePatterns: [
       {
@@ -13,7 +8,21 @@ const nextConfig: NextConfig = {
         hostname: "upload.wikimedia.org",
         pathname: "/wikipedia/**",
       },
+      {
+        protocol: "https",
+        hostname: "files.cdn.printful.com",
+      },
     ],
+  },
+  async redirects() {
+    // The editorial era: old news URLs go home permanently.
+    return [
+      { source: "/archive", destination: "/", permanent: true },
+      { source: "/article/:slug*", destination: "/", permanent: true },
+      { source: "/vols/:path*", destination: "/", permanent: true },
+      { source: "/titans/:path*", destination: "/", permanent: true },
+      { source: "/feed.xml", destination: "/", permanent: true },
+    ];
   },
   async rewrites() {
     return [

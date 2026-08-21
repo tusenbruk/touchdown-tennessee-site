@@ -28,12 +28,15 @@ const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  // Load from sessionStorage on mount
+  // Load from sessionStorage on mount (deferred past hydration)
   useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem("tdt-cart");
-      if (saved) setItems(JSON.parse(saved));
-    } catch {}
+    const t = setTimeout(() => {
+      try {
+        const saved = sessionStorage.getItem("tdt-cart");
+        if (saved) setItems(JSON.parse(saved));
+      } catch {}
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   // Save to sessionStorage on change

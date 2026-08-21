@@ -3,18 +3,32 @@ import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "./components/CartContext";
 import AnalyticsScripts from "./components/AnalyticsScripts";
 import NewsletterPopup from "./components/NewsletterPopup";
+import { jsonLdString, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.touchdowntennessee.com").replace(/\/$/, "");
+
 export const metadata: Metadata = {
-  title: "Touchdown Tennessee — Independent Tennessee Football Editorial",
-  description: "Independent editorial coverage of the Tennessee Volunteers and Tennessee Titans.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Touchdown Tennessee — Original Tennessee Football Goods",
+    template: "%s | Touchdown Tennessee",
+  },
+  description: "Original, independent Tennessee football designs — apparel, prints, and gifts. Plus daily trivia and arcade games. Knoxville to Nashville.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Touchdown Tennessee",
-    description: "Independent editorial coverage of the Tennessee Volunteers and Tennessee Titans.",
-    url: "https://touchdowntennessee.com",
+    description: "Original, independent Tennessee football designs — apparel, prints, and gifts.",
+    url: SITE_URL,
     siteName: "Touchdown Tennessee",
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@TDTennessee",
   },
   icons: {
     icon: "/tdt-favicon.png",
@@ -33,6 +47,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body style={{ margin: 0, padding: 0 }}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString(organizationJsonLd(), websiteJsonLd()) }}
+        />
         <CartProvider>{children}</CartProvider>
         <NewsletterPopup />
         <AnalyticsScripts />

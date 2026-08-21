@@ -19,12 +19,12 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         ) : (
           <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
         )}
-        <span className="top-bar-center">Tennessee Football · Knoxville to Nashville</span>
+        <span className="top-bar-center">Original Tennessee Football Goods · Knoxville to Nashville</span>
         <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {rightLink ? (
             <Link href={rightLink.href} style={{ textDecoration: "none", color: "#8B7355" }}>{rightLink.label}</Link>
           ) : (
-            <span style={{ fontSize: 11, letterSpacing: "0.12em" }}>Independent Editorial</span>
+            <span style={{ fontSize: 11, letterSpacing: "0.12em" }}>Independent &amp; Unlicensed on Purpose</span>
           )}
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
             <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ color: "#8B7355", display: "flex" }} aria-label="X / Twitter">
@@ -48,7 +48,7 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         <Link href="/" style={{ textDecoration: "none" }}>
           <h1 className="masthead-title" style={{ fontSize: 48, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
         </Link>
-        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
+        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Original Tennessee Football Goods</div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
           <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
           <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 36, width: "auto", display: "block" }} />

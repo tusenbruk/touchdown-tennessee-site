@@ -40,6 +40,20 @@ export function trackBeginCheckout(items: EcommerceItem[], value: number) {
   fbq()?.("track", "InitiateCheckout", { value, currency: "USD", num_items: items.length });
 }
 
+// Game events — names only, never answers or identity.
+export function trackGameStart(game: string, mode: string) {
+  gtag()?.("event", "game_start", { game, mode });
+}
+export function trackGameComplete(game: string, mode: string, score: number, maxScore: number) {
+  gtag()?.("event", "game_complete", { game, mode, score, max_score: maxScore });
+}
+export function trackGameShare(game: string) {
+  gtag()?.("event", "game_share", { game });
+}
+export function trackGameProductClick(game: string, target: string) {
+  gtag()?.("event", "game_product_click", { game, target });
+}
+
 // Purchase is deduped by transaction (session) id so a success-page refresh
 // doesn't double-count.
 export function trackPurchase(transactionId: string, value: number, items: EcommerceItem[]) {

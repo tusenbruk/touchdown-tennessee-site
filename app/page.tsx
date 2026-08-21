@@ -1,101 +1,60 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getAllArticles, Article } from "@/lib/articles";
-import { getLatestScores, getOddsBoard } from "@/lib/espn";
 import NewsletterForm from "./components/NewsletterForm";
 import MobileNav from "./components/MobileNav";
 import { NAV_ITEMS } from "./components/nav-items";
-import { getCatalog } from "@/lib/printful";
+import { getCatalog, CatalogProduct } from "@/lib/printful";
 
 export const dynamic = "force-dynamic";
 
-const VOLS_CARD_IMAGES = [
-  "/vols-runningback-2.png",
-  "/vols-stadium-charge.png",
-  "/volwalk-banner.png",
+// Planned collection lines (per the design program). A line goes live by
+// pointing its href at real products; until then it reads "dropping soon"
+// honestly — no fake scarcity.
+const COLLECTIONS = [
+  { name: "The Frontier Collection", desc: "Longhunters, powder horns, and the state that started as the frontier.", href: "/merch", live: true, color: "#FF6600", image: "/vols-rifleman-1794.png" },
+  { name: "Smokies Line", desc: "Mountains at dusk, poster-style. Wall prints and heavyweight tees.", href: null, live: false, color: "#8B7355", image: "/campus-divider.png" },
+  { name: "Knoxville City Line", desc: "The river, the skyline, Saturday at 7pm.", href: null, live: false, color: "#4B92DB", image: "/volwalk-banner.png" },
+  { name: "Tasteless Tennessee", desc: "Rival-flavored. Zero class. All original.", href: "/merch#tasteless", live: true, color: "#1A1208", image: "/bookies-nook-art.png" },
 ];
 
-const TITANS_CARD_IMAGES = [
-  "/titans-stadium-charge.png",
-  "/titans-hero.png",
-  "/titans-stadium-charge.png",
-];
+const PLACEHOLDERS = ["The Frontier Tee", "Blount College 1794 Crest", "Smokies Poster Print", "Powder Horn Mug", "State Rope Cap", "Frontier Kit Sticker Sheet"];
+
+function ProductCard({ p }: { p: CatalogProduct }) {
+  return (
+    <Link href={`/merch/${p.id}`} className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+      <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
+        <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", overflow: "hidden", aspectRatio: "1/1" as const, marginBottom: 12 }}>
+          <img src={p.thumbnail} alt={p.name} className="card-image" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{p.name}</h3>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>{p.samePrice ? `$${p.minPrice}` : `from $${p.minPrice}`}</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function PlaceholderCard({ name }: { name: string }) {
+  return (
+    <Link href="/merch" className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+      <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
+        <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", aspectRatio: "1/1" as const, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10 }}>
+          <img src="/tdt-logo.png" alt="" style={{ width: "55%", height: "auto", opacity: 0.25 }} />
+          <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C0B9AF", fontWeight: 700 }}>Dropping Soon</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{name}</h3>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>$—</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 export default async function Home() {
-  const [allArticles, latestScores, oddsBoard, catalog] = await Promise.all([
-    getAllArticles(),
-    getLatestScores(),
-    getOddsBoard(),
-    getCatalog(),
-  ]);
-  const shopProducts = catalog.slice(0, 6);
-  const volsArticles = allArticles.filter((a) => a.desk === "vols").slice(0, 3);
-  const titansArticles = allArticles.filter((a) => a.desk === "titans").slice(0, 3);
-  const heroArticle = allArticles[0];
-  // Hot takes: latest 3 articles (any desk) excluding hero
-  const hotTakeArticles = allArticles.filter((a) => a.slug !== heroArticle?.slug).slice(0, 3);
-
-  const volsFallback = [
-    { slug: "#", badge: "Film Room", title: "The Route Combination Killing SEC Defenses", deck: "Tennessee's crossing concept is open every week.", date: "Sept 6", author: "Cal Merritt", image: VOLS_CARD_IMAGES[0] },
-    { slug: "#", badge: "Recruiting", title: "Four-Star WR Commits — What It Means for 2027", deck: "The Vols landed their second top-50 receiver in the class.", date: "Sept 5", author: "Huck Denton", image: VOLS_CARD_IMAGES[1] },
-    { slug: "#", badge: "Analysis", title: "Spring Practice Winners and One Lingering Question", deck: "Three players who helped themselves.", date: "Sept 4", author: "Ned Bowman", image: VOLS_CARD_IMAGES[2] },
-  ];
-  const titansFallback = [
-    { slug: "#", badge: "Gamebook", title: "Containing the Edge Where Everyone Can Rush", deck: "The Titans' defensive scheme is built for one thing.", date: "Sept 6", author: "Ray Pickard", image: TITANS_CARD_IMAGES[0] },
-    { slug: "#", badge: "Draft", title: "Draft Capital and What Nashville Does With It", deck: "Three picks in the top 60.", date: "Sept 5", author: "Ray Pickard", image: TITANS_CARD_IMAGES[1] },
-    { slug: "#", badge: "Camp", title: "OTA Observations: The Quarterback Situation, Plainly Stated", deck: "No spin. Here is what the depth chart looks like.", date: "Sept 4", author: "Cal Merritt", image: TITANS_CARD_IMAGES[2] },
-  ];
-
-  const displayVols = volsArticles.length > 0 ? volsArticles.map((a, i) => ({
-    slug: `/article/${a.slug}`,
-    badge: a.tags[0] || "Analysis",
-    title: a.title,
-    deck: a.deck,
-    date: new Date(a.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-    author: a.author,
-    image: VOLS_CARD_IMAGES[i % VOLS_CARD_IMAGES.length],
-  })) : volsFallback;
-
-  const displayTitans = titansArticles.length > 0 ? titansArticles.map((a, i) => ({
-    slug: `/article/${a.slug}`,
-    badge: a.tags[0] || "Analysis",
-    title: a.title,
-    deck: a.deck,
-    date: new Date(a.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-    author: a.author,
-    image: TITANS_CARD_IMAGES[i % TITANS_CARD_IMAGES.length],
-  })) : titansFallback;
-
-  const displayHotTakes = hotTakeArticles.length > 0 ? hotTakeArticles.map((a, i) => ({
-    slug: `/article/${a.slug}`,
-    title: a.title,
-    deck: a.deck,
-    author: a.author,
-    desk: a.desk,
-    image: a.desk === "titans" ? TITANS_CARD_IMAGES[i % TITANS_CARD_IMAGES.length] : VOLS_CARD_IMAGES[i % VOLS_CARD_IMAGES.length],
-  })) : [
-    { slug: "#", title: "MacIntyre vs. Brandon: Tennessee Still Has No Starter Named", deck: "Heupel has a Week 1 game in three weeks and no one under center. That is a real problem.", author: "Cal Merritt", desk: "vols" as const, image: VOLS_CARD_IMAGES[0] },
-    { slug: "#", title: "The Titans Don't Need to Win the AFC South to Matter This Year", deck: "A seven-win season with the right games teaches you more than it costs.", author: "Ray Pickard", desk: "titans" as const, image: TITANS_CARD_IMAGES[0] },
-    { slug: "#", title: "Cam Ward's Preseason Debut Was Ugly. That Is Not the Whole Story.", deck: "5 of 12 against backup defenders. The Daboll system takes time. Here is why that matters.", author: "Ned Bowman", desk: "titans" as const, image: VOLS_CARD_IMAGES[1] },
-  ];
-
-  const Badge = ({ label, color }: { label: string; color: string }) => (
-    <span style={{ border: `1.5px solid ${color}`, color, fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>{label}</span>
-  );
-
-  const BrassRule = () => (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <div style={{ flex: 1, borderTop: "1px dashed #8B7355", opacity: 0.5 }} />
-      <div style={{ width: 4, height: 4, background: "#8B7355", borderRadius: "50%", opacity: 0.5 }} />
-      <div style={{ flex: 1, borderTop: "1px dashed #8B7355", opacity: 0.5 }} />
-    </div>
-  );
-
-  const AdSlot = ({ label }: { label: string }) => (
-    <div style={{ background: "#FAFAF8", border: "1px dashed #D4CEC7", display: "flex", alignItems: "center", justifyContent: "center", padding: "16px", margin: "24px 0" }}>
-      <span style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#C0B9AF" }}>Advertisement · {label}</span>
-    </div>
-  );
+  const catalog = await getCatalog();
+  const featured = catalog.slice(0, 6);
 
   return (
     <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
@@ -103,9 +62,9 @@ export default async function Home() {
       {/* TOP BAR */}
       <div className="top-bar" style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
         <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
-        <span className="top-bar-center">Tennessee Football · Knoxville to Nashville</span>
+        <span className="top-bar-center">Original Tennessee Football Goods · Knoxville to Nashville</span>
         <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <span style={{ fontSize: 11, letterSpacing: "0.12em" }}>Independent Editorial</span>
+          <span style={{ fontSize: 11, letterSpacing: "0.12em" }}>Independent &amp; Unlicensed on Purpose</span>
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
             <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ color: "#8B7355", display: "flex" }} aria-label="X / Twitter">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
@@ -136,7 +95,7 @@ export default async function Home() {
           <h1 className="masthead-brand-title">Touchdown Tennessee</h1>
           <div className="masthead-desk">
             <span aria-hidden="true" />
-            <p>Tennessee Football Desk</p>
+            <p>Original Tennessee Football Goods</p>
             <span aria-hidden="true" />
           </div>
         </div>
@@ -144,7 +103,7 @@ export default async function Home() {
         <div className="masthead-rule masthead-rule-heavy" />
       </div>
 
-      {/* NAV — rendered from the shared nav module */}
+      {/* NAV */}
       <nav className="desktop-nav" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7", overflowX: "auto" as const }}>
         {NAV_ITEMS.map((item, i) => (
           <a key={i} href={item.href} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color: item.color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined, whiteSpace: "nowrap" as const }}>{item.label}</a>
@@ -158,304 +117,92 @@ export default async function Home() {
 
       <div className="main-container" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
 
-        {/* THE SHOP */}
-        <div style={{ margin: "32px 0 8px" }}>
+        {/* FEATURED PRODUCTS */}
+        <div style={{ margin: "36px 0 8px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
             <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Shop</span>
             <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
             <Link href="/merch" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase" as const, textDecoration: "none", color: "#1A1208", fontWeight: 700 }}>Shop All →</Link>
           </div>
-          {shopProducts.length > 0 ? (
-            <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
-              {shopProducts.map((p) => (
-                <Link key={p.id} href={`/merch/${p.id}`} className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-                  <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
-                    <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", overflow: "hidden", aspectRatio: "1/1" as const, marginBottom: 12 }}>
-                      <img src={p.thumbnail} alt={p.name} className="card-image" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{p.name}</h3>
-                      <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>{p.samePrice ? `$${p.minPrice}` : `from $${p.minPrice}`}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
-              {["The Frontier Tee", "Blount College 1794 Crest", "Smokies Poster Print"].map((name, i) => (
-                <Link key={i} href="/merch" className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-                  <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
-                    <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", aspectRatio: "1/1" as const, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10 }}>
-                      <img src="/tdt-logo.png" alt="" style={{ width: "55%", height: "auto", opacity: 0.25 }} />
-                      <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C0B9AF", fontWeight: 700 }}>Dropping Soon</span>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{name}</h3>
-                      <span style={{ fontSize: 14, fontWeight: 700, color: "#FF6600", whiteSpace: "nowrap" }}>$—</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-        <div style={{ margin: "16px 0 0" }}><BrassRule /></div>
-
-        <AdSlot label="728×90 Leaderboard" />
-
-        {/* HERO */}
-        <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", borderBottom: "1px solid #D4CEC7", paddingBottom: 32 }}>
-          <div style={{ paddingRight: 32, borderRight: "1px solid #D4CEC7" }}>
-            <div style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 }}>
-              <Badge label="Vols Desk" color="#FF6600" /><span>Latest</span>
-              <div style={{ flex: 1, height: 1, background: "#FF6600", opacity: 0.3 }} />
-            </div>
-            <div style={{ position: "relative", width: "100%", marginBottom: 20, borderBottom: "3px solid #FF6600", overflow: "hidden" }}>
-              <Image src="/playcall.png" alt="The Callman at Neyland" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} priority />
-            </div>
-            {heroArticle ? (
-              <Link href={`/article/${heroArticle.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-                <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 14 }}>{heroArticle.title}</h2>
-                <p style={{ fontSize: 16, color: "#555", lineHeight: 1.55, fontStyle: "italic", marginBottom: 16 }}>{heroArticle.deck}</p>
-              </Link>
-            ) : (
-              <>
-                <h2 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.07, color: "#1A1208", marginBottom: 14 }}>Patience in the Trenches: How Tennessee Wins the Line</h2>
-                <p style={{ fontSize: 16, color: "#555", lineHeight: 1.55, fontStyle: "italic", marginBottom: 16 }}>The Volunteers&apos; offensive line is the story no one is telling.</p>
-              </>
-            )}
-            <BrassRule />
-            <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355", marginTop: 10 }}>
-              By {heroArticle?.author || "Staff Writer"} · {heroArticle ? new Date(heroArticle.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "Sept 6, 2026"}
-            </div>
-          </div>
-
-          {/* SIDEBAR: Scores + Social CTA */}
-          <div className="hero-sidebar" style={{ paddingLeft: 28 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" as const, borderBottom: "2px solid #1A1208", paddingBottom: 5, marginBottom: 12 }}>Latest Scores</div>
-            {latestScores.map((s,i)=>(
-              <div key={i} style={{ borderBottom: "1px solid #D4CEC7", paddingBottom: 10, marginBottom: 10 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <Badge label={s.badge} color={s.color} />
-                  <span style={{ fontWeight: 700, fontSize: s.status === "Upcoming" ? 15 : 20 }}>{s.score}</span>
-                </div>
-                <div style={{ fontSize: 12, color: "#666", marginTop: 3 }}>{s.game}</div>
-                <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: s.live ? "#C00" : "#8B7355", fontWeight: s.live ? 700 : 400 }}>{s.live ? "● Live" : s.status}</div>
-              </div>
-            ))}
-
-            {/* Social CTA in sidebar */}
-            <div style={{ background: "#1A1208", padding: "16px", marginTop: 16, marginBottom: 12 }}>
-              <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 10 }}>Follow TDT</div>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
-                <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
-                  @TDTennessee on X
-                </a>
-                <a href="https://instagram.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                  Instagram
-                </a>
-              </div>
-            </div>
-
-            <div style={{ background: "#FAFAF8", border: "1px dashed #D4CEC7", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px 0", marginTop: 0 }}>
-              <span style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#C0B9AF" }}>Ad · 300×250</span>
-            </div>
+          <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
+            {featured.length > 0
+              ? featured.map((p) => <ProductCard key={p.id} p={p} />)
+              : PLACEHOLDERS.slice(0, 6).map((name) => <PlaceholderCard key={name} name={name} />)}
           </div>
         </div>
 
-        {/* VOLS DESK */}
-        <div id="vols" style={{ display: "flex", alignItems: "center", gap: 12, margin: "36px 0 18px" }}>
-          <Badge label="Vols Desk" color="#FF6600" />
-          <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
-          <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>University of Tennessee Volunteers</span>
-          <img src="/vols-rifleman-1794.png" alt="Vol" style={{ height: 80, width: "auto", display: "block", marginRight: -8 }} />
-        </div>
-        <div style={{ width: "100%", marginBottom: 24 }}>
-          <Image src="/family.png" alt="Vols fans" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
-
-        {/* VOLS ARTICLE CARDS WITH IMAGE THUMBNAILS */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 8 }}>
-          {displayVols.map((a, i) => (
-            <Link key={i} href={a.slug} style={{ textDecoration: "none", color: "inherit" }} className="article-card">
-              <div>
-                <div style={{ overflow: "hidden", marginBottom: 0, aspectRatio: "16/9" as const }}>
-                  <img
-                    src={a.image}
-                    alt={a.title}
-                    className="card-image"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
-                <div style={{ borderTop: "3px solid #FF6600", paddingTop: 14 }}>
-                  <div style={{ marginBottom: 8 }}>
-                    <Badge label={a.badge} color="#FF6600" />
-                  </div>
-                  <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8, transition: "color 0.2s" }}>{a.title}</h3>
-                  <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
-                  <div style={{ fontSize: 11, color: "#8B7355" }}>{a.date} · By {a.author}</div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div style={{ margin: "24px 0" }}><BrassRule /></div>
-      </div>
-
-      {/* CAMPUS DIVIDER — Neyland Stadium aerial, Neomrbungle / CC BY-SA 3.0 */}
-      <div style={{ width: "100%", borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", overflow: "hidden", maxHeight: 240, position: "relative" }}>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Neyland_and_downtown_aerial.JPG" alt="Neyland Stadium aerial view" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", maxHeight: 240 }} />
-        <div style={{ position: "absolute", bottom: 4, right: 8, fontSize: 9, color: "rgba(255,255,255,0.6)", letterSpacing: "0.04em" }}>Photo: Neomrbungle / CC BY-SA 3.0</div>
-      </div>
-
-      <div id="titans" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
-        <AdSlot label="728×90 Mid-Page" />
-
-        {/* TITANS DESK */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "8px 0 18px" }}>
-          <Badge label="Titans Desk" color="#4B92DB" />
-          <div style={{ flex: 1, height: 1, background: "#4B92DB" }} />
-          <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee Titans · NFL</span>
-        </div>
-        {/* Nissan Stadium (now Geodis Park era), public domain / CC0 */}
-        <div style={{ width: "100%", marginBottom: 24, borderBottom: "3px solid #4B92DB", position: "relative" }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/LP_Field_2009_crop.jpg" alt="Nissan Stadium, home of the Tennessee Titans" style={{ width: "100%", height: "auto", display: "block", maxHeight: 320, objectFit: "cover" }} />
-          <div style={{ position: "absolute", bottom: 4, right: 8, fontSize: 9, color: "rgba(255,255,255,0.6)", letterSpacing: "0.04em" }}>Public domain</div>
-        </div>
-
-        {/* TITANS ARTICLE CARDS WITH IMAGE THUMBNAILS */}
-        <div className="titans-desk" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 40 }}>
-          {displayTitans.map((a, i) => (
-            <Link key={i} href={a.slug} style={{ textDecoration: "none", color: "inherit" }} className="article-card">
-              <div>
-                <div style={{ overflow: "hidden", marginBottom: 0, aspectRatio: "16/9" as const }}>
-                  <img
-                    src={a.image}
-                    alt={a.title}
-                    className="card-image"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
-                <div style={{ borderTop: "3px solid #4B92DB", paddingTop: 14 }}>
-                  <div style={{ marginBottom: 8 }}>
-                    <Badge label={a.badge} color="#4B92DB" />
-                  </div>
-                  <h3 style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.22, marginBottom: 8, transition: "color 0.2s" }}>{a.title}</h3>
-                  <p style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 10 }}>{a.deck}</p>
-                  <div style={{ fontSize: 11, color: "#8B7355" }}>{a.date} · By {a.author}</div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* HOT TAKES SECTION */}
-        <div style={{ background: "#1A1208", margin: "0 -40px 48px", padding: "36px 40px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-            <span style={{ fontSize: 22, lineHeight: 1 }}>🔥</span>
-            <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>Fire Takes</span>
-            <div style={{ flex: 1, height: 1, background: "#FF6600", opacity: 0.4 }} />
-            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#666" }}>Strong opinions. Strongly held.</span>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
-            {displayHotTakes.map((a, i) => (
-              <Link key={i} href={a.slug} style={{ textDecoration: "none", color: "inherit" }} className="hot-take-card">
-                <div style={{ border: `2px solid ${a.desk === "titans" ? "#4B92DB" : "#FF6600"}`, overflow: "hidden" }}>
-                  <div style={{ position: "relative", aspectRatio: "16/9" as const, overflow: "hidden" }}>
-                    <img
-                      src={a.image}
-                      alt={a.title}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.55)" }}
-                    />
-                    <div style={{ position: "absolute", top: 8, left: 8 }}>
-                      <span style={{ background: a.desk === "titans" ? "#4B92DB" : "#FF6600", color: "#fff", fontSize: 8, fontWeight: 900, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>
-                        {a.desk === "titans" ? "Titans" : "Vols"}
-                      </span>
-                    </div>
-                  </div>
-                  <div style={{ padding: "16px" }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 900, lineHeight: 1.25, color: "#fff", marginBottom: 8 }}>{a.title}</h3>
-                    <p style={{ fontSize: 12, color: "#999", lineHeight: 1.5, marginBottom: 10, fontStyle: "italic" }}>{a.deck}</p>
-                    <div style={{ fontSize: 10, color: "#666", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>
-                      By {a.author} · <span style={{ color: a.desk === "titans" ? "#4B92DB" : "#FF6600" }}>Read →</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* BOOKIE'S NOOK */}
-        <div id="bookies-nook" style={{ marginBottom: 48 }}>
-          <div style={{ width: "100%", marginBottom: 0, borderTop: "2px solid #1A1208", overflow: "hidden" }}>
-            <Image src="/bookies-nook-art.png" alt="Bookie's Nook" width={1400} height={788} style={{ width: "100%", height: "auto", display: "block", maxHeight: 320, objectFit: "cover", objectPosition: "top" }} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 18px" }}>
-            <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Bookie&apos;s Nook</span>
+        {/* COLLECTIONS */}
+        <div style={{ margin: "40px 0 0" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+            <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Lines</span>
             <div style={{ flex: 1, height: 1, background: "#1A1208" }} />
-            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>{oddsBoard.live ? "Live lines via ESPN · refreshed every 5 min" : "Last verified lines · live feed reconnecting"} · Bet responsibly</span>
           </div>
-          <div style={{ border: "1px solid #D4CEC7", overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1.2fr 0.8fr 1.2fr", background: "#1A1208", color: "#fff", padding: "10px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase" as const, gap: 12 }}>
-              <span>Matchup</span><span>Spread</span><span>Moneyline</span><span>O/U</span><span>Book</span>
-            </div>
-            {oddsBoard.rows.map((o, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1.2fr 1.2fr 0.8fr 1.2fr", padding: "14px 16px", borderTop: i === 0 ? "none" : "1px solid #D4CEC7", background: i % 2 === 0 ? "#fff" : "#FAFAF8", gap: 12, alignItems: "center" }}>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{o.game}</div>
-                  <div style={{ fontSize: 11, color: "#8B7355", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>{o.date}</div>
+          <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24, marginBottom: 8 }}>
+            {COLLECTIONS.map((c) => {
+              const inner = (
+                <div style={{ border: "1px solid #D4CEC7", borderTop: `3px solid ${c.color}`, overflow: "hidden", opacity: c.live ? 1 : 0.85 }}>
+                  <div style={{ aspectRatio: "21/9" as const, overflow: "hidden", position: "relative" }}>
+                    <img src={c.image} alt="" className="card-image" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: c.live ? "none" : "grayscale(0.4)" }} />
+                    {!c.live && (
+                      <span style={{ position: "absolute", top: 10, right: 10, background: "#1A1208", color: "#F5EFE4", fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, padding: "4px 10px" }}>Dropping Soon</span>
+                    )}
+                  </div>
+                  <div style={{ padding: "14px 18px" }}>
+                    <h3 style={{ fontSize: 18, fontWeight: 900, margin: "0 0 4px" }}>{c.name}</h3>
+                    <p style={{ fontSize: 13, color: "#666", margin: 0, lineHeight: 1.5 }}>{c.desc}</p>
+                  </div>
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{o.spread}</div>
-                <div style={{ fontSize: 13, color: "#555" }}>{o.ml}</div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{o.ou}</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: "#FF6600" }}>{o.book}</div>
-              </div>
-            ))}
+              );
+              return c.href ? (
+                <Link key={c.name} href={c.href} className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>{inner}</Link>
+              ) : (
+                <div key={c.name}>{inner}</div>
+              );
+            })}
           </div>
-          <div style={{ fontSize: 10, color: "#aaa", marginTop: 12 }}>Lines are informational, move constantly, and are shown as reported by the listed book. 21+ only. Gambling problem? Call 1-800-GAMBLER.</div>
         </div>
 
-        {/* AROUND THE WEB */}
-        <div style={{ marginBottom: 48 }}>
+        {/* THE POSITION */}
+        <div style={{ borderTop: "1px solid #D4CEC7", borderBottom: "1px solid #D4CEC7", margin: "40px 0", padding: "28px 0", display: "flex", flexWrap: "wrap" as const, gap: 20, alignItems: "center", justifyContent: "space-between" }}>
+          <p style={{ fontSize: 15, fontStyle: "italic", color: "#555", lineHeight: 1.7, maxWidth: 620, margin: 0 }}>
+            Every design here is original artwork. No licensed logos, no bookstore markup, nothing you&apos;ll see on eight thousand other people at the tailgate. Independent and unlicensed — on purpose.
+          </p>
+          <Link href="/guides/independent-tennessee-football-apparel" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#FF6600", textDecoration: "none", whiteSpace: "nowrap" as const }}>
+            What that means →
+          </Link>
+        </div>
+
+        {/* GAMES DRAW */}
+        <div style={{ background: "#1A1208", margin: "0 -40px 40px", padding: "32px 40px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
-            <span style={{ border: "1.5px solid #8B7355", color: "#8B7355", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Reading Room</span>
-            <div style={{ flex: 1, height: 1, background: "#8B7355", opacity: 0.4 }} />
-            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#aaa" }}>Tennessee coverage elsewhere · links open in a new tab</span>
+            <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>The Game Room</span>
+            <div style={{ flex: 1, height: 1, background: "#FF6600", opacity: 0.4 }} />
+            <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#8a8074" }}>Free · No login · Big scores earn shop discounts</span>
           </div>
-          <div className="reading-room-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+          <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {[
-              { name: "ESPN · Vols", desc: "Scores, stats, and national coverage of Tennessee football.", url: "https://www.espn.com/college-football/team/_/id/2633/tennessee-volunteers", color: "#FF6600" },
-              { name: "ESPN · Titans", desc: "Titans news, depth chart, and game coverage.", url: "https://www.espn.com/nfl/team/_/name/ten/tennessee-titans", color: "#4B92DB" },
-              { name: "GoVols247", desc: "Recruiting intel and Vols insider reporting from 247Sports.", url: "https://247sports.com/college/tennessee/", color: "#FF6600" },
-              { name: "Barstool CFB", desc: "The unfiltered college football takes. You know what you're getting.", url: "https://www.barstoolsports.com/topics/college-football", color: "#1A1208" },
-              { name: "Bleacher Report · Vols", desc: "B/R's Tennessee stream — highlights and the national angle.", url: "https://bleacherreport.com/tennessee-volunteers-football", color: "#FF6600" },
-              { name: "Bleacher Report · Titans", desc: "B/R's Titans stream — trades, rumors, and film breakdowns.", url: "https://bleacherreport.com/tennessee-titans", color: "#4B92DB" },
-            ].map((s, i) => (
-              <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="article-card" style={{ textDecoration: "none", color: "inherit", border: "1px solid #D4CEC7", borderTop: `3px solid ${s.color}`, padding: "14px 16px", background: "#fff", display: "block" }}>
-                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
-                  <span style={{ fontWeight: 700, fontSize: 14 }}>{s.name}</span>
-                  <span style={{ fontSize: 11, color: "#8B7355" }}>↗</span>
-                </div>
-                <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5 }}>{s.desc}</p>
-              </a>
+              { href: "/games/tennessee-football-trivia", title: "Daily Trivia", desc: "Ten questions on Tennessee football history. Same round for everyone." },
+              { href: "/games/saturday-score", title: "Saturday Score", desc: "Five clues, one answer. Solve early, score big." },
+              { href: "/arcade", title: "Tennessee Rifleman", desc: "The arcade hunt. Score 3,000+ and earn 15% off the shop." },
+            ].map((g) => (
+              <Link key={g.href} href={g.href} className="hot-take-card" style={{ textDecoration: "none", display: "block", border: "2px solid #FF6600", padding: "16px 18px" }}>
+                <div style={{ color: "#fff", fontSize: 16, fontWeight: 900, marginBottom: 6 }}>{g.title}</div>
+                <div style={{ color: "#C9BFAF", fontSize: 12, lineHeight: 1.5 }}>{g.desc}</div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
 
-      {/* NEWSLETTER */}
+      {/* NEWSLETTER — the drop list */}
       <div style={{ background: "#1A1208", color: "#fff", padding: "0", margin: "0 0 40px", position: "relative" as const, overflow: "hidden" }}>
         <div style={{ position: "absolute", right: -20, top: "50%", transform: "translateY(-50%)", width: "45%", opacity: 0.12 }}>
           <Image src="/titans-ticket.png" alt="" width={900} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>
-          <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Saturday Digest</h3>
-          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>Game-week analysis, delivered Friday morning. No filler.</p>
+          <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Drop List</h3>
+          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop, plus code WELCOME10 for 10% off your first order.</p>
           <NewsletterForm />
         </div>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
@@ -466,16 +213,21 @@ export default async function Home() {
         <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", flexWrap: "wrap" as const, justifyContent: "space-between", alignItems: "center", gap: 12 }}>
           <div style={{ fontSize: 14, letterSpacing: "0.04em", fontWeight: 700 }}>Touchdown Tennessee</div>
           <div style={{ display: "flex", gap: 18, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-            <a href="/about" style={{color:"#8B7355",textDecoration:"none"}}>About</a>
-            <a href="/contact" style={{color:"#8B7355",textDecoration:"none"}}>Contact</a>
-            <a href="/contact#advertising" style={{color:"#8B7355",textDecoration:"none"}}>Advertise</a>
+            <Link href="/merch" style={{ color: "#8B7355", textDecoration: "none" }}>Shop</Link>
+            <Link href="/games" style={{ color: "#8B7355", textDecoration: "none" }}>Games</Link>
+            <Link href="/guides" style={{ color: "#8B7355", textDecoration: "none" }}>Guides</Link>
+            <Link href="/about" style={{ color: "#8B7355", textDecoration: "none" }}>About</Link>
+            <Link href="/contact" style={{ color: "#8B7355", textDecoration: "none" }}>Contact</Link>
             <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" style={{ color: "#8B7355", textDecoration: "none" }}>@TDTennessee</a>
           </div>
-          <div style={{ fontSize: 10, letterSpacing: "0.08em", color: "#8B7355", maxWidth: 320 }}>Independent fan publication and brand. Not affiliated with, sponsored by, or endorsed by the University of Tennessee or the NFL.</div>
+          <div style={{ fontSize: 10, letterSpacing: "0.08em", color: "#8B7355", maxWidth: 320 }}>
+            Independent fan brand. Not affiliated with, sponsored by, or endorsed by the University of Tennessee or the NFL.
+          </div>
         </div>
-        <div style={{ textAlign: "center" as const, marginTop: 12, fontSize: 10, color: "#D4CEC7", letterSpacing: "0.08em" }}>touchdowntennessee.com</div>
+        <div style={{ textAlign: "center", marginTop: 12, fontSize: 10, color: "#D4CEC7", letterSpacing: "0.08em" }}>
+          touchdowntennessee.com
+        </div>
       </footer>
-
     </main>
   );
 }
