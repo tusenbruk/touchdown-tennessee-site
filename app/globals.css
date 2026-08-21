@@ -1,5 +1,80 @@
 * { box-sizing: border-box; }
 
+/* Masthead — Tennessee-shaped wordmark as the primary visual */
+.masthead {
+  padding: 20px 40px 0;
+  text-align: center;
+}
+
+.masthead-rule {
+  height: 1px;
+  background: #1a1208;
+  margin-top: 2px;
+}
+
+.masthead-rule-heavy {
+  height: 3px;
+  margin-top: 0;
+}
+
+.masthead-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0 24px;
+}
+
+.masthead-mark-frame {
+  position: relative;
+  width: min(720px, 82vw);
+  height: clamp(150px, 21vw, 245px);
+  overflow: hidden;
+}
+
+.masthead-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* Named distinctly from .masthead-title, which the site-wide Masthead
+   component still uses with its own inline sizing on interior pages. */
+.masthead-brand-title {
+  margin: -2px 0 0;
+  color: #1a1208;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.masthead-desk {
+  display: grid;
+  grid-template-columns: minmax(34px, 110px) auto minmax(34px, 110px);
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+  color: #ff6600;
+}
+
+.masthead-desk span {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.65;
+}
+
+.masthead-desk p {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -52,7 +127,27 @@
   .top-bar-right { display: none !important; }
   .top-bar { padding: 6px 16px !important; }
 
+  .masthead { padding: 14px 16px 0; }
+  .masthead-brand { padding: 10px 0 20px; }
+  .masthead-mark-frame {
+    width: min(520px, 96vw);
+    height: clamp(125px, 36vw, 180px);
+  }
+  .masthead-brand-title {
+    margin-top: 0;
+    font-size: clamp(17px, 5vw, 22px);
+    letter-spacing: 0.12em;
+  }
+  /* Interior pages' Masthead component (inline 48px) still needs this */
   .masthead-title { font-size: 36px !important; }
+  .masthead-desk {
+    gap: 10px;
+    margin-top: 13px;
+  }
+  .masthead-desk p {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+  }
 
   .hero-grid {
     grid-template-columns: 1fr !important;

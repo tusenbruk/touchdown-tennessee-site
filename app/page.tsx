@@ -115,18 +115,29 @@ export default async function Home() {
       </div>
 
       {/* MASTHEAD */}
-      <div style={{ textAlign: "center", padding: "20px 40px 0" }}>
-        <div style={{ height: 3, background: "#1A1208", marginBottom: 2 }} />
-        <div style={{ height: 1, background: "#1A1208", marginBottom: 16 }} />
-        <h1 className="masthead-title" style={{ fontSize: 64, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
-        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Tennessee Football Desk</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-          <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 36, width: "auto", display: "block" }} />
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
+      <div className="masthead">
+        <div className="masthead-rule masthead-rule-heavy" />
+        <div className="masthead-rule" />
+        <div className="masthead-brand">
+          <div className="masthead-mark-frame">
+            <Image
+              className="masthead-mark"
+              src="/tdt-logo.png"
+              alt=""
+              width={1086}
+              height={724}
+              priority
+            />
+          </div>
+          <h1 className="masthead-brand-title">Touchdown Tennessee</h1>
+          <div className="masthead-desk">
+            <span aria-hidden="true" />
+            <p>Tennessee Football Desk</p>
+            <span aria-hidden="true" />
+          </div>
         </div>
-        <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
-        <div style={{ height: 3, background: "#1A1208", marginTop: 2 }} />
+        <div className="masthead-rule" />
+        <div className="masthead-rule masthead-rule-heavy" />
       </div>
 
       {/* NAV */}
