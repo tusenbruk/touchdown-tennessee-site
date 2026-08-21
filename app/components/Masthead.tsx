@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import MobileNav from "./MobileNav";
 import { NAV_ITEMS } from "./nav-items";
 
@@ -41,21 +42,26 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         <MobileNav />
       </div>
 
-      {/* MASTHEAD */}
-      <div style={{ textAlign: "center", padding: "20px 40px 0" }}>
-        <div style={{ height: 3, background: "#1A1208", marginBottom: 2 }} />
-        <div style={{ height: 1, background: "#1A1208", marginBottom: 16 }} />
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <h1 className="masthead-title" style={{ fontSize: 48, fontWeight: 700, letterSpacing: "0.03em", lineHeight: 1, color: "#1A1208" }}>Touchdown Tennessee</h1>
-        </Link>
-        <div style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase" as const, color: "#FF6600", margin: "10px 0 4px" }}>Original Tennessee Football Goods</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "center", margin: "14px 0 0" }}>
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
-          <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 36, width: "auto", display: "block" }} />
-          <div style={{ flex: 1, height: 1, background: "#1A1208", maxWidth: 220 }} />
+      {/* MASTHEAD — the Tennessee-shaped wordmark is the primary visual. This
+          is the single source of truth: the homepage renders it too. */}
+      <div className="masthead">
+        <div className="masthead-rule masthead-rule-heavy" />
+        <div className="masthead-rule" />
+        <div className="masthead-brand">
+          <Link href="/" className="masthead-brand-link">
+            <div className="masthead-mark-frame">
+              <Image className="masthead-mark" src="/art/tdt-mark-state.png" alt="" width={385} height={134} priority />
+            </div>
+            <h1 className="masthead-brand-title">Touchdown Tennessee</h1>
+          </Link>
+          <div className="masthead-desk">
+            <span aria-hidden="true" />
+            <p>Original Tennessee Football Goods</p>
+            <span aria-hidden="true" />
+          </div>
         </div>
-        <div style={{ height: 1, background: "#1A1208", marginTop: 16 }} />
-        <div style={{ height: 3, background: "#1A1208", marginTop: 2 }} />
+        <div className="masthead-rule" />
+        <div className="masthead-rule masthead-rule-heavy" />
       </div>
 
       {/* DESKTOP NAV */}

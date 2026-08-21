@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import NewsletterForm from "./components/NewsletterForm";
-import MobileNav from "./components/MobileNav";
-import { NAV_ITEMS } from "./components/nav-items";
+import Masthead from "./components/Masthead";
 import { getCatalog, CatalogProduct } from "@/lib/printful";
 
 export const dynamic = "force-dynamic";
@@ -11,13 +10,23 @@ export const dynamic = "force-dynamic";
 // pointing its href at real products; until then it reads "dropping soon"
 // honestly — no fake scarcity.
 const COLLECTIONS = [
-  { name: "The Frontier Collection", desc: "Longhunters, powder horns, and the state that started as the frontier.", href: "/merch", live: true, color: "#FF6600", image: "/vols-rifleman-1794.png" },
-  { name: "Smokies Line", desc: "Mountains at dusk, poster-style. Wall prints and heavyweight tees.", href: null, live: false, color: "#8B7355", image: "/campus-divider.png" },
-  { name: "Knoxville City Line", desc: "The river, the skyline, Saturday at 7pm.", href: null, live: false, color: "#4B92DB", image: "/volwalk-banner.png" },
-  { name: "Tasteless Tennessee", desc: "Rival-flavored. Zero class. All original.", href: "/merch#tasteless", live: true, color: "#1A1208", image: "/bookies-nook-art.png" },
+  { name: "The Frontier Collection", desc: "Longhunters, powder horns, and the state that started as the frontier.", href: "/merch", live: true, color: "#FF6600", image: "/art/collection-frontier.png" },
+  { name: "Smokies Line", desc: "Mountains at dusk, poster-style. Wall prints and heavyweight tees.", href: null, live: false, color: "#8B7355", image: "/art/collection-smokies.png" },
+  { name: "Knoxville City Line", desc: "The river, the skyline, Saturday at 7pm.", href: null, live: false, color: "#4B92DB", image: "/art/collection-knoxville.png" },
+  { name: "Tasteless Tennessee", desc: "Rival-flavored. Zero class. All original.", href: "/merch#tasteless", live: true, color: "#1A1208", image: "/art/collection-tasteless.png" },
 ];
 
-const PLACEHOLDERS = ["The Frontier Tee", "Blount College 1794 Crest", "Smokies Poster Print", "Powder Horn Mug", "State Rope Cap", "Frontier Kit Sticker Sheet"];
+// Shown only when the Printful catalogue is unreachable or empty. Art is the
+// approved concept work; Blount College 1794 stays image-free until the
+// trademark clearance on that name comes back.
+const PLACEHOLDERS: { name: string; image: string | null }[] = [
+  { name: "The Frontier Tee", image: "/art/card-frontier-tee.png" },
+  { name: "Blount College 1794 Crest", image: null },
+  { name: "Smokies Poster Print", image: "/art/card-smokies-print.png" },
+  { name: "Powder Horn Mug", image: "/art/card-powder-horn-mug.png" },
+  { name: "State Rope Cap", image: "/art/card-state-rope-cap.png" },
+  { name: "Frontier Kit Sticker Sheet", image: "/art/card-sticker-sheet.png" },
+];
 
 function ProductCard({ p }: { p: CatalogProduct }) {
   return (
@@ -35,13 +44,17 @@ function ProductCard({ p }: { p: CatalogProduct }) {
   );
 }
 
-function PlaceholderCard({ name }: { name: string }) {
+function PlaceholderCard({ name, image }: { name: string; image: string | null }) {
   return (
     <Link href="/merch" className="article-card" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       <div style={{ borderTop: "3px solid #FF6600", borderBottom: "1px solid #1A1208", paddingBottom: 14 }}>
-        <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", aspectRatio: "1/1" as const, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10 }}>
-          <img src="/tdt-logo.png" alt="" style={{ width: "55%", height: "auto", opacity: 0.25 }} />
-          <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#C0B9AF", fontWeight: 700 }}>Dropping Soon</span>
+        <div style={{ background: "#FAFAF8", border: "1px solid #D4CEC7", borderTop: "none", aspectRatio: "1/1" as const, marginBottom: 12, position: "relative" as const, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10, overflow: "hidden" }}>
+          {image ? (
+            <img src={image} alt={name} className="card-image" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          ) : (
+            <img src="/art/tdt-mark-state.png" alt="" style={{ width: "55%", height: "auto", opacity: 0.25 }} />
+          )}
+          <span style={{ position: image ? "absolute" : "static", bottom: 10, right: 10, background: image ? "#1A1208" : "transparent", color: image ? "#F5EFE4" : "#C0B9AF", padding: image ? "4px 9px" : 0, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, fontWeight: 700 }}>Dropping Soon</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
           <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, lineHeight: 1.25 }}>{name}</h3>
@@ -59,56 +72,7 @@ export default async function Home() {
   return (
     <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
 
-      {/* TOP BAR */}
-      <div className="top-bar" style={{ borderBottom: "1px solid #D4CEC7", padding: "7px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8B7355" }}>
-        <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
-        <span className="top-bar-center">Original Tennessee Football Goods · Knoxville to Nashville</span>
-        <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <span style={{ fontSize: 11, letterSpacing: "0.12em" }}>Independent &amp; Unlicensed on Purpose</span>
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ color: "#8B7355", display: "flex" }} aria-label="X / Twitter">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
-            </a>
-            <a href="https://instagram.com/TDTennessee" target="_blank" rel="noopener noreferrer" className="social-icon" style={{ color: "#8B7355", display: "flex" }} aria-label="Instagram">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-          </div>
-        </div>
-        <MobileNav />
-      </div>
-
-      {/* MASTHEAD */}
-      <div className="masthead">
-        <div className="masthead-rule masthead-rule-heavy" />
-        <div className="masthead-rule" />
-        <div className="masthead-brand">
-          <div className="masthead-mark-frame">
-            <Image
-              className="masthead-mark"
-              src="/tdt-logo.png"
-              alt=""
-              width={1086}
-              height={724}
-              priority
-            />
-          </div>
-          <h1 className="masthead-brand-title">Touchdown Tennessee</h1>
-          <div className="masthead-desk">
-            <span aria-hidden="true" />
-            <p>Original Tennessee Football Goods</p>
-            <span aria-hidden="true" />
-          </div>
-        </div>
-        <div className="masthead-rule" />
-        <div className="masthead-rule masthead-rule-heavy" />
-      </div>
-
-      {/* NAV */}
-      <nav className="desktop-nav" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #D4CEC7", overflowX: "auto" as const }}>
-        {NAV_ITEMS.map((item, i) => (
-          <a key={i} href={item.href} style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none", color: item.color, padding: "10px 20px", borderRight: "1px solid #D4CEC7", borderLeft: i === 0 ? "1px solid #D4CEC7" : undefined, whiteSpace: "nowrap" as const }}>{item.label}</a>
-        ))}
-      </nav>
+      <Masthead />
 
       {/* ANNOUNCEMENT BAR */}
       <div style={{ background: "#1A1208", color: "#F5EFE4", textAlign: "center", padding: "8px 16px", fontSize: 10, letterSpacing: "0.24em", textTransform: "uppercase" as const, fontWeight: 700 }}>
@@ -127,7 +91,7 @@ export default async function Home() {
           <div className="shop-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 12 }}>
             {featured.length > 0
               ? featured.map((p) => <ProductCard key={p.id} p={p} />)
-              : PLACEHOLDERS.slice(0, 6).map((name) => <PlaceholderCard key={name} name={name} />)}
+              : PLACEHOLDERS.slice(0, 6).map((p) => <PlaceholderCard key={p.name} name={p.name} image={p.image} />)}
           </div>
         </div>
 
@@ -197,7 +161,7 @@ export default async function Home() {
       {/* NEWSLETTER — the drop list */}
       <div style={{ background: "#1A1208", color: "#fff", padding: "0", margin: "0 0 40px", position: "relative" as const, overflow: "hidden" }}>
         <div style={{ position: "absolute", right: -20, top: "50%", transform: "translateY(-50%)", width: "45%", opacity: 0.12 }}>
-          <Image src="/titans-ticket.png" alt="" width={900} height={500} style={{ width: "100%", height: "auto", display: "block" }} />
+          <Image src="/art/tdt-mark-state.png" alt="" width={385} height={134} style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>

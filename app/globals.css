@@ -45,10 +45,12 @@ button, input, select, textarea {
   padding: 18px 0 24px;
 }
 
+/* The mark is trimmed tight to its artwork, so the frame matches its aspect
+   ratio and fits it rather than cropping surrounding whitespace. */
 .masthead-mark-frame {
   position: relative;
-  width: min(720px, 82vw);
-  height: clamp(150px, 21vw, 245px);
+  width: min(560px, 82vw);
+  aspect-ratio: 385 / 134;
   overflow: hidden;
 }
 
@@ -61,8 +63,16 @@ button, input, select, textarea {
   transform: translate(-50%, -50%);
 }
 
-/* Named distinctly from .masthead-title, which the site-wide Masthead
-   component still uses with its own inline sizing on interior pages. */
+/* Wraps the mark and title in the home link without disturbing the
+   centred column layout of .masthead-brand. */
+.masthead-brand-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
 .masthead-brand-title {
   margin: -2px 0 0;
   color: #1a1208;
@@ -168,16 +178,13 @@ button, input, select, textarea {
   .masthead { padding: 14px 16px 0; }
   .masthead-brand { padding: 10px 0 20px; }
   .masthead-mark-frame {
-    width: min(520px, 96vw);
-    height: clamp(125px, 36vw, 180px);
+    width: min(420px, 92vw);
   }
   .masthead-brand-title {
     margin-top: 0;
     font-size: clamp(17px, 5vw, 22px);
     letter-spacing: 0.12em;
   }
-  /* Interior pages' Masthead component (inline 48px) still needs this */
-  .masthead-title { font-size: 36px !important; }
   .masthead-desk {
     gap: 10px;
     margin-top: 13px;
@@ -238,7 +245,6 @@ button, input, select, textarea {
 }
 
 @media (max-width: 480px) {
-  .masthead-title { font-size: 28px !important; }
 
   div[style*="repeat(3, 1fr)"] {
     grid-template-columns: 1fr !important;

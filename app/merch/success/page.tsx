@@ -45,7 +45,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
   return (
     <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center", maxWidth: 520, padding: "40px" }}>
-        <img src="/tdt-logo.png" alt="TDT" style={{ height: 60, marginBottom: 32 }} />
+        <img src="/art/tdt-mark-state.png" alt="TDT" style={{ height: 60, marginBottom: 32 }} />
         <h2 style={{ fontSize: 32, fontWeight: 900, marginBottom: 12 }}>Order Confirmed</h2>
         <p style={{ fontSize: 16, color: "#555", fontStyle: "italic", lineHeight: 1.6, marginBottom: 20 }}>
           {order?.email ? `A confirmation is on its way to ${order.email}. ` : "You'll receive a confirmation email shortly. "}

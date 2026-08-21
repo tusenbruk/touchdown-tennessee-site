@@ -20,8 +20,10 @@ export default async function MerchPage() {
       <Masthead backLink={{ href: "/", label: "← Home" }} />
 
       {/* BANNER */}
-      <div style={{ width: "100%", maxHeight: 280, overflow: "hidden", borderBottom: "3px solid #FF6600" }}>
-        <Image src="/vols-stadium-charge.png" alt="The Frontier Collection" width={1800} height={600} style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", objectPosition: "center 40%" }} priority />
+      {/* The lockup is centred on flat cream, so the banner contains rather than
+          crops it — letterboxing is invisible against the same background. */}
+      <div style={{ width: "100%", height: "clamp(180px, 22vw, 280px)", background: "#F5EFE4", overflow: "hidden", borderBottom: "3px solid #FF6600" }}>
+        <Image src="/art/collection-frontier.png" alt="The Frontier Collection" width={1260} height={540} style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }} priority />
       </div>
 
       {/* HEADER */}
@@ -102,14 +104,20 @@ export default async function MerchPage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
             {[
-              { name: "Gator Tears Sweet Tea Glass", tag: "For sipping in October" },
-              { name: "Elephant Graveyard Cap", tag: "Third Saturday state of mind" },
-              { name: "Bulldog Obedience School Tee", tag: "Sit. Stay. Lose." },
+              { name: "New Skin Frontier Tee", tag: "New season. New skin.", image: "/art/card-gator-tee.png" },
+              { name: "Visitors Leave Quietly Pennant", tag: "Felt, and unfriendly", image: "/art/card-pennant-visitors.png" },
+              { name: "Gator Tears Sweet Tea Glass", tag: "For sipping in October", image: null },
+              { name: "Elephant Graveyard Cap", tag: "Third Saturday state of mind", image: null },
+              { name: "Bulldog Obedience School Tee", tag: "Sit. Stay. Lose.", image: null },
             ].map((p, i) => (
               <div key={i} style={{ border: "2px solid #FF6600", padding: 0 }}>
-                <div style={{ aspectRatio: "1/1" as const, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10, background: "rgba(255,102,0,0.06)" }}>
-                  <span style={{ fontSize: 34 }}>🔥</span>
-                  <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#8a8074", fontWeight: 700 }}>Dropping Soon</span>
+                <div style={{ aspectRatio: "1/1" as const, position: "relative" as const, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10, background: "rgba(255,102,0,0.06)", overflow: "hidden" }}>
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  ) : (
+                    <span style={{ fontSize: 34 }}>🔥</span>
+                  )}
+                  <span style={{ position: p.image ? "absolute" : "static", bottom: 10, right: 10, background: p.image ? "#1A1208" : "transparent", padding: p.image ? "4px 9px" : 0, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: p.image ? "#F5EFE4" : "#8a8074", fontWeight: 700 }}>Dropping Soon</span>
                 </div>
                 <div style={{ padding: "12px 14px", borderTop: "1px solid rgba(255,102,0,0.4)" }}>
                   <div style={{ color: "#fff", fontSize: 15, fontWeight: 700, lineHeight: 1.25, marginBottom: 4 }}>{p.name}</div>
@@ -135,6 +143,8 @@ export default async function MerchPage() {
           <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8B7355" }}>The Frontier Collection</span>
         </div>
       </div>
+
+      <Footer />
     </main>
   );
 }

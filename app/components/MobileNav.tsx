@@ -43,7 +43,7 @@ export default function MobileNav() {
         }}>
           {/* Close button */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 24px 20px", borderBottom: "2px solid #1A1208" }}>
-            <img src="/tdt-logo.png" alt="Touchdown Tennessee" style={{ height: 32 }} />
+            <img src="/art/tdt-mark-state.png" alt="Touchdown Tennessee" style={{ height: 32 }} />
             <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 24, color: "#1A1208", lineHeight: 1 }}>✕</button>
           </div>
 
@@ -90,7 +90,6 @@ export default function MobileNav() {
           .merch-grid { grid-template-columns: 1fr !important; }
           .product-grid { grid-template-columns: 1fr !important; }
           .roster-table { font-size: 11px !important; }
-          .masthead-title { font-size: 36px !important; }
           .top-bar { padding: 6px 16px !important; }
           .main-container { padding: 0 16px !important; }
           .section-padding { padding: 0 16px !important; }
