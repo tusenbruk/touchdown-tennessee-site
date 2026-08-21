@@ -4,6 +4,7 @@ import MobileNavBar from "@/app/components/MobileNavBar";
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/app/components/CartContext";
+import { trackBeginCheckout } from "@/app/components/analytics";
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart, total, count } = useCart();
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,10 @@ export default function CartPage() {
   const handleCheckout = async () => {
     setLoading(true);
     setError("");
+    trackBeginCheckout(
+      items.map((i) => ({ item_id: String(i.variantId), item_name: i.name, price: i.price, quantity: i.quantity })),
+      total
+    );
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",

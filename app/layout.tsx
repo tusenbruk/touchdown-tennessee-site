@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "./components/CartContext";
+import AnalyticsScripts from "./components/AnalyticsScripts";
+import NewsletterPopup from "./components/NewsletterPopup";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -31,6 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body style={{ margin: 0, padding: 0 }}>
         <CartProvider>{children}</CartProvider>
+        <NewsletterPopup />
+        <AnalyticsScripts />
+        <Analytics />
       </body>
     </html>
   );
