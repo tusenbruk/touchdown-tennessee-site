@@ -48,7 +48,7 @@ export default function SuccessClient({ sessionId, total, items, stickerVariantI
         <button
           onClick={buySticker}
           disabled={stickerLoading}
-          style={{ background: "none", border: "2px solid #FF6600", color: "#FF6600", padding: "10px 20px", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif", opacity: stickerLoading ? 0.6 : 1 }}
+          style={{ background: "none", border: "2px solid #FF6600", color: "#FF6600", padding: "10px 20px", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)", opacity: stickerLoading ? 0.6 : 1 }}
         >
           {stickerLoading ? "One second…" : "Grab a sticker for $5 →"}
         </button>

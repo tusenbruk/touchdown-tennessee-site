@@ -38,7 +38,7 @@ export default function NewsletterPopup() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{ background: "#1A1208", color: "#fff", maxWidth: 440, width: "100%", padding: "32px 28px", position: "relative", border: "3px solid #FF6600", fontFamily: "Georgia, serif", textAlign: "center" }}
+        style={{ background: "#1A1208", color: "#fff", maxWidth: 440, width: "100%", padding: "32px 28px", position: "relative", border: "3px solid #FF6600", fontFamily: "var(--font-body)", textAlign: "center" }}
       >
         <button
           onClick={() => setOpen(false)}

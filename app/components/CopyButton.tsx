@@ -39,7 +39,7 @@ export default function CopyButton({ url }: { url: string }) {
         letterSpacing: "0.14em",
         textTransform: "uppercase" as const,
         cursor: "pointer",
-        fontFamily: "Georgia, serif",
+        fontFamily: "var(--font-body)",
         transition: "all 0.2s",
       }}
     >

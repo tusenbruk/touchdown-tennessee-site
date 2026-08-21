@@ -47,7 +47,7 @@ const GAMES = [
 
 export default function GamesPage() {
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

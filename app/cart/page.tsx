@@ -34,7 +34,7 @@ export default function CartPage() {
   };
 
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
       <MobileNavBar backHref="/merch" backLabel="← Shop" rightHref="/" rightLabel="Home" />
 
       <div style={{ maxWidth: 800, margin: "48px auto", padding: "0 40px" }}>
@@ -94,7 +94,7 @@ export default function CartPage() {
               {error && <p style={{ color: "#cc0000", fontSize: 12, marginBottom: 12 }}>{error}</p>}
 
               <button onClick={handleCheckout} disabled={loading}
-                style={{ width: "100%", padding: "16px", background: loading ? "#aaa" : "#1A1208", color: "#fff", fontSize: 13, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "Georgia, serif" }}>
+                style={{ width: "100%", padding: "16px", background: loading ? "#aaa" : "#1A1208", color: "#fff", fontSize: 13, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "var(--font-body)" }}>
                 {loading ? "Redirecting to Checkout..." : "Proceed to Checkout →"}
               </button>
 

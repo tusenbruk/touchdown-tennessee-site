@@ -10,6 +10,8 @@
     "test:games": "node --experimental-strip-types --test tests/games.test.ts"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/oswald": "^5.3.0",
     "@stripe/stripe-js": "^9.6.0",
     "@vercel/analytics": "^2.0.1",
     "gray-matter": "^4.0.3",

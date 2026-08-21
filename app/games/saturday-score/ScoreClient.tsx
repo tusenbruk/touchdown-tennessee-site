@@ -115,7 +115,7 @@ export default function ScoreClient() {
             {progress.lastPlayed === todayKey && " · You've played today — replays don't change your streak."}
           </p>
         )}
-        <button onClick={start} style={{ background: "#4B92DB", color: "#fff", border: "none", padding: "14px 28px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+        <button onClick={start} style={{ background: "#4B92DB", color: "#fff", border: "none", padding: "14px 28px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
           Play Today&apos;s Puzzle
         </button>
         <p style={{ fontSize: 11, color: "#aaa", marginTop: 22, lineHeight: 1.6 }}>
@@ -159,14 +159,14 @@ export default function ScoreClient() {
             onKeyDown={(e) => e.key === "Enter" && submitGuess()}
             placeholder="Person, game, place, tradition…"
             autoComplete="off"
-            style={{ flex: 1, padding: "12px 14px", fontSize: 15, fontFamily: "Georgia, serif", border: "2px solid #1A1208", outline: "none" }}
+            style={{ flex: 1, padding: "12px 14px", fontSize: 15, fontFamily: "var(--font-body)", border: "2px solid #1A1208", outline: "none" }}
           />
-          <button onClick={submitGuess} style={{ background: "#1A1208", color: "#fff", border: "none", padding: "12px 22px", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+          <button onClick={submitGuess} style={{ background: "#1A1208", color: "#fff", border: "none", padding: "12px 22px", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
             Guess
           </button>
         </div>
         {cluesSeen < MAX_CLUES && (
-          <button onClick={skipClue} style={{ background: "none", border: "none", color: "#8B7355", fontSize: 12, cursor: "pointer", fontFamily: "Georgia, serif", padding: 0, textDecoration: "underline" }}>
+          <button onClick={skipClue} style={{ background: "none", border: "none", color: "#8B7355", fontSize: 12, cursor: "pointer", fontFamily: "var(--font-body)", padding: 0, textDecoration: "underline" }}>
             Skip to the next clue (costs a point)
           </button>
         )}
@@ -202,10 +202,10 @@ export default function ScoreClient() {
       </p>
 
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center", marginBottom: 8 }}>
-        <button onClick={doShare} style={{ background: "#4B92DB", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+        <button onClick={doShare} style={{ background: "#4B92DB", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
           Share Result
         </button>
-        <Link href="/games/tennessee-football-trivia" style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "10px 24px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", textDecoration: "none", fontFamily: "Georgia, serif" }}>
+        <Link href="/games/tennessee-football-trivia" style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "10px 24px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", textDecoration: "none", fontFamily: "var(--font-body)" }}>
           Play the Trivia
         </Link>
       </div>

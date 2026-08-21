@@ -15,7 +15,7 @@ export default async function MerchPage() {
   const products = await getCatalog();
 
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
 
       <Masthead backLink={{ href: "/", label: "← Home" }} />
 

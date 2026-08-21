@@ -43,7 +43,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
   const stickerVariantId = process.env.STICKER_VARIANT_ID || null;
 
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center", maxWidth: 520, padding: "40px" }}>
         <img src="/tdt-logo.png" alt="TDT" style={{ height: 60, marginBottom: 32 }} />
         <h2 style={{ fontSize: 32, fontWeight: 900, marginBottom: 12 }}>Order Confirmed</h2>

@@ -47,13 +47,13 @@ export default function ProductClient() {
   }, [id]);
 
   if (loading) return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <p style={{ color: "#8B7355", fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase" as const }}>Loading...</p>
     </main>
   );
 
   if (!product) return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 16 }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 16 }}>
       <p style={{ fontSize: 18, fontWeight: 700 }}>Product not found.</p>
       <Link href="/merch" style={{ color: "#FF6600" }}>← Back to Shop</Link>
     </main>
@@ -99,7 +99,7 @@ export default function ProductClient() {
   };
 
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
       <MobileNavBar backHref="/merch" backLabel="← Shop" rightHref="/cart" rightLabel="View Cart →" />
 
       <div style={{ maxWidth: 1080, margin: "48px auto", padding: "0 40px" }}>
@@ -121,7 +121,7 @@ export default function ProductClient() {
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
                   {colors.map((color) => (
                     <button key={color} onClick={() => { setSelectedColor(color); setSelectedSize(""); setError(""); }}
-                      style={{ padding: "8px 16px", border: `1.5px solid ${selectedColor === color ? "#1A1208" : "#D4CEC7"}`, background: selectedColor === color ? "#1A1208" : "#fff", color: selectedColor === color ? "#fff" : "#1A1208", fontSize: 12, cursor: "pointer", fontFamily: "Georgia, serif" }}>
+                      style={{ padding: "8px 16px", border: `1.5px solid ${selectedColor === color ? "#1A1208" : "#D4CEC7"}`, background: selectedColor === color ? "#1A1208" : "#fff", color: selectedColor === color ? "#fff" : "#1A1208", fontSize: 12, cursor: "pointer", fontFamily: "var(--font-body)" }}>
                       {color}
                     </button>
                   ))}
@@ -135,7 +135,7 @@ export default function ProductClient() {
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" as const }}>
                   {sizes.map((size) => (
                     <button key={size} onClick={() => { setSelectedSize(size); setError(""); }}
-                      style={{ width: 52, height: 42, border: `1.5px solid ${selectedSize === size ? "#1A1208" : "#D4CEC7"}`, background: selectedSize === size ? "#1A1208" : "#fff", color: selectedSize === size ? "#fff" : "#1A1208", fontSize: 12, cursor: "pointer", fontFamily: "Georgia, serif", fontWeight: 600 }}>
+                      style={{ width: 52, height: 42, border: `1.5px solid ${selectedSize === size ? "#1A1208" : "#D4CEC7"}`, background: selectedSize === size ? "#1A1208" : "#fff", color: selectedSize === size ? "#fff" : "#1A1208", fontSize: 12, cursor: "pointer", fontFamily: "var(--font-body)", fontWeight: 600 }}>
                       {size}
                     </button>
                   ))}
@@ -146,7 +146,7 @@ export default function ProductClient() {
             {error && <p style={{ color: "#cc0000", fontSize: 12, marginBottom: 12 }}>{error}</p>}
 
             <button onClick={handleAddToCart}
-              style={{ width: "100%", padding: "14px 24px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "Georgia, serif", marginBottom: 12 }}>
+              style={{ width: "100%", padding: "14px 24px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "var(--font-body)", marginBottom: 12 }}>
               {added ? "✓ Added to Cart" : "Add to Cart"}
             </button>
 
@@ -206,7 +206,7 @@ export default function ProductClient() {
             <div style={{ fontSize: 16, fontWeight: 700, color: "#FF6600" }}>${price.toFixed(2)}</div>
           </div>
           <button onClick={handleAddToCart}
-            style={{ flex: 1, maxWidth: 220, padding: "12px 16px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+            style={{ flex: 1, maxWidth: 220, padding: "12px 16px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "var(--font-body)" }}>
             {added ? "✓ Added" : "Add to Cart"}
           </button>
         </div>

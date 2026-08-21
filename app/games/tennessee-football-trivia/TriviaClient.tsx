@@ -127,10 +127,10 @@ export default function TriviaClient() {
           </p>
         )}
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button onClick={() => start("daily")} style={{ background: "#FF6600", color: "#fff", border: "none", padding: "14px 28px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+          <button onClick={() => start("daily")} style={{ background: "#FF6600", color: "#fff", border: "none", padding: "14px 28px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
             Play Today&apos;s Round
           </button>
-          <button onClick={() => start("practice")} style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+          <button onClick={() => start("practice")} style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
             Practice Round
           </button>
         </div>
@@ -173,7 +173,7 @@ export default function TriviaClient() {
                 style={{
                   display: "block", width: "100%", textAlign: "left", padding: "14px 18px", marginBottom: 10,
                   background: bg, color: fg, border: `2px solid ${showState && c.correct ? "#2a5c2a" : "#D4CEC7"}`,
-                  fontSize: 15, fontFamily: "Georgia, serif", cursor: picked === null ? "pointer" : "default",
+                  fontSize: 15, fontFamily: "var(--font-body)", cursor: picked === null ? "pointer" : "default",
                   transition: "background 0.15s",
                 }}
               >
@@ -194,7 +194,7 @@ export default function TriviaClient() {
               <p style={{ fontSize: 11, color: "#8B7355", marginBottom: 16 }}>
                 Source: <a href={question.source.url} target="_blank" rel="noopener noreferrer" style={{ color: "#8B7355" }}>{question.source.label}</a>
               </p>
-              <button ref={nextBtnRef} onClick={next} style={{ background: "#1A1208", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+              <button ref={nextBtnRef} onClick={next} style={{ background: "#1A1208", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
                 {qIndex + 1 >= round.length ? "See Results" : "Next Question"}
               </button>
             </div>
@@ -222,10 +222,10 @@ export default function TriviaClient() {
       </div>
 
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center", marginBottom: 8 }}>
-        <button onClick={doShare} style={{ background: "#FF6600", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+        <button onClick={doShare} style={{ background: "#FF6600", color: "#fff", border: "none", padding: "12px 26px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
           Share Result
         </button>
-        <button onClick={() => start("practice")} style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "10px 24px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "Georgia, serif" }}>
+        <button onClick={() => start("practice")} style={{ background: "#fff", color: "#1A1208", border: "2px solid #1A1208", padding: "10px 24px", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", fontFamily: "var(--font-body)" }}>
           Practice Round
         </button>
       </div>

@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main style={{ fontFamily: "Georgia, serif", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
+    <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
       <Masthead backLink={{ href: "/", label: "← Home" }} />
 
       <div style={{ maxWidth: 740, margin: "48px auto", padding: "0 24px" }}>

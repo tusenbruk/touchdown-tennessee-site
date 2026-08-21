@@ -4,6 +4,9 @@ import { CartProvider } from "./components/CartContext";
 import AnalyticsScripts from "./components/AnalyticsScripts";
 import NewsletterPopup from "./components/NewsletterPopup";
 import { jsonLdString, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import "@fontsource-variable/dm-sans";
+import "@fontsource-variable/dm-sans/wght-italic.css";
+import "@fontsource-variable/oswald";
 import "./globals.css";
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.touchdowntennessee.com").replace(/\/$/, "");

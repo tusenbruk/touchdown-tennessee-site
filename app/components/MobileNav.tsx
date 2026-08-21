@@ -58,7 +58,7 @@ export default function MobileNav() {
                   display: "block",
                   padding: "16px 24px",
                   fontSize: 14,
-                  fontFamily: "Georgia, serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 700,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase" as const,
