@@ -7,7 +7,7 @@ import TriviaClient from "./TriviaClient";
 export const metadata: Metadata = {
   title: "Tennessee Football Trivia — Daily Round",
   description:
-    "Ten questions a day on Tennessee football: Vols history, Titans lore, coaches, bowls, venues, and culture. Same round for everyone — compare scores with your section.",
+    "Ten questions a day on Tennessee football: history, Titans lore, coaches, bowls, venues, and culture. Same round for everyone — compare scores with your section.",
   alternates: { canonical: "/games/tennessee-football-trivia" },
 };
 
