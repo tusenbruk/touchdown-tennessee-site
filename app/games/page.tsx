@@ -16,7 +16,7 @@ const GAMES = [
     badge: "Daily Trivia",
     color: "#FF6600",
     title: "Tennessee Football Trivia",
-    desc: "Ten questions a day on Vols history, Titans lore, coaches, bowls, and the culture. Same round for everyone — compare scores.",
+    desc: "Ten questions a day on Tennessee football history, Titans lore, coaches, bowls, and the culture. Same round for everyone — compare scores.",
     cta: "Play today's round →",
   },
   {
@@ -32,7 +32,7 @@ const GAMES = [
     badge: "Arcade",
     color: "#FF6600",
     title: "Tennessee Rifleman",
-    desc: "Crockett's hunt. Streak multipliers, a supply wagon, three-strike Smokey rule — and a shop discount for big scores.",
+    desc: "Crockett's hunt. Streak multipliers, a supply wagon, a three-strike rule — and a shop discount for big scores.",
     cta: "Start the hunt →",
   },
   {
@@ -40,7 +40,7 @@ const GAMES = [
     badge: "Arcade",
     color: "#4B92DB",
     title: "Crockett's Catwalk",
-    desc: "Knock SEC mascots off the tightrope before they reach the uprights. Fifteen balls. Don't hit Smokey.",
+    desc: "Knock SEC mascots off the tightrope before they reach the uprights. Fifteen balls. Make them count.",
     cta: "Play ball →",
   },
 ];
