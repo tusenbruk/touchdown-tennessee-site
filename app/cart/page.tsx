@@ -99,6 +99,10 @@ export default function CartPage() {
               </button>
 
               <p style={{ fontSize: 10, color: "#aaa", textAlign: "center" as const, marginTop: 12, lineHeight: 1.6 }}>
+                First order? Use code <strong style={{ color: "#FF6600" }}>WELCOME10</strong> at checkout for 10% off.
+              </p>
+
+              <p style={{ fontSize: 10, color: "#aaa", textAlign: "center" as const, marginTop: 8, lineHeight: 1.6 }}>
                 Secure checkout via Stripe. Fulfilled by Printful. Ships in 3–5 business days.
               </p>
             </div>
