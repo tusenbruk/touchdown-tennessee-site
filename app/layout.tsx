@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "./components/CartContext";
 import AnalyticsScripts from "./components/AnalyticsScripts";
+import AdSenseScript from "./components/AdSenseScript";
 import NewsletterPopup from "./components/NewsletterPopup";
 import { jsonLdString, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "@fontsource-variable/dm-sans";
@@ -42,13 +43,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5612762298444240"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body style={{ margin: 0, padding: 0 }}>
         <script
           type="application/ld+json"
@@ -56,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <CartProvider>{children}</CartProvider>
         <NewsletterPopup />
+        <AdSenseScript />
         <AnalyticsScripts />
         <Analytics />
       </body>

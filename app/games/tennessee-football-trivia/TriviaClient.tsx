@@ -20,7 +20,7 @@ interface DisplayChoice {
 }
 
 function rankTitle(score: number): string {
-  if (score >= 10) return "General Neyland Would Salute";
+  if (score >= 10) return "Undefeated";
   if (score >= 8) return "All-Conference";
   if (score >= 6) return "Saturday Starter";
   if (score >= 4) return "Special Teams";

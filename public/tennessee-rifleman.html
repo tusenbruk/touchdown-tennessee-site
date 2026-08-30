@@ -205,7 +205,7 @@
   @keyframes comboPulse { from { transform: scale(1); } to { transform: scale(1.1); } }
   #combo .streak-label { font-size: 11px; color: #FFF; letter-spacing: 3px; display: block; margin-top: -4px; }
 
-  /* Smokey strike flash */
+  /* Good-boy strike flash */
   #redflash {
     position: absolute; inset: 0; pointer-events: none; z-index: 15;
     background: radial-gradient(circle, rgba(255,40,40,0) 40%, rgba(255,20,20,0.45) 100%);
@@ -276,7 +276,7 @@
     Hit SEC critters back-to-back to build a streak multiplier.<br>
     Shoot the powder keg on the supply wagon for +5 rounds.<br>
     Golden critters are worth triple.<br>
-    <span style="color:#FF8200">Spare Smokey — three strikes and you're ejected.</span></p>
+    <span style="color:#FF8200">Spare the good boy — three strikes and you're ejected.</span></p>
   <div class="hof">
     <div class="hof-title">★ HALL OF FAME ★</div>
     <table class="hs-table" id="titleHighscores"></table>
@@ -353,7 +353,7 @@ let hitFreeze = 0;       // brief slow-mo after a hit
 let wagons = [];
 let wagonTimer = 11000;  // ms until next supply wagon
 let lowAmmoPity = false; // one early wagon per low-ammo stretch
-let endReason = null;    // null = out of powder, 'ejected' = 3 Smokey strikes
+let endReason = null;    // null = out of powder, 'ejected' = 3 good-boy strikes
 
 function multiplier() {
   if (streak >= 9) return 4;
@@ -511,9 +511,9 @@ function streakUpSound(mult) {
   setTimeout(() => beep(root * 1.25, 0.07, 'square', 0.09), 70);
   setTimeout(() => beep(root * 1.5, 0.1, 'square', 0.1), 140);
 }
-function rockyTopJingle() {
-  // A quick chiptune nod to Rocky Top for big streaks
-  const notes = [523, 523, 587, 659, 587, 523, 392];
+function bigStreakJingle() {
+  // A quick original chiptune fanfare for big streaks
+  const notes = [440, 554, 659, 880, 659, 554, 440];
   notes.forEach((f, i) => setTimeout(() => beep(f, i === notes.length - 1 ? 0.22 : 0.09, 'square', 0.1), i * 95));
 }
 function resupplySound() {
@@ -646,7 +646,7 @@ function spawnMascot() {
   const difficulty = Math.min(1, timeAlive / 60000);
   const baseSpeed = 55 + difficulty * 65;
 
-  // Smokey appearance scales up (forces target ID)
+  // Good-boy appearance scales up (forces target ID)
   const smokeyChance = 0.16 + difficulty * 0.18;
   const aliveSmokeys = mascots.filter(m => m.smokey && !m.hit).length;
   const isSmokey = aliveSmokeys < 1 && Math.random() < smokeyChance;
@@ -825,7 +825,7 @@ function onHit(m, tx, ty) {
     updateStrikesUI();
     spawnExplosion(m.x, m.y - 20, '#FF8200', 30);
     spawnExplosion(m.x, m.y - 20, '#FFFFFF', 16);
-    popups.push({ x: m.x, y: m.y - 40, text: 'NOT SMOKEY!', color: '#FF3344', life: 1.6, vy: -50, size: 22 });
+    popups.push({ x: m.x, y: m.y - 40, text: "THAT'S THE GOOD BOY!", color: '#FF3344', life: 1.6, vy: -50, size: 22 });
     popups.push({ x: m.x, y: m.y - 65, text: '-500', color: '#FFF', life: 1.6, vy: -50, size: 18 });
     if (stats.smokey < 3) {
       popups.push({ x: m.x, y: m.y - 90, text: `STRIKE ${stats.smokey} OF 3`, color: '#FF3344', life: 1.8, vy: -40, size: 15 });
@@ -850,9 +850,9 @@ function onHit(m, tx, ty) {
     updateComboUI();
     if (mult > prevMult) {
       streakUpSound(mult);
-      const label = mult >= 4 ? 'ROCKY TOP! ×4' : mult === 3 ? 'ON FIRE! ×3' : 'DOUBLE POINTS! ×2';
+      const label = mult >= 4 ? 'ON A TEAR! ×4' : mult === 3 ? 'ON FIRE! ×3' : 'DOUBLE POINTS! ×2';
       popups.push({ x: W * 0.5, y: H * 0.25, text: label, color: '#FFD700', life: 1.4, vy: -35, size: 30 });
-      if (mult >= 4) rockyTopJingle();
+      if (mult >= 4) bigStreakJingle();
     }
     spawnExplosion(m.x, m.y - 20, m.golden ? '#FFD700' : m.type.accent, 18);
     spawnExplosion(m.x, m.y - 20, '#FFD700', m.golden ? 26 : 12);
@@ -1061,7 +1061,7 @@ function applyMotion(m) {
       break;
     }
     case 'happy':
-      // Smokey: cheerful trot with bob
+      // Good boy: cheerful trot with bob
       m.bobY = Math.sin(m.walkPhase * 1.1) * 2;
       m.vx = m.baseVx;
       break;
@@ -2249,9 +2249,9 @@ function drawMascot(m) {
       ctx.scale(pulse, pulse);
       ctx.strokeStyle = '#FFFFFF';
       ctx.lineWidth = 4;
-      ctx.strokeText('★ SMOKEY ★', 0, 0);
+      ctx.strokeText('★ GOOD BOY ★', 0, 0);
       ctx.fillStyle = '#FF8200';
-      ctx.fillText('★ SMOKEY ★', 0, 0);
+      ctx.fillText('★ GOOD BOY ★', 0, 0);
     } else {
       ctx.strokeStyle = '#000';
       ctx.lineWidth = 3;
@@ -2858,11 +2858,11 @@ function endGame() {
   }
   if (ejected) {
     lines.push('');
-    lines.push('YOU SHOT SMOKEY THREE TIMES.');
-    lines.push('THE UNIVERSITY HAS REVOKED');
+    lines.push('YOU SHOT THE GOOD BOY THREE TIMES.');
+    lines.push('THE HOME CROWD HAS REVOKED');
     lines.push('YOUR SEASON TICKETS.');
   } else if (stats.smokey > 0) {
-    lines.push(`SMOKEY STRIKES ....... ${stats.smokey} OF 3`);
+    lines.push(`GOOD-BOY STRIKES ..... ${stats.smokey} OF 3`);
   }
   lines.push('');
   lines.push(`RANK: ${rankTitle(score)}`);

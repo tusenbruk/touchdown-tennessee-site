@@ -32,6 +32,11 @@ export interface PrintfulVariant {
 
 const CATALOG_REVALIDATE = 300;
 
+// Products parked by the owner: still live in Printful, hidden everywhere on
+// the site (homepage shop grid, /merch grid, sitemap). Rifleman 1794 Tee is
+// parked until the artwork redraw lands.
+const HIDDEN_PRODUCT_IDS = new Set<number>([434179581]);
+
 export interface ProductDetail {
   id: number;
   name: string;
@@ -108,7 +113,7 @@ export async function getCatalog(): Promise<CatalogProduct[]> {
         };
       })
     );
-    return detailed.filter(Boolean) as CatalogProduct[];
+    return (detailed.filter(Boolean) as CatalogProduct[]).filter((p) => !HIDDEN_PRODUCT_IDS.has(p.id));
   } catch {
     return [];
   }

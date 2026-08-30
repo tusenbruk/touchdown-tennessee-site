@@ -179,7 +179,7 @@
   <p class="subtitle">CROCKETT'S CATWALK<br>
     15 balls. Knock SEC mascots off the tightrope.<br>
     Don't let 'em reach the uprights.<br>
-    <span style="color:#FF8200">DO NOT HIT SMOKEY!</span></p>
+    <span style="color:#FF8200">DON'T HIT THE GOOD BOY!</span></p>
   <div class="hof">
     <div class="hof-title">★ HALL OF FAME ★</div>
     <table class="hs-table" id="titleHighscores"></table>
@@ -383,7 +383,7 @@ function spawnMascot() {
   const difficulty = Math.min(1, timeAlive / 75000);
   const baseSpeed = 45 + difficulty * 70;
 
-  // Smokey appears more often as it gets harder (forces precision)
+  // The good boy appears more often as it gets harder (forces precision)
   const smokeyChance = 0.18 + difficulty * 0.17;
   const alreadySmokeys = mascots.filter(m => m.smokey && !m.hit).length;
   const isSmokey = alreadySmokeys < 1 && Math.random() < smokeyChance;
@@ -446,7 +446,7 @@ function hitMascot(m, fb) {
     spawnExplosion(m.x, m.y - 10, '#FF8200', 35);
     spawnExplosion(m.x, m.y - 10, '#FFFFFF', 20);
     popups.push({
-      x: m.x, y: m.y - 30, text: 'NOT SMOKEY!',
+      x: m.x, y: m.y - 30, text: "THAT'S THE GOOD BOY!",
       color: '#FF3344', life: 1.6, vy: -50, size: 22
     });
     popups.push({
@@ -550,9 +550,9 @@ function update(dt) {
             beep(220, 0.25, 'sawtooth', 0.12, -120);
             beep(140, 0.35, 'sawtooth', 0.1, -60);
           } else {
-            // Smokey scored — friendly cheer
+            // The good boy scored — friendly cheer
             popups.push({
-              x: W * 0.5, y: ropeY() - 30, text: 'GO VOLS!',
+              x: W * 0.5, y: ropeY() - 30, text: 'GOOD DOG!',
               color: '#FF8200', life: 1.4, vy: -45, size: 22
             });
             beep(660, 0.1, 'square', 0.1);
@@ -941,15 +941,9 @@ function drawNeyland(cx, baseY) {
   ctx.beginPath();
   ctx.ellipse(cx, baseY - sh * 0.55, sw / 2 * 0.7, sh / 2 * 0.55, 0, Math.PI, Math.PI * 2);
   ctx.fill();
-  // Checkerboard end zone hint (orange/white blocks at base front)
+  // Trim stripe at base front
   ctx.fillStyle = '#FF8200';
   ctx.fillRect(cx - sw/2 + 6, baseY - 4, sw - 12, 4);
-  ctx.fillStyle = '#FFFFFF';
-  for (let i = 0; i < 8; i++) {
-    if (i % 2 === 0) {
-      ctx.fillRect(cx - sw/2 + 6 + i * (sw - 12) / 8, baseY - 4, (sw - 12) / 8, 4);
-    }
-  }
   // Light towers (4) — daytime, lights off
   ctx.strokeStyle = '#888';
   ctx.lineWidth = 1.5;
@@ -1657,16 +1651,16 @@ function drawMascot(m) {
     ctx.font = 'bold 11px Impact, sans-serif';
     ctx.textAlign = 'center';
     if (m.smokey) {
-      // Smokey label - big and warning-like
+      // Good-boy label - big and warning-like
       ctx.font = 'bold 14px Impact, sans-serif';
       // Pulse
       const pulse = 1 + Math.sin(performance.now() / 150) * 0.1;
       ctx.scale(pulse, pulse);
       ctx.strokeStyle = '#FFFFFF';
       ctx.lineWidth = 4;
-      ctx.strokeText('★ SMOKEY ★', 0, 0);
+      ctx.strokeText('★ GOOD BOY ★', 0, 0);
       ctx.fillStyle = '#FF8200';
-      ctx.fillText('★ SMOKEY ★', 0, 0);
+      ctx.fillText('★ GOOD BOY ★', 0, 0);
     } else {
       ctx.strokeStyle = '#000';
       ctx.lineWidth = 3;
@@ -1991,7 +1985,7 @@ function drawCatHead(t) {
   ctx.stroke();
 }
 
-// ============ SMOKEY (THE GOOD BOY) ============
+// ============ THE GOOD BOY ============
 function drawSmokey(m) {
   // Aura — clear visual cue this is friendly
   const glow = 1 + Math.sin(performance.now() / 200) * 0.2;

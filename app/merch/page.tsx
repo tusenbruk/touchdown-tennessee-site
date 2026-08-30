@@ -100,15 +100,11 @@ export default async function MerchPage() {
             <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "#8a8074" }}>Rival-flavored · Zero class · All original</span>
           </div>
           <p style={{ color: "#C9BFAF", fontSize: 14, fontStyle: "italic", maxWidth: 560, lineHeight: 1.6, marginBottom: 24 }}>
-            The line your mother-in-law won&apos;t get for Christmas. Strong opinions about certain reptiles, elephants, and bulldogs — expressed in 100% original artwork, no rival trademarks harmed.
+            The line your mother-in-law won&apos;t get for Christmas. Strong opinions about whoever is visiting — expressed in 100% original artwork, no rival trademarks harmed.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 24, maxWidth: 320 }}>
             {[
-              { name: "New Skin Frontier Tee", tag: "New season. New skin.", image: "/art/card-gator-tee.png" },
               { name: "Visitors Leave Quietly Pennant", tag: "Felt, and unfriendly", image: "/art/card-pennant-visitors.png" },
-              { name: "Gator Tears Sweet Tea Glass", tag: "For sipping in October", image: null },
-              { name: "Elephant Graveyard Cap", tag: "Third Saturday state of mind", image: null },
-              { name: "Bulldog Obedience School Tee", tag: "Sit. Stay. Lose.", image: null },
             ].map((p, i) => (
               <div key={i} style={{ border: "2px solid #FF6600", padding: 0 }}>
                 <div style={{ aspectRatio: "1/1" as const, position: "relative" as const, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" as const, gap: 10, background: "rgba(255,102,0,0.06)", overflow: "hidden" }}>

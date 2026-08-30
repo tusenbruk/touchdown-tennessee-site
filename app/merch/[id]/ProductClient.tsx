@@ -20,6 +20,22 @@ interface Product {
   variants: Variant[];
 }
 
+// Persuasive copy for specific in-stock products, keyed by real Printful
+// sync product id — not invented, taken from the kickoff-week brief. Any
+// product without an entry here keeps the plain generic layout.
+const PRODUCT_COPY: Record<number, { hook: string; body: string; cta: string }> = {
+  434160148: {
+    hook: "The hat people steal from you.",
+    body: "Black, navy, or white. State-outline house mark. Not a bookstore lid. Printful is 3–5 days so this is for the rest of the season, not Saturday's opener. Put it on anyway.",
+    cta: "Get the hat",
+  },
+  434189214: {
+    hook: "Class of 1794. The bookstore does not sell this year.",
+    body: "Athletic heather, vintage white, or white. Original 1794 artwork. Independent and unlicensed on purpose. Will not arrive for Saturday. Will arrive for every Saturday after.",
+    cta: "Get Blount College",
+  },
+};
+
 export default function ProductClient() {
   const params = useParams();
   const id = params.id as string;
@@ -78,6 +94,7 @@ export default function ProductClient() {
   }) || product.variants[0];
 
   const price = parseFloat(selectedVariant?.retail_price || "0");
+  const copy = PRODUCT_COPY[product.id];
 
   const handleAddToCart = () => {
     setError("");
@@ -111,7 +128,14 @@ export default function ProductClient() {
           <div style={{ paddingTop: 8 }}>
             <div style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 12, fontWeight: 700 }}>The Frontier Collection</div>
             <h2 style={{ fontSize: 32, fontWeight: 900, lineHeight: 1.1, marginBottom: 16 }}>{product.name}</h2>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#FF6600", marginBottom: 28 }}>${price.toFixed(2)}</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: "#FF6600", marginBottom: copy ? 14 : 28 }}>${price.toFixed(2)}</div>
+
+            {copy && (
+              <>
+                <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>{copy.hook}</div>
+                <p style={{ fontSize: 13, color: "#555", lineHeight: 1.6, marginBottom: 24, maxWidth: 440 }}>{copy.body}</p>
+              </>
+            )}
 
             {colors.length > 1 && (
               <div style={{ marginBottom: 24 }}>
@@ -147,7 +171,7 @@ export default function ProductClient() {
 
             <button onClick={handleAddToCart}
               style={{ width: "100%", padding: "14px 24px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "var(--font-body)", marginBottom: 12 }}>
-              {added ? "✓ Added to Cart" : "Add to Cart"}
+              {added ? "✓ Added to Cart" : copy?.cta ?? "Add to Cart"}
             </button>
 
             {added && (
@@ -207,7 +231,7 @@ export default function ProductClient() {
           </div>
           <button onClick={handleAddToCart}
             style={{ flex: 1, maxWidth: 220, padding: "12px 16px", background: added ? "#2a5c2a" : "#FF6600", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, border: "none", cursor: "pointer", fontFamily: "var(--font-body)" }}>
-            {added ? "✓ Added" : "Add to Cart"}
+            {added ? "✓ Added" : copy?.cta ?? "Add to Cart"}
           </button>
         </div>
       </div>
