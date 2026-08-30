@@ -8,7 +8,7 @@ export default function Footer({ showNewsletter = true }: { showNewsletter?: boo
         <div style={{ background: "#1A1208", color: "#fff", padding: "36px 24px", textAlign: "center", position: "relative" as const, overflow: "hidden" }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
           <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Drop List</h3>
-          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop, plus code WELCOME10 for 10% off your first order.</p>
+          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop.</p>
           <NewsletterForm />
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
         </div>

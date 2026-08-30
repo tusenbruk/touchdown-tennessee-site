@@ -15,7 +15,6 @@ export function organizationJsonLd(): JsonLd {
     logo: `${SITE_URL}/tdt-logo.png`,
     description:
       "Independent Tennessee football editorial and original-design merchandise. Not affiliated with the University of Tennessee or the NFL.",
-    sameAs: ["https://twitter.com/TDTennessee", "https://instagram.com/TDTennessee"],
   };
 }
 

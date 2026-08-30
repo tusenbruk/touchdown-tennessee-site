@@ -102,9 +102,8 @@ export default async function MerchPage() {
           <p style={{ color: "#C9BFAF", fontSize: 14, fontStyle: "italic", maxWidth: 560, lineHeight: 1.6, marginBottom: 24 }}>
             The line your mother-in-law won&apos;t get for Christmas. Strong opinions about whoever is visiting — expressed in 100% original artwork, no rival trademarks harmed.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 24, maxWidth: 320 }}>
             {[
-              { name: "New Skin Frontier Tee", tag: "New season. New skin.", image: "/art/card-gator-tee.png" },
               { name: "Visitors Leave Quietly Pennant", tag: "Felt, and unfriendly", image: "/art/card-pennant-visitors.png" },
             ].map((p, i) => (
               <div key={i} style={{ border: "2px solid #FF6600", padding: 0 }}>

@@ -67,7 +67,9 @@ function PlaceholderCard({ name, image }: { name: string; image: string | null }
 
 export default async function Home() {
   const catalog = await getCatalog();
-  const featured = catalog.slice(0, 6);
+  // MagSafe cases stay purchasable via direct product link, just not pushed
+  // on the homepage — the catalog only goes through iPhone 15 compatibility.
+  const featured = catalog.filter((p) => !/magsafe/i.test(p.name)).slice(0, 6);
 
   return (
     <main style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#1A1208", minHeight: "100vh" }}>
@@ -81,25 +83,31 @@ export default async function Home() {
 
       {/* KICKOFF HERO — Tennessee vs Furman, Sat Sep 5 2026, 3:30pm ET.
           Independent original goods only. No licensed marks or nicknames, and
-          no delivery-by-Saturday promise: Printful ships in 3–5 business days. */}
+          no delivery-by-Saturday promise: Printful ships in 3–5 business days.
+          Leads with the occasion, not TENNESSEE-as-headline; sells what's
+          actually in stock; trivia is a small secondary link, not a co-equal
+          button. */}
       <section style={{ background: "#1A1208", color: "#F5EFE4", padding: "44px 40px", borderBottom: "3px solid #FF6600" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>Kickoff Weekend</span>
+          <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>Sat, Sep 5 · 3:30pm ET · Neyland Stadium</span>
           <h1 style={{ fontSize: 40, fontWeight: 900, lineHeight: 1.08, margin: "18px 0 10px", maxWidth: 720 }}>
-            Tennessee vs. Furman — Saturday, September 5, 3:30pm ET
+            Season opener in Knoxville.
           </h1>
           <p style={{ fontSize: 16, color: "#C9BFAF", fontStyle: "italic", lineHeight: 1.6, maxWidth: 620, margin: "0 0 8px" }}>
-            Season opener in Knoxville. Independent, original goods for the home
+            Tennessee vs. Furman. Independent, original goods for the home
             crowd — drawn here, licensed by nobody.
           </p>
           <p style={{ fontSize: 12, color: "#8a8074", letterSpacing: "0.06em", lineHeight: 1.6, maxWidth: 620, margin: "0 0 22px" }}>
             Printed to order and fulfilled by Printful — ships in 3–5 business
             days, so order now for the weeks after the opener, not for Saturday.
           </p>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" as const }}>
-            <Link href="/merch" style={{ background: "#FF6600", color: "#fff", padding: "13px 26px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none" }}>Shop the Collection →</Link>
-            <Link href="/games/tennessee-football-trivia" style={{ border: "2px solid #FF6600", color: "#FF6600", padding: "11px 24px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none" }}>Play Gameday Trivia</Link>
+          <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
+            <Link href="/merch" style={{ background: "#FF6600", color: "#fff", padding: "13px 26px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none" }}>Shop the Signature Tee →</Link>
+            <Link href="/games/tennessee-football-trivia" style={{ color: "#C9BFAF", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" as const, textDecoration: "underline", textUnderlineOffset: 3 }}>Or play today&apos;s trivia</Link>
           </div>
+          <p style={{ fontSize: 11, color: "#8a8074", letterSpacing: "0.04em", marginTop: 12 }}>
+            In stock now: Signature Tee · Blount College Tee · Rope Cap
+          </p>
         </div>
       </section>
 
@@ -190,7 +198,7 @@ export default async function Home() {
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>
           <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Drop List</h3>
-          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop, plus code WELCOME10 for 10% off your first order.</p>
+          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop.</p>
           <NewsletterForm />
         </div>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
