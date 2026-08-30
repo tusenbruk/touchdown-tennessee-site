@@ -79,6 +79,30 @@ export default async function Home() {
         Free US shipping over $75 · New drop every Thursday
       </div>
 
+      {/* KICKOFF HERO — Tennessee vs Furman, Sat Sep 5 2026, 3:30pm ET.
+          Independent original goods only. No licensed marks or nicknames, and
+          no delivery-by-Saturday promise: Printful ships in 3–5 business days. */}
+      <section style={{ background: "#1A1208", color: "#F5EFE4", padding: "44px 40px", borderBottom: "3px solid #FF6600" }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+          <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>Kickoff Weekend</span>
+          <h1 style={{ fontSize: 40, fontWeight: 900, lineHeight: 1.08, margin: "18px 0 10px", maxWidth: 720 }}>
+            Tennessee vs. Furman — Saturday, September 5, 3:30pm ET
+          </h1>
+          <p style={{ fontSize: 16, color: "#C9BFAF", fontStyle: "italic", lineHeight: 1.6, maxWidth: 620, margin: "0 0 8px" }}>
+            Season opener in Knoxville. Independent, original goods for the home
+            crowd — drawn here, licensed by nobody.
+          </p>
+          <p style={{ fontSize: 12, color: "#8a8074", letterSpacing: "0.06em", lineHeight: 1.6, maxWidth: 620, margin: "0 0 22px" }}>
+            Printed to order and fulfilled by Printful — ships in 3–5 business
+            days, so order now for the weeks after the opener, not for Saturday.
+          </p>
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" as const }}>
+            <Link href="/merch" style={{ background: "#FF6600", color: "#fff", padding: "13px 26px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none" }}>Shop the Collection →</Link>
+            <Link href="/games/tennessee-football-trivia" style={{ border: "2px solid #FF6600", color: "#FF6600", padding: "11px 24px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, textDecoration: "none" }}>Play Gameday Trivia</Link>
+          </div>
+        </div>
+      </section>
+
       <div className="main-container" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
 
         {/* FEATURED PRODUCTS */}
@@ -182,7 +206,6 @@ export default async function Home() {
             <Link href="/guides" style={{ color: "#8B7355", textDecoration: "none" }}>Guides</Link>
             <Link href="/about" style={{ color: "#8B7355", textDecoration: "none" }}>About</Link>
             <Link href="/contact" style={{ color: "#8B7355", textDecoration: "none" }}>Contact</Link>
-            <a href="https://twitter.com/TDTennessee" target="_blank" rel="noopener noreferrer" style={{ color: "#8B7355", textDecoration: "none" }}>@TDTennessee</a>
           </div>
           <div style={{ fontSize: 10, letterSpacing: "0.08em", color: "#8B7355", maxWidth: 320 }}>
             Independent fan brand. Not affiliated with, sponsored by, or endorsed by the University of Tennessee or the NFL.
