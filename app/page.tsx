@@ -102,7 +102,10 @@ export default async function Home() {
       {/* KICKOFF HERO — full-bleed collection art with the state mark as a
           corner watermark. Independent original goods only: no licensed
           marks or nicknames, and no delivery-by-Saturday promise — Printful
-          ships in 3–5 business days. Exact copy per the kickoff-week brief. */}
+          ships in 3–5 business days. Exact copy per the kickoff-week brief.
+          Scheduled through Wed 2026-09-02; keep this hero into Thursday too
+          unless a real Frontier Printful SKU exists to replace it — don't
+          swap in New Skin/Frontier art as if it were a live product. */}
       <section style={{ position: "relative", overflow: "hidden", minHeight: "clamp(380px, 52vw, 560px)", display: "flex", alignItems: "flex-end", borderBottom: "3px solid #FF6600" }}>
         <Image src="/art/collection-frontier.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(26,18,8,0.30) 0%, rgba(26,18,8,0.88) 100%)" }} />
@@ -211,7 +214,12 @@ export default async function Home() {
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, borderTop: "3px dashed rgba(255,255,255,0.15)" }} />
         <div style={{ padding: "36px 40px", textAlign: "center", position: "relative" as const }}>
           <h3 style={{ fontSize: 22, letterSpacing: "0.06em", marginBottom: 6 }}>The Drop List</h3>
-          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 20 }}>First look at every Thursday drop.</p>
+          <p style={{ fontSize: 14, fontStyle: "italic", color: "#aaa", marginBottom: 10 }}>First look at every Thursday drop.</p>
+          {/* Copy-only preview of what the signup actually sends — no ESP
+              subject line is wired here, this is just an honest preview. */}
+          <p style={{ fontSize: 11, color: "#8a8074", letterSpacing: "0.01em", marginBottom: 20, maxWidth: 360, marginLeft: "auto", marginRight: "auto" }}>
+            What lands in your inbox: <span style={{ color: "#C9BFAF" }}>&ldquo;Kickoff Saturday. The tee is $19.&rdquo;</span> Printful will not make Saturday. Buy it anyway.
+          </p>
           <NewsletterForm />
         </div>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, borderBottom: "3px dashed rgba(255,255,255,0.15)" }} />
