@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3ebe0;
+  --color-bone: #e7d9c6;
+  --color-cream: #fff8f0;
+  --color-ink: #16120e;
+  --color-muted: #7a6f64;
+  --color-brand: #e85d04;
+  --color-brand-dark: #c24a00;
+  --color-rule: color-mix(in oklab, var(--color-ink) 12%, transparent);
+
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+
+  --shadow-border:
+    0px 0px 0px 1px rgba(22, 18, 14, 0.06),
+    0px 1px 2px -1px rgba(22, 18, 14, 0.06),
+    0px 8px 24px -12px rgba(22, 18, 14, 0.18);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  img {
+    outline: 1px solid rgba(22, 18, 14, 0.08);
+    outline-offset: -1px;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: var(--color-cream);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
