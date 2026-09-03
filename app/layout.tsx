@@ -15,16 +15,16 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.touchdowntenn
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Touchdown Tennessee — Original Tennessee Football Goods",
+    default: "Touchdown Tennessee — Independent Tennessee football culture",
     template: "%s | Touchdown Tennessee",
   },
-  description: "Original, independent Tennessee football designs — apparel, prints, and gifts. Plus daily trivia and arcade games. Knoxville to Nashville.",
+  description: "Independent Tennessee football culture. Games, history, and why Saturdays still matter. Not affiliated with the University of Tennessee.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Touchdown Tennessee",
-    description: "Original, independent Tennessee football designs — apparel, prints, and gifts.",
+    description: "Independent Tennessee football culture. Games, history, and why Saturdays still matter.",
     url: SITE_URL,
     siteName: "Touchdown Tennessee",
     locale: "en_US",
@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@TDTennessee",
   },
   icons: {
     icon: "/tdt-favicon.png",
