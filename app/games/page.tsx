@@ -3,10 +3,11 @@ import Link from "next/link";
 import Masthead from "@/app/components/Masthead";
 import Footer from "@/app/components/Footer";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/seo";
+import { SLATE_2026, THIS_SATURDAY } from "@/lib/culture";
 
 export const metadata: Metadata = {
   title: "Games",
-  description: "Daily Tennessee football trivia, the Saturday Score guessing game, and two arcade games. Free, no login, progress saved on your device.",
+  description: "The 2026 slate, daily Tennessee football trivia, Saturday Score, and arcade games. Free, no login.",
   alternates: { canonical: "/games" },
 };
 
@@ -16,7 +17,7 @@ const GAMES = [
     badge: "Daily Trivia",
     color: "#FF6600",
     title: "Tennessee Football Trivia",
-    desc: "Ten questions a day on Tennessee football history, Titans lore, coaches, bowls, and the culture. Same round for everyone — compare scores.",
+    desc: "Ten questions a day on Tennessee football history, coaches, bowls, and the culture. Same round for everyone — compare scores.",
     cta: "Play today's round →",
   },
   {
@@ -32,7 +33,7 @@ const GAMES = [
     badge: "Arcade",
     color: "#FF6600",
     title: "Tennessee Rifleman",
-    desc: "Crockett's hunt. Streak multipliers, a supply wagon, a three-strike rule — and a shop discount for big scores.",
+    desc: "Crockett's hunt. Streak multipliers, a supply wagon, a three-strike rule.",
     cta: "Start the hunt →",
   },
   {
@@ -63,15 +64,49 @@ export default function GamesPage() {
 
       <div style={{ maxWidth: 1080, margin: "40px auto 0", padding: "0 40px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-          <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Game Room</span>
+          <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>This Saturday</span>
           <div style={{ flex: 1, height: 1, background: "#FF6600" }} />
         </div>
         <h1 style={{ fontSize: 36, fontWeight: 900, lineHeight: 1.1, marginBottom: 8 }}>Games</h1>
-        <p style={{ fontSize: 16, color: "#666", fontStyle: "italic", lineHeight: 1.6, marginBottom: 6, maxWidth: 640 }}>
-          Two daily brain games, two arcade shooters. Free, no login.
+        <p style={{ fontSize: 16, color: "#666", fontStyle: "italic", lineHeight: 1.6, marginBottom: 18, maxWidth: 640 }}>
+          The 2026 slate. Show up when you can. Watch when you can’t. Talk about it either way.
         </p>
-        <p style={{ fontSize: 11, color: "#8B7355", marginBottom: 36 }}>
-          Progress and streaks are stored only on your device. Nothing is tracked to you personally.
+
+        <div style={{ border: "1px solid #D4CEC7", borderTop: "3px solid #FF6600", padding: "18px 20px", background: "#FAFAF8", marginBottom: 28 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase" as const, color: "#FF6600", marginBottom: 6 }}>{THIS_SATURDAY.label}</div>
+          <div style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.3 }}>{THIS_SATURDAY.line}</div>
+          <p style={{ margin: "8px 0 0", fontSize: 13, color: "#666", fontStyle: "italic" }}>{THIS_SATURDAY.note}</p>
+        </div>
+
+        <h2 style={{ fontSize: 22, fontWeight: 900, margin: "0 0 14px" }}>2026 slate</h2>
+        <div style={{ border: "1px solid #D4CEC7", marginBottom: 40 }}>
+          {SLATE_2026.map((g, i) => (
+            <div
+              key={`${g.date}-${g.opponent}`}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "90px 1fr 120px 90px",
+                gap: 12,
+                padding: "12px 14px",
+                borderTop: i === 0 ? "none" : "1px solid #EEE8E0",
+                background: g.featured ? "#FFF7F0" : "#fff",
+                fontSize: 13,
+              }}
+            >
+              <span style={{ fontWeight: 700, letterSpacing: "0.04em" }}>{g.date}</span>
+              <span style={{ fontWeight: g.featured ? 800 : 600 }}>{g.opponent}</span>
+              <span style={{ color: "#8B7355" }}>{g.where || "—"}</span>
+              <span style={{ color: "#666", textAlign: "right" as const }}>{g.time || "TBD"}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+          <span style={{ border: "1.5px solid #1A1208", color: "#1A1208", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>The Game Room</span>
+          <div style={{ flex: 1, height: 1, background: "#1A1208" }} />
+        </div>
+        <p style={{ fontSize: 14, color: "#666", marginBottom: 20 }}>
+          Two daily brain games, two arcade shooters. Free, no login. Progress stays on your device.
         </p>
 
         <div className="games-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}>
@@ -83,16 +118,6 @@ export default function GamesPage() {
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: g.color }}>{g.cta}</span>
             </Link>
           ))}
-        </div>
-
-        {/* Commerce cross-link, restrained */}
-        <div style={{ borderTop: "1px solid #D4CEC7", paddingTop: 24, marginBottom: 48, display: "flex", flexWrap: "wrap" as const, alignItems: "baseline", gap: 12, justifyContent: "space-between" }}>
-          <p style={{ fontSize: 13, color: "#8B7355", fontStyle: "italic", margin: 0 }}>
-            Big Rifleman scores earn a single-use shop discount. Everything in the shop is original artwork.
-          </p>
-          <Link href="/merch" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase" as const, color: "#FF6600", textDecoration: "none" }}>
-            Visit the Shop →
-          </Link>
         </div>
       </div>
       <Footer />
