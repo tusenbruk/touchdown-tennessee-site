@@ -20,7 +20,7 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         ) : (
           <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
         )}
-        <span className="top-bar-center">Original Tennessee Football Goods · Knoxville to Nashville</span>
+        <span className="top-bar-center">Saturday · Knoxville · Football country</span>
         <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {rightLink ? (
             <Link href={rightLink.href} style={{ textDecoration: "none", color: "#8B7355" }}>{rightLink.label}</Link>
@@ -31,8 +31,7 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
         <MobileNav />
       </div>
 
-      {/* MASTHEAD — the Tennessee-shaped wordmark is the primary visual. This
-          is the single source of truth: the homepage renders it too. */}
+      {/* MASTHEAD — house mark stays the primary visual. */}
       <div className="masthead">
         <div className="masthead-rule masthead-rule-heavy" />
         <div className="masthead-rule" />
@@ -45,7 +44,7 @@ export default function Masthead({ backLink, rightLink }: MastheadProps) {
           </Link>
           <div className="masthead-desk">
             <span aria-hidden="true" />
-            <p>Original Tennessee Football Goods</p>
+            <p>Independent Tennessee football culture</p>
             <span aria-hidden="true" />
           </div>
         </div>
