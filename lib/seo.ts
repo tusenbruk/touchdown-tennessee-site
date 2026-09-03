@@ -9,12 +9,13 @@ type JsonLd = Record<string, unknown>;
 export function organizationJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
-    "@type": "OnlineStore",
+    "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/tdt-logo.png`,
+    email: "ryan@watauga.co",
     description:
-      "Independent Tennessee football editorial and original-design merchandise. Not affiliated with the University of Tennessee or the NFL.",
+      "Independent Tennessee football culture. Not affiliated with, endorsed by, or licensed by the University of Tennessee.",
   };
 }
 
@@ -59,8 +60,6 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]): JsonL
   };
 }
 
-// Render helper — use inside a <script type="application/ld+json"> via
-// dangerouslySetInnerHTML on the stringified schema.
 export function jsonLdString(...schemas: JsonLd[]): string {
   return JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
 }
