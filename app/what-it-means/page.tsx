@@ -32,7 +32,7 @@ export default function WhatItMeansPage() {
         </div>
         <h1 style={{ fontSize: 40, fontWeight: 900, lineHeight: 1.1, marginBottom: 18 }}>What It Means</h1>
         <p style={{ fontSize: 17, color: "#333", lineHeight: 1.75, margin: "0 0 16px" }}>
-          Tennessee football isn’t only a scoreboard. It’s the drive over the mountains. It’s a kid in an oversized shirt. It’s alumni in Sydney and Singapore still checking kickoff times like they’re late for church.
+          Tennessee football isn’t only a scoreboard. It’s the drive over the mountains. It’s a kid in an oversized shirt. It’s alumni all over the world still checking kickoff times like they’re late for church.
         </p>
         <p style={{ fontSize: 17, color: "#333", lineHeight: 1.75, margin: "0 0 16px" }}>
           It’s hospitality that runs hot until the whistle — then the joke gets sharper. It’s arguing about coaching on Monday and forgiving by Thursday because Saturday is coming again.
