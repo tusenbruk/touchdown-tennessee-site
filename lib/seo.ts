@@ -13,7 +13,7 @@ export function organizationJsonLd(): JsonLd {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/tdt-logo.png`,
-    email: "ryan@watauga.co",
+    email: "touchdowntennessee@gmail.com",
     description:
       "Independent Tennessee football culture. Not affiliated with, endorsed by, or licensed by the University of Tennessee.",
   };
