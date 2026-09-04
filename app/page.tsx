@@ -15,7 +15,7 @@ export default function Home() {
       <section style={{ position: "relative", overflow: "hidden", minHeight: "clamp(360px, 48vw, 520px)", display: "flex", alignItems: "flex-end", borderBottom: "3px solid #FF6600" }}>
         <Image
           src="/photos/neyland-2010.jpg"
-          alt="Stadium exterior in Knoxville — Wikimedia Commons"
+          alt="Stadium exterior in Knoxville"
           fill
           priority
           sizes="100vw"
@@ -33,9 +33,15 @@ export default function Home() {
           <span style={{ border: "1.5px solid #FF6600", color: "#FF6600", fontSize: 9, fontWeight: 900, letterSpacing: "0.26em", padding: "4px 10px", textTransform: "uppercase" as const }}>
             Saturday · Knoxville · Football country
           </span>
-          <h1 style={{ fontSize: "clamp(36px, 7vw, 64px)", fontWeight: 900, lineHeight: 1.02, margin: "18px 0 12px", letterSpacing: "0.02em" }}>
+          <h1 style={{ fontSize: "clamp(36px, 7vw, 64px)", fontWeight: 900, lineHeight: 1.02, margin: "18px 0 10px", letterSpacing: "0.02em" }}>
             THEN GO AHEAD.
           </h1>
+          <p style={{ fontSize: 15, color: "#E7DFD1", lineHeight: 1.55, maxWidth: 640, margin: "0 0 6px", fontStyle: "italic" }}>
+            “Be always sure you&apos;re right, then go ahead.”
+          </p>
+          <p style={{ fontSize: 12, color: "#C0B9AF", letterSpacing: "0.08em", margin: "0 0 18px" }}>
+            — Davy Crockett
+          </p>
           <p style={{ fontSize: 16, color: "#E7DFD1", lineHeight: 1.6, maxWidth: 620, margin: "0 0 22px" }}>
             Independent Tennessee football culture. Games, history, and why Saturdays still matter.
           </p>
@@ -126,7 +132,7 @@ export default function Home() {
         <h2 style={{ fontSize: 32, fontWeight: 900, margin: "0 0 14px", lineHeight: 1.15 }}>What It Means</h2>
         <div style={{ maxWidth: 720 }}>
           <p style={{ fontSize: 15, color: "#444", lineHeight: 1.7, margin: "0 0 12px" }}>
-            Tennessee football isn’t only a scoreboard. It’s the drive over the mountains. It’s a kid in an oversized shirt. It’s alumni in Sydney and Singapore still checking kickoff times like they’re late for church.
+            Tennessee football isn’t only a scoreboard. It’s the drive over the mountains. It’s a kid in an oversized shirt. It’s alumni all over the world still checking kickoff times like they’re late for church.
           </p>
           <p style={{ fontSize: 15, color: "#444", lineHeight: 1.7, margin: "0 0 12px" }}>
             It’s hospitality that runs hot until the whistle — then the joke gets sharper. It’s arguing about coaching on Monday and forgiving by Thursday because Saturday is coming again.
@@ -143,29 +149,13 @@ export default function Home() {
           <span style={{ border: "1.5px solid #8B7355", color: "#8B7355", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", padding: "3px 8px", textTransform: "uppercase" as const }}>Photo wall</span>
           <div style={{ flex: 1, height: 1, background: "#8B7355" }} />
         </div>
-        <h2 style={{ fontSize: 28, fontWeight: 900, margin: "0 0 8px" }}>On the river</h2>
-        <p style={{ fontSize: 13, color: "#8B7355", margin: "0 0 18px" }}>
-          Wikimedia Commons only. Each caption credits author, license, and file page.
-        </p>
+        <h2 style={{ fontSize: 28, fontWeight: 900, margin: "0 0 18px" }}>On the river</h2>
         <div className="article-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 18 }}>
           {PHOTOS.map((photo) => (
             <figure key={photo.src} style={{ margin: 0, border: "1px solid #D4CEC7", background: "#FAFAF8" }}>
               <div style={{ position: "relative", aspectRatio: "4 / 3", overflow: "hidden", background: "#1A1208" }}>
                 <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
               </div>
-              <figcaption style={{ padding: "12px 14px", fontSize: 12, lineHeight: 1.5, color: "#444" }}>
-                <div style={{ marginBottom: 4 }}>{photo.caption}</div>
-                <div>
-                  Photo: {photo.author} ·{" "}
-                  <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#FF6600" }}>
-                    {photo.license}
-                  </a>{" "}
-                  ·{" "}
-                  <a href={photo.filePage} target="_blank" rel="noopener noreferrer" style={{ color: "#8B7355" }}>
-                    Wikimedia Commons
-                  </a>
-                </div>
-              </figcaption>
             </figure>
           ))}
         </div>
