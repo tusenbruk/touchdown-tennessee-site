@@ -26,7 +26,7 @@ export default function Footer({ showNewsletter = false }: { showNewsletter?: bo
               Photos: Wikimedia Commons contributors (see captions).
             </p>
             <p style={{ margin: 0, fontSize: 12 }}>
-              Contact: <a href="mailto:ryan@watauga.co" style={{ color: "#FF6600", textDecoration: "none" }}>ryan@watauga.co</a>
+              Contact: <a href="mailto:touchdowntennessee@gmail.com" style={{ color: "#FF6600", textDecoration: "none" }}>touchdowntennessee@gmail.com</a>
             </p>
           </div>
         </div>
