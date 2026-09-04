@@ -22,9 +22,6 @@ export default function Footer({ showNewsletter = false }: { showNewsletter?: bo
             <p style={{ margin: "0 0 8px" }}>
               Touchdown Tennessee is an independent brand. Not affiliated with, endorsed by, or licensed by the University of Tennessee.
             </p>
-            <p style={{ margin: "0 0 8px", fontSize: 12, color: "#8B7355" }}>
-              Photos: Wikimedia Commons contributors (see captions).
-            </p>
             <p style={{ margin: 0, fontSize: 12 }}>
               Contact: <a href="mailto:touchdowntennessee@gmail.com" style={{ color: "#FF6600", textDecoration: "none" }}>touchdowntennessee@gmail.com</a>
             </p>
