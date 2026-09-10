@@ -19,9 +19,9 @@ export const wire: WireItem[] = [
   {
     id: "w1",
     kind: "notice",
-    stamped: "Mon · Game week",
-    line: "Furman, Saturday, 3:30. The hill will be loud for a game it should win.",
-    body: "That is the point of September. Come early. The shop is merch. Saturday is why you stay.",
+    stamped: "Saturday · Atlanta",
+    line: "Tennessee at Georgia Tech · Sep 12 · 7:00 ET · Atlanta",
+    body: "Primetime on the road. First real test of the year.",
   },
   {
     id: "w2",
