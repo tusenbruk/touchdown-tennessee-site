@@ -5,14 +5,13 @@ import { BrandStamp } from "@/components/brand-mark";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button";
 import { wire } from "@/lib/saturday/wire";
-import { nextGame } from "@/lib/saturday/schedule";
+import { THIS_SATURDAY } from "@/lib/saturday/schedule";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
   const classics = getByCollection("classics");
   const heritage = getByCollection("heritage");
-  const next = nextGame();
   const featured = wire[0]!;
   return (
     <div>
@@ -58,9 +57,9 @@ function Home() {
             <p className="font-display text-xs tracking-[0.22em] text-brand">Saturday</p>
             <h2 className="mt-2 text-3xl sm:text-5xl">The shop is merch. This is why you stay.</h2>
             <p className="mt-4 max-w-lg text-sm text-cream/70">
-              A wire of takes, a board that actually has an opinion, and a kick with something on it. {next.opponent},{" "}
-              {next.kickoffLabel}.
+              {THIS_SATURDAY.line}
             </p>
+            <p className="mt-2 max-w-lg text-sm text-cream/70">{THIS_SATURDAY.note}</p>
             <div className="mt-8">
               <KickoffCountdown tone="ink" />
             </div>

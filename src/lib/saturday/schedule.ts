@@ -12,13 +12,20 @@ export type Game = {
   network: string;
   lean: Lean;
   take: string;
+  featured?: boolean;
 };
 
-/** Furman, Saturday Sep 5 2026, 3:30pm ET (EDT = UTC-4). */
-export const NEXT_KICKOFF = "2026-09-05T19:30:00.000Z";
-export const NEXT_OPPONENT = "Furman";
+/** Georgia Tech, Saturday Sep 12 2026, 7:00pm ET (EDT = UTC-4). */
+export const NEXT_KICKOFF = "2026-09-12T23:00:00.000Z";
+export const NEXT_OPPONENT = "Georgia Tech";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
+
+export const THIS_SATURDAY = {
+  label: "This Saturday",
+  line: "Tennessee at Georgia Tech · Sep 12 · 7:00 ET · Atlanta",
+  note: "Primetime on the road. First real test of the year.",
+} as const;
 
 export const games: Game[] = [
   {
@@ -33,6 +40,7 @@ export const games: Game[] = [
     network: "SECN+",
     lean: "lock",
     take: "Not a trap. A temperature check. The hill should be loud for a game it is supposed to win. That is the whole point of September.",
+    featured: false,
   },
   {
     id: "georgia-tech",
@@ -46,6 +54,7 @@ export const games: Game[] = [
     network: "ESPN",
     lean: "toss",
     take: "First real test, under the lights, on the road. Atlanta is not a warm-up. If the freshman is still standing on Sunday, the season has a spine.",
+    featured: true,
   },
   {
     id: "kennesaw",

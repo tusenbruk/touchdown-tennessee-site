@@ -21,7 +21,7 @@ export function Header() {
     <>
       <div className="bg-ink text-cream">
         <p className="hidden py-2 text-center font-display text-[11px] uppercase tracking-[0.22em] sm:block">
-          Furman · Saturday 3:30 ET · Independent on purpose
+          Saturday · Atlanta · Road lights
         </p>
         <p className="py-2 text-center font-display text-[11px] uppercase tracking-[0.18em] sm:hidden">
           Furman · Saturday 3:30 ET
