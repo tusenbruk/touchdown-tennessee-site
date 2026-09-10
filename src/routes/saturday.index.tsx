@@ -2,13 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button";
 import { wire } from "@/lib/saturday/wire";
-import { games, leanLabel, nextGame, pulse } from "@/lib/saturday/schedule";
+import { THIS_SATURDAY, games, leanLabel, pulse } from "@/lib/saturday/schedule";
 import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/saturday/")({ component: SaturdayHome });
 
 function SaturdayHome() {
-  const next = nextGame();
   const featured = wire[0]!;
   const look = games.filter((g) => g.id === "texas" || g.id === "alabama" || g.id === "georgia-tech");
 
@@ -17,10 +16,8 @@ function SaturdayHome() {
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         <div>
           <KickoffCountdown />
-          <p className="mt-4 text-sm text-muted">
-            {next.location === "home" ? "Home" : "Away"} · {next.city} · {next.kickoffLabel} · {next.network}
-          </p>
-          <p className="mt-4 max-w-lg text-sm text-ink/80">{next.take}</p>
+          <p className="mt-4 text-sm text-muted">{THIS_SATURDAY.line}</p>
+          <p className="mt-4 max-w-lg text-sm text-ink/80">{THIS_SATURDAY.note}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/saturday/six" className={buttonVariants({ size: "lg" })}>
               Play Give Him 6
