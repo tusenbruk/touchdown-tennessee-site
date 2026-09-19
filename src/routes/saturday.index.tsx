@@ -9,7 +9,7 @@ export const Route = createFileRoute("/saturday/")({ component: SaturdayHome });
 
 function SaturdayHome() {
   const featured = wire[0]!;
-  const look = games.filter((g) => g.id === "texas" || g.id === "alabama" || g.id === "georgia-tech");
+  const look = games.filter((g) => g.id === "texas" || g.id === "alabama" || g.id === "kennesaw");
 
   return (
     <div>
@@ -19,11 +19,11 @@ function SaturdayHome() {
           <p className="mt-4 text-sm text-muted">{THIS_SATURDAY.line}</p>
           <p className="mt-4 max-w-lg text-sm text-ink/80">{THIS_SATURDAY.note}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/saturday/six" className={buttonVariants({ size: "lg" })}>
-              Play Give Him 6
-            </Link>
-            <Link to="/saturday/wire" className={buttonVariants({ size: "lg", variant: "outline" })}>
+            <Link to="/saturday/wire" className={buttonVariants({ size: "lg" })}>
               Read the wire
+            </Link>
+            <Link to="/saturday/board" className={buttonVariants({ size: "lg", variant: "outline" })}>
+              The Board
             </Link>
           </div>
         </div>
@@ -44,9 +44,9 @@ function SaturdayHome() {
 
       <section className="border-t border-ink/10 bg-cream/40">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <p className="font-display text-xs tracking-[0.22em] text-brand">Three rooms</p>
-          <h2 className="mt-2 text-3xl sm:text-4xl">Come for the takes. Stay for the kick.</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <p className="font-display text-xs tracking-[0.22em] text-brand">Two rooms</p>
+          <h2 className="mt-2 text-3xl sm:text-4xl">Come for the takes. Stay for kickoff.</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
             <Room
               to="/saturday/wire"
               kicker="Gossip"
@@ -58,12 +58,6 @@ function SaturdayHome() {
               kicker="Numbers"
               title="The Board"
               body="The slate with our lean, not a spreadsheet. What 7.5 actually means, in English."
-            />
-            <Room
-              to="/saturday/six"
-              kicker="The game"
-              title="Give Him 6"
-              body="Hold. Time it. Put it through. Fifty and beyond is six. Miss and you start over."
             />
           </div>
         </div>
@@ -112,7 +106,7 @@ function Room({
   title,
   body,
 }: {
-  to: "/saturday/wire" | "/saturday/board" | "/saturday/six";
+  to: "/saturday/wire" | "/saturday/board";
   kicker: string;
   title: string;
   body: string;

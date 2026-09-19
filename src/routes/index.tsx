@@ -64,11 +64,11 @@ function Home() {
               <KickoffCountdown tone="ink" />
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/saturday/six" className={buttonVariants({ size: "lg" })}>
-                Play Give Him 6
-              </Link>
-              <Link to="/saturday/wire" className={buttonVariants({ size: "lg", variant: "cream" })}>
+              <Link to="/saturday/wire" className={buttonVariants({ size: "lg" })}>
                 The Wire
+              </Link>
+              <Link to="/saturday/board" className={buttonVariants({ size: "lg", variant: "cream" })}>
+                The Board
               </Link>
             </div>
           </div>

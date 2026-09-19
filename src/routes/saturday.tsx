@@ -10,7 +10,7 @@ export const Route = createFileRoute("/saturday")({
       {
         name: "description",
         content:
-          "The Knoxville clubhouse: rumor mill, the board, and Give Him 6. Independent Tennessee football spirit.",
+          "The Knoxville clubhouse: rumor mill and the board. Independent Tennessee football spirit.",
       },
     ],
   }),
@@ -20,7 +20,6 @@ const links = [
   { to: "/saturday" as const, label: "Clubhouse", exact: true },
   { to: "/saturday/wire" as const, label: "The Wire" },
   { to: "/saturday/board" as const, label: "The Board" },
-  { to: "/saturday/six" as const, label: "Give Him 6" },
 ];
 
 function SaturdayLayout() {
@@ -35,7 +34,7 @@ function SaturdayLayout() {
             <p className="font-display text-xs tracking-[0.22em] text-brand">Game week</p>
             <h1 className="mt-2 text-4xl sm:text-6xl">Saturday</h1>
             <p className="mt-3 max-w-xl text-sm text-cream/70">
-              The shop is merch. This is why you come back. Gossip, the board, and a kick with something on it.
+              The shop is merch. This is why you come back. Gossip and the board for game week.
             </p>
           </div>
         ) : (
