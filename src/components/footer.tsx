@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Newsletter } from "@/components/newsletter";
 import { BrandStamp } from "@/components/brand-mark";
+import { HOUSE_MARK } from "@/lib/house-mark-data";
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
         <div>
           <BrandStamp
-            src="/brand/house-mark.png"
+            src={HOUSE_MARK}
             alt="Touchdown Tennessee"
             className="h-16 sm:h-20"
           />
