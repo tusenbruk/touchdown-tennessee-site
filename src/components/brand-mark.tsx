@@ -1,10 +1,9 @@
 import { cn } from "@/lib/cn";
-import { HOUSE_MARK_INK } from "@/lib/house-mark-ink-data";
 
 export function PrimaryMark({ className }: { className?: string }) {
   return (
     <img
-      src={HOUSE_MARK_INK}
+      src="/brand/house-mark-ink.svg"
       alt="Touchdown Tennessee"
       className={cn("h-9 w-auto object-contain outline-none sm:h-11", className)}
     />
@@ -14,7 +13,7 @@ export function PrimaryMark({ className }: { className?: string }) {
 export function TdtMark({ className }: { className?: string }) {
   return (
     <img
-      src={HOUSE_MARK_INK}
+      src="/brand/house-mark-ink.svg"
       alt="Touchdown Tennessee"
       className={cn("h-9 w-auto object-contain outline-none sm:h-11", className)}
     />
