@@ -43,7 +43,7 @@ function Home() {
               </div>
             </div>
             <BrandStamp
-              src="/brand/primary-orange.png"
+              src="/brand/house-mark.png"
               alt="Touchdown"
               className="hidden w-72 lg:block lg:w-80"
             />
