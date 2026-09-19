@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { collections, getByCollection } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { BrandStamp } from "@/components/brand-mark";
-import { HOUSE_MARK } from "@/lib/house-mark-data";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button";
 import { wire } from "@/lib/saturday/wire";
@@ -44,7 +43,7 @@ function Home() {
               </div>
             </div>
             <BrandStamp
-              src={HOUSE_MARK}
+              src="/brand/house-mark.svg"
               alt="Touchdown"
               className="hidden w-72 lg:block lg:w-80"
             />
