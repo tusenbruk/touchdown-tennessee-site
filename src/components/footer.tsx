@@ -31,9 +31,6 @@ export function Footer() {
             <Link to="/saturday/wire" className="hover:text-cream">
               The Wire
             </Link>
-            <Link to="/saturday/six" className="hover:text-cream">
-              Give Him 6
-            </Link>
             <Link to="/independent" className="hover:text-cream">
               Independent
             </Link>

@@ -15,16 +15,16 @@ export type Game = {
   featured?: boolean;
 };
 
-/** Georgia Tech, Saturday Sep 12 2026, 7:00pm ET (EDT = UTC-4). */
-export const NEXT_KICKOFF = "2026-09-12T23:00:00.000Z";
-export const NEXT_OPPONENT = "Georgia Tech";
+/** Kennesaw State, Saturday Sep 19 2026, 7:45pm ET (EDT = UTC-4). */
+export const NEXT_KICKOFF = "2026-09-19T23:45:00.000Z";
+export const NEXT_OPPONENT = "Kennesaw State";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
 
 export const THIS_SATURDAY = {
   label: "This Saturday",
-  line: "Tennessee at Georgia Tech · Sep 12 · 7:00 ET · Atlanta",
-  note: "Primetime on the road. First real test of the year.",
+  line: "Tennessee vs Kennesaw State · Sep 19 · 7:45 ET · Knoxville",
+  note: "Home under the lights. Non-conference Saturday on SEC Network.",
 } as const;
 
 export const games: Game[] = [
@@ -32,7 +32,7 @@ export const games: Game[] = [
     id: "furman",
     week: 1,
     date: "2026-09-05",
-    kickoff: NEXT_KICKOFF,
+    kickoff: "2026-09-05T19:30:00.000Z",
     kickoffLabel: "3:30 ET",
     opponent: "Furman",
     location: "home",
@@ -54,7 +54,7 @@ export const games: Game[] = [
     network: "ESPN",
     lean: "toss",
     take: "First real test, under the lights, on the road. Atlanta is not a warm-up. If the freshman is still standing on Sunday, the season has a spine.",
-    featured: true,
+    featured: false,
   },
   {
     id: "kennesaw",
@@ -68,6 +68,7 @@ export const games: Game[] = [
     network: "SECN",
     lean: "lock",
     take: "A Saturday to remember the depth chart. Score it, sit the pride, keep the freshman upright. Nobody hands out banners in week three.",
+    featured: true,
   },
   {
     id: "texas",
@@ -224,8 +225,8 @@ export const pulse = [
   },
   {
     kicker: "Under the lights",
-    value: "Atlanta",
-    label: "Week two, 7 ET",
-    note: "Georgia Tech is the first adult conversation. Everything before it is volume. Everything after it is consequence.",
+    value: "Knoxville",
+    label: "Week three, 7:45 ET",
+    note: "Kennesaw State at home on SEC Network. Depth-chart Saturday. Score it, sit the pride, keep the freshman upright.",
   },
 ];

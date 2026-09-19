@@ -21,10 +21,10 @@ export function Header() {
     <>
       <div className="bg-ink text-cream">
         <p className="hidden py-2 text-center font-display text-[11px] uppercase tracking-[0.22em] sm:block">
-          Saturday · Atlanta · Road lights
+          Saturday · Knoxville · Under the lights
         </p>
         <p className="py-2 text-center font-display text-[11px] uppercase tracking-[0.18em] sm:hidden">
-          Furman · Saturday 3:30 ET
+          Kennesaw State · Saturday 7:45 ET
         </p>
       </div>
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur-sm">
@@ -129,9 +129,6 @@ function MobileLinks() {
       </Link>
       <Link to="/saturday/wire" className={mobileClass}>
         The Wire
-      </Link>
-      <Link to="/saturday/six" className={mobileClass}>
-        Give Him 6
       </Link>
       <Link to="/collection/$slug" params={{ slug: "classics" }} className={mobileClass}>
         Classics

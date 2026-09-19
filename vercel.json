@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build",
+  "redirects": [
+    { "source": "/games", "destination": "/saturday", "permanent": false },
+    { "source": "/saturday/six", "destination": "/saturday", "permanent": false }
+  ]
 }
