@@ -3,7 +3,7 @@ import { cn } from "@/lib/cn";
 export function PrimaryMark({ className }: { className?: string }) {
   return (
     <img
-      src="/brand/primary-orange.png"
+      src="/brand/house-mark-ink.svg"
       alt="Touchdown Tennessee"
       className={cn("h-9 w-auto object-contain outline-none sm:h-11", className)}
     />
@@ -13,7 +13,7 @@ export function PrimaryMark({ className }: { className?: string }) {
 export function TdtMark({ className }: { className?: string }) {
   return (
     <img
-      src="/brand/tdt-mark.png"
+      src="/brand/house-mark-ink.svg"
       alt="Touchdown Tennessee"
       className={cn("h-9 w-auto object-contain outline-none sm:h-11", className)}
     />

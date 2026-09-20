@@ -8,7 +8,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
         <div>
           <BrandStamp
-            src="/brand/primary-cream.png"
+            src="/brand/house-mark.svg"
             alt="Touchdown Tennessee"
             className="h-16 sm:h-20"
           />
