@@ -21,10 +21,10 @@ export function Header() {
     <>
       <div className="bg-ink text-cream">
         <p className="hidden py-2 text-center font-display text-[11px] uppercase tracking-[0.22em] sm:block">
-          Saturday · Knoxville · Under the lights
+          Saturday · Knoxville · Noon
         </p>
         <p className="py-2 text-center font-display text-[11px] uppercase tracking-[0.18em] sm:hidden">
-          Kennesaw State · Saturday 7:45 ET
+          Saturday · Knoxville · Noon
         </p>
       </div>
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur-sm">

@@ -20,8 +20,8 @@ export const wire: WireItem[] = [
     id: "w1",
     kind: "notice",
     stamped: "Saturday · Knoxville",
-    line: "Tennessee vs Kennesaw State · Sep 19 · 7:45 ET · Knoxville",
-    body: "Home under the lights. Non-conference Saturday on SEC Network.",
+    line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
+    body: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
   },
   {
     id: "w2",
@@ -33,9 +33,9 @@ export const wire: WireItem[] = [
   {
     id: "w3",
     kind: "whisper",
-    stamped: "Sun night",
-    line: "Somebody already called Kennesaw a trap game.",
-    body: "It is not a trap game. It is a depth-chart Saturday. Sit the pride. Save the panic for Texas week.",
+    stamped: "Last week",
+    line: "Somebody called Kennesaw a trap game.",
+    body: "It was not a trap. Depth-chart Saturday came and went. The panic is Texas week now.",
   },
   {
     id: "w4",
@@ -62,8 +62,8 @@ export const wire: WireItem[] = [
     id: "w7",
     kind: "notice",
     stamped: "Thu",
-    line: "Texas week is one Saturday away and already living in the group chat.",
-    body: "Noon, national window, a roster that is supposed to be better. Steal it and the over/under is a rumor. Hydrate now.",
+    line: "Texas week is here and living in the group chat.",
+    body: "Noon, national window, a roster that is supposed to be better. Steal it and the over/under is a rumor. Visitors leave quietly.",
   },
   {
     id: "w8",
