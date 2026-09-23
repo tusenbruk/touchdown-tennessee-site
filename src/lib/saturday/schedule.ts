@@ -15,16 +15,16 @@ export type Game = {
   featured?: boolean;
 };
 
-/** Kennesaw State, Saturday Sep 19 2026, 7:45pm ET (EDT = UTC-4). */
-export const NEXT_KICKOFF = "2026-09-19T23:45:00.000Z";
-export const NEXT_OPPONENT = "Kennesaw State";
+/** Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4). */
+export const NEXT_KICKOFF = "2026-09-26T16:00:00.000Z";
+export const NEXT_OPPONENT = "Texas";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
 
 export const THIS_SATURDAY = {
   label: "This Saturday",
-  line: "Tennessee vs Kennesaw State · Sep 19 · 7:45 ET · Knoxville",
-  note: "Home under the lights. Non-conference Saturday on SEC Network.",
+  line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
+  note: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
 } as const;
 
 export const games: Game[] = [
@@ -68,7 +68,7 @@ export const games: Game[] = [
     network: "SECN",
     lean: "lock",
     take: "A Saturday to remember the depth chart. Score it, sit the pride, keep the freshman upright. Nobody hands out banners in week three.",
-    featured: true,
+    featured: false,
   },
   {
     id: "texas",
@@ -82,6 +82,7 @@ export const games: Game[] = [
     network: "ABC",
     lean: "lean-l",
     take: "Noon, national window, a roster that is supposed to be better than ours. Steal it and the over/under is a rumor. Drop it and we find out who we actually are.",
+    featured: true,
   },
   {
     id: "auburn",
@@ -224,9 +225,9 @@ export const pulse = [
     note: "Texas, Alabama, Texas A&M, LSU. The whole season lives in whether one of those gets stubborn.",
   },
   {
-    kicker: "Under the lights",
+    kicker: "Noon kick",
     value: "Knoxville",
-    label: "Week three, 7:45 ET",
-    note: "Kennesaw State at home on SEC Network. Depth-chart Saturday. Score it, sit the pride, keep the freshman upright.",
+    label: "Week four, Noon ET",
+    note: "Texas at home on ABC. National window. Visitors leave quietly.",
   },
 ];
