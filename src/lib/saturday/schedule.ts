@@ -15,16 +15,16 @@ export type Game = {
   featured?: boolean;
 };
 
-/** Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4). */
-export const NEXT_KICKOFF = "2026-09-26T16:00:00.000Z";
-export const NEXT_OPPONENT = "Texas";
+/** Auburn, Saturday Oct 3 2026, 3:30pm ET (EDT = UTC-4). */
+export const NEXT_KICKOFF = "2026-10-03T19:30:00.000Z";
+export const NEXT_OPPONENT = "Auburn";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
 
 export const THIS_SATURDAY = {
   label: "This Saturday",
-  line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
-  note: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
+  line: "Tennessee vs Auburn · Oct 3 · 3:30 ET · Knoxville",
+  note: "Home 3:30 kick. SEC Saturday on ESPN. Visitors leave quietly.",
 } as const;
 
 export const games: Game[] = [
@@ -82,20 +82,21 @@ export const games: Game[] = [
     network: "ABC",
     lean: "lean-l",
     take: "Noon, national window, a roster that is supposed to be better than ours. Steal it and the over/under is a rumor. Drop it and we find out who we actually are.",
-    featured: true,
+    featured: false,
   },
   {
     id: "auburn",
     week: 5,
     date: "2026-10-03",
-    kickoff: null,
-    kickoffLabel: "Flex",
+    kickoff: "2026-10-03T19:30:00.000Z",
+    kickoffLabel: "3:30 ET",
     opponent: "Auburn",
     location: "home",
     city: "Knoxville",
-    network: "TBD",
+    network: "ESPN",
     lean: "toss",
     take: "Chaos in a Saturday costume. Treat it like a road game even though it is not. The river has seen this movie.",
+    featured: true,
   },
   {
     id: "arkansas",
@@ -225,9 +226,9 @@ export const pulse = [
     note: "Texas, Alabama, Texas A&M, LSU. The whole season lives in whether one of those gets stubborn.",
   },
   {
-    kicker: "Noon kick",
+    kicker: "3:30 kick",
     value: "Knoxville",
-    label: "Week four, Noon ET",
-    note: "Texas at home on ABC. National window. Visitors leave quietly.",
+    label: "Week five, 3:30 ET",
+    note: "Auburn at home on ESPN. SEC Saturday. Visitors leave quietly.",
   },
 ];

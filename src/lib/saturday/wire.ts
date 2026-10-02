@@ -20,8 +20,8 @@ export const wire: WireItem[] = [
     id: "w1",
     kind: "notice",
     stamped: "Saturday · Knoxville",
-    line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
-    body: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
+    line: "Tennessee vs Auburn · Oct 3 · 3:30 ET · Knoxville",
+    body: "Home 3:30 kick. SEC Saturday on ESPN. Visitors leave quietly.",
   },
   {
     id: "w2",
@@ -61,9 +61,9 @@ export const wire: WireItem[] = [
   {
     id: "w7",
     kind: "notice",
-    stamped: "Thu",
-    line: "Texas week is here and living in the group chat.",
-    body: "Noon, national window, a roster that is supposed to be better. Steal it and the over/under is a rumor. Visitors leave quietly.",
+    stamped: "Last week",
+    line: "Texas week came and went in the group chat.",
+    body: "Noon, national window, a roster that was supposed to be better. Auburn week now. Treat it like a road game even though it is not.",
   },
   {
     id: "w8",
