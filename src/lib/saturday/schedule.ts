@@ -15,16 +15,16 @@ export type Game = {
   featured?: boolean;
 };
 
-/** Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4). */
-export const NEXT_KICKOFF = "2026-09-26T16:00:00.000Z";
-export const NEXT_OPPONENT = "Texas";
+/** Arkansas, Saturday Oct 10 2026, 4:15pm ET (EDT = UTC-4). */
+export const NEXT_KICKOFF = "2026-10-10T20:15:00.000Z";
+export const NEXT_OPPONENT = "Arkansas";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
 
 export const THIS_SATURDAY = {
   label: "This Saturday",
-  line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
-  note: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
+  line: "Tennessee at Arkansas · Oct 10 · 4:15 ET · Fayetteville",
+  note: "Road game, SEC Network. Our hospitality doesn't travel, so we don't expect any either.",
 } as const;
 
 export const games: Game[] = [
@@ -82,7 +82,7 @@ export const games: Game[] = [
     network: "ABC",
     lean: "lean-l",
     take: "Noon, national window, a roster that is supposed to be better than ours. Steal it and the over/under is a rumor. Drop it and we find out who we actually are.",
-    featured: true,
+    featured: false,
   },
   {
     id: "auburn",
@@ -101,14 +101,15 @@ export const games: Game[] = [
     id: "arkansas",
     week: 6,
     date: "2026-10-10",
-    kickoff: null,
-    kickoffLabel: "Flex",
+    kickoff: "2026-10-10T20:15:00.000Z",
+    kickoffLabel: "4:15 ET",
     opponent: "Arkansas",
     location: "away",
     city: "Fayetteville",
-    network: "TBD",
+    network: "SECN",
     lean: "lean-w",
     take: "The kind of game a young team either grows up in or spends November explaining. We like the road dogs more than the experts do.",
+    featured: true,
   },
   {
     id: "alabama",
@@ -225,9 +226,9 @@ export const pulse = [
     note: "Texas, Alabama, Texas A&M, LSU. The whole season lives in whether one of those gets stubborn.",
   },
   {
-    kicker: "Noon kick",
-    value: "Knoxville",
-    label: "Week four, Noon ET",
-    note: "Texas at home on ABC. National window. Visitors leave quietly.",
+    kicker: "4:15 kick",
+    value: "Fayetteville",
+    label: "Week six, 4:15 ET",
+    note: "Arkansas on the road. SEC Network. Our hospitality doesn't travel, so we don't expect any either.",
   },
 ];

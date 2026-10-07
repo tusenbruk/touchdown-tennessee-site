@@ -9,7 +9,7 @@ export const Route = createFileRoute("/saturday/")({ component: SaturdayHome });
 
 function SaturdayHome() {
   const featured = wire[0]!;
-  const look = ["texas", "alabama", "lsu"].map((id) => games.find((g) => g.id === id)!);
+  const look = ["arkansas", "alabama", "lsu"].map((id) => games.find((g) => g.id === id)!);
 
   return (
     <div>
