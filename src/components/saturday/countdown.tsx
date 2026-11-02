@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NEXT_KICKOFF, NEXT_OPPONENT } from "@/lib/saturday/schedule";
+import { formatGameDate, nextGame } from "@/lib/saturday/schedule";
 import { cn } from "@/lib/cn";
 
 function parts(ms: number) {
@@ -28,13 +28,36 @@ export function KickoffCountdown({
     return () => window.clearInterval(id);
   }, []);
 
-  const target = Date.parse(NEXT_KICKOFF);
-  const t = now === null ? null : parts(target - now);
+  const game = nextGame(now ?? Date.now());
+  const opponent = game.opponent;
+  // Most future games have no confirmed kickoff yet. Do not invent one:
+  // show the date and say the time is pending.
+  const target = game.kickoff ? Date.parse(game.kickoff) : null;
+  const t = now === null || target === null ? null : parts(target - now);
+
+  if (target === null) {
+    const pending = `${formatGameDate(game.date)} · kickoff time to be announced`;
+    if (compact) {
+      return (
+        <p className="font-display text-sm uppercase tracking-[0.16em] text-brand">
+          {formatGameDate(game.date)} · {opponent}
+        </p>
+      );
+    }
+    return (
+      <div>
+        <p className="kicker">Next up: {opponent}</p>
+        <p className="mt-3 font-display text-3xl uppercase tracking-[0.06em] sm:text-4xl">
+          {pending}
+        </p>
+      </div>
+    );
+  }
 
   if (compact) {
     return (
       <p className="font-display text-sm uppercase tracking-[0.16em] text-brand">
-        {t?.live ? "Kickoff" : t ? `${t.d}d ${t.h}h ${t.m}m` : "—"} · {NEXT_OPPONENT}
+        {t?.live ? "Kickoff" : t ? `${t.d}d ${t.h}h ${t.m}m` : "—"} · {opponent}
       </p>
     );
   }
@@ -55,7 +78,7 @@ export function KickoffCountdown({
 
   return (
     <div>
-      <p className="kicker">{t?.live ? "It is Saturday" : `Until ${NEXT_OPPONENT}`}</p>
+      <p className="kicker">{t?.live ? "It is Saturday" : `Until ${opponent}`}</p>
       <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
         {cells.map(([n, label]) => (
           <div

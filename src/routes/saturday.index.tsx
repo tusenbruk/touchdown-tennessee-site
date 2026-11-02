@@ -2,13 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { wire } from "@/lib/saturday/wire";
-import { THIS_SATURDAY, games, leanLabel, pulse } from "@/lib/saturday/schedule";
+import { games, leanLabel, nextGame, pulse, saturdayCard } from "@/lib/saturday/schedule";
 import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/saturday/")({ component: SaturdayHome });
 
 function SaturdayHome() {
   const featured = wire[0]!;
+  const card = saturdayCard(nextGame());
   const look = ["texas", "alabama", "lsu"].map((id) => games.find((g) => g.id === id)!);
 
   return (
@@ -16,8 +17,8 @@ function SaturdayHome() {
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         <div>
           <KickoffCountdown />
-          <p className="mt-4 text-base text-ink">{THIS_SATURDAY.line}</p>
-          <p className="mt-2 max-w-lg text-base text-muted">{THIS_SATURDAY.note}</p>
+          <p className="mt-4 text-base text-ink">{card.line}</p>
+          <p className="mt-2 max-w-lg text-base text-muted">{card.note}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/saturday/wire" className={buttonVariants({ size: "lg" })}>
               Read the wire

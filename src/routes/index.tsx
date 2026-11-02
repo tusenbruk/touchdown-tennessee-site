@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/page-header";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { wire } from "@/lib/saturday/wire";
-import { THIS_SATURDAY } from "@/lib/saturday/schedule";
+import { nextGame, saturdayCard } from "@/lib/saturday/schedule";
 import { formatMoney } from "@/lib/format";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -22,6 +22,7 @@ function Home() {
   const classics = getByCollection("classics");
   const heritage = getByCollection("heritage");
   const featured = wire[0]!;
+  const card = saturdayCard(nextGame());
   return (
     <div>
       <section className="relative isolate min-h-[72svh] overflow-hidden bg-ink text-cream">
@@ -86,8 +87,8 @@ function Home() {
           <div>
             <p className="kicker">Saturday</p>
             <h2 className="mt-2 text-3xl sm:text-5xl">The shop is merch. This is why you stay.</h2>
-            <p className="mt-4 max-w-lg text-base text-cream/80">{THIS_SATURDAY.line}</p>
-            <p className="mt-2 max-w-lg text-base text-cream/80">{THIS_SATURDAY.note}</p>
+            <p className="mt-4 max-w-lg text-base text-cream/80">{card.line}</p>
+            <p className="mt-2 max-w-lg text-base text-cream/80">{card.note}</p>
             <div className="mt-8">
               <KickoffCountdown tone="ink" />
             </div>
