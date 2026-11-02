@@ -183,7 +183,7 @@ function ProductDetail({ product }: { product: Product }) {
           {product.colors.length > 1 ? (
             <fieldset className="mt-8">
               <legend className="font-display text-xs uppercase tracking-[0.16em]">
-                {color?.name}
+                Color: {color?.name}
               </legend>
               <div className="mt-3 flex gap-2">
                 {product.colors.map((c) => (

@@ -59,6 +59,7 @@ export function TakeMachine() {
               key={s}
               type="button"
               onClick={() => setSubject(s)}
+              aria-pressed={subject === s}
               className={cn(
                 "h-10 px-3 font-display text-xs uppercase tracking-[0.14em] transition-colors duration-150",
                 subject === s ? "bg-ink text-cream" : "bg-paper text-ink hover:bg-bone",
@@ -79,19 +80,24 @@ export function TakeMachine() {
           ) : null}
         </div>
       </div>
-      {take ? (
-        <div className="bg-ink px-5 py-8 text-cream sm:px-8">
-          <p className="kicker">{take.kicker}</p>
-          <p className="mt-3 font-display text-2xl uppercase leading-tight tracking-[0.04em] sm:text-3xl">
-            {take.line}
-          </p>
-          {take.aside ? <p className="mt-4 max-w-xl text-sm text-cream/80">{take.aside}</p> : null}
-          <p className="mt-6 font-display text-[11px] uppercase tracking-[0.18em] text-cream/70">
-            {take.subject}
-            {take.canned ? " · House take" : " · Fresh off the wire"}
-          </p>
-        </div>
-      ) : null}
+      {/* Announce each new take to screen readers without moving focus. */}
+      <div role="status" aria-live="polite">
+        {take ? (
+          <div className="bg-ink px-5 py-8 text-cream sm:px-8">
+            <p className="kicker">{take.kicker}</p>
+            <p className="mt-3 font-display text-2xl uppercase leading-tight tracking-[0.04em] sm:text-3xl">
+              {take.line}
+            </p>
+            {take.aside ? (
+              <p className="mt-4 max-w-xl text-sm text-cream/80">{take.aside}</p>
+            ) : null}
+            <p className="mt-6 font-display text-[11px] uppercase tracking-[0.18em] text-cream/70">
+              {take.subject}
+              {take.canned ? " · House take" : " · Fresh off the wire"}
+            </p>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

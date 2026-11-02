@@ -33,7 +33,7 @@ function BoardPage() {
 
       <div className="mt-14">
         <p className="kicker">The slate</p>
-        <h3 className="mt-2 text-2xl sm:text-3xl">Twelve Saturdays</h3>
+        <h2 className="mt-2 text-2xl sm:text-3xl">Twelve Saturdays</h2>
         <ul className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
           {games.map((g) => (
             <li

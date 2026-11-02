@@ -43,7 +43,7 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-brand text-ink">
+      <div role="region" aria-label="Announcement" className="bg-brand text-ink">
         <p className="py-2 text-center font-display text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.22em]">
           Saturday · Knoxville · Noon
         </p>
