@@ -6,9 +6,13 @@ import { kindLabel, wire, disclaimer } from "@/lib/saturday/wire";
 
 export const Route = createFileRoute("/saturday/wire")({
   component: WirePage,
-  head: () => ({
-    meta: [{ title: "The Wire — Touchdown Tennessee" }],
-  }),
+  head: () =>
+    seo({
+      title: "The Wire",
+      path: "/saturday/wire",
+      description:
+        "Whispers, notices and a take machine. Tennessee football satire with a Knoxville accent. Not a newsroom.",
+    }),
 });
 
 function WirePage() {

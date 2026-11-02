@@ -6,9 +6,13 @@ import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/saturday/board")({
   component: BoardPage,
-  head: () => ({
-    meta: [{ title: "The Board — Touchdown Tennessee" }],
-  }),
+  head: () =>
+    seo({
+      title: "The Board",
+      path: "/saturday/board",
+      description:
+        "Twelve Saturdays, our lean on each, and what the season over/under actually means. Opinion, not betting advice.",
+    }),
 });
 
 function BoardPage() {
