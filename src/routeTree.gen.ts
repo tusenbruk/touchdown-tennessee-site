@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as DropsRouteImport } from './routes/drops'
+import { Route as GamesRouteImport } from './routes/games'
 import { Route as IndependentRouteImport } from './routes/independent'
 import { Route as SaturdayRouteImport } from './routes/saturday'
 import { Route as ShopRouteImport } from './routes/shop'
@@ -37,6 +38,11 @@ const CheckoutRoute = CheckoutRouteImport.update({
 const DropsRoute = DropsRouteImport.update({
   id: '/drops',
   path: '/drops',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GamesRoute = GamesRouteImport.update({
+  id: '/games',
+  path: '/games',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndependentRoute = IndependentRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/drops': typeof DropsRoute
+  '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
   '/shop': typeof ShopRouteWithChildren
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/drops': typeof DropsRoute
+  '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/order/$id': typeof OrderIdRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/drops': typeof DropsRoute
+  '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
   '/shop': typeof ShopRouteWithChildren
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/drops'
+    | '/games'
     | '/independent'
     | '/saturday'
     | '/shop'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/drops'
+    | '/games'
     | '/independent'
     | '/collection/$slug'
     | '/order/$id'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/drops'
+    | '/games'
     | '/independent'
     | '/saturday'
     | '/shop'
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckoutRoute: typeof CheckoutRoute
   DropsRoute: typeof DropsRoute
+  GamesRoute: typeof GamesRoute
   IndependentRoute: typeof IndependentRoute
   SaturdayRoute: typeof SaturdayRouteWithChildren
   ShopRoute: typeof ShopRouteWithChildren
@@ -223,6 +236,13 @@ declare module '@tanstack/react-router' {
       path: '/drops'
       fullPath: '/drops'
       preLoaderRoute: typeof DropsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/games': {
+      id: '/games'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof GamesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/independent': {
@@ -339,6 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckoutRoute: CheckoutRoute,
   DropsRoute: DropsRoute,
+  GamesRoute: GamesRoute,
   IndependentRoute: IndependentRoute,
   SaturdayRoute: SaturdayRouteWithChildren,
   ShopRoute: ShopRouteWithChildren,

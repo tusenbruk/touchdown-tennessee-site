@@ -34,7 +34,7 @@ function IndependentPage() {
       </ul>
       <p className="mt-8 text-sm text-muted">
         If a design needs a protected logo to work, it is a bad design. We are not affiliated with,
-        sponsored by, or endorsed by the University of Tennessee or any professional club. Questions:{" "}
+        sponsored by, or endorsed by any collegiate or professional football organisation. Questions:{" "}
         <a href="mailto:touchdowntennessee@gmail.com" className="text-ink underline">
           touchdowntennessee@gmail.com
         </a>

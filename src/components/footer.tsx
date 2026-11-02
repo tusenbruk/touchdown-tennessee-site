@@ -39,9 +39,9 @@ export function Footer() {
             </a>
           </div>
           <p className="max-w-xl">
-            All designs are original and do not incorporate any officially licensed University of
-            Tennessee, NFL, or Tennessee Titans marks. Not affiliated with, endorsed by, or connected
-            to those institutions. The Wire is satire, not reporting.
+            All designs are original. No officially licensed collegiate or professional football
+            marks are used. Not affiliated with, endorsed by, or connected to any team or
+            institution. The Wire is satire, not reporting.
           </p>
         </div>
       </div>
