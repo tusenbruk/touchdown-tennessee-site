@@ -2,17 +2,23 @@ import { Link } from "@tanstack/react-router";
 import type { Product } from "@/lib/catalog";
 import { formatMoney } from "@/lib/format";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: Product;
+  priority?: boolean;
+}) {
   return (
-    <Link
-      to="/shop/$slug"
-      params={{ slug: product.slug }}
-      className="group block"
-    >
+    <Link to="/shop/$slug" params={{ slug: product.slug }} className="group block">
       <div className="relative overflow-hidden bg-bone">
         <img
           src={product.images[0]}
           alt={product.name}
+          width={900}
+          height={1200}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
           className="aspect-3/4 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
         {product.badge ? (
@@ -23,10 +29,12 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="mt-3 flex items-baseline justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-display text-lg uppercase tracking-[0.06em] text-ink">{product.name}</p>
+          <p className="font-display text-lg uppercase tracking-[0.06em] text-ink decoration-brand decoration-2 underline-offset-4 group-hover:underline">
+            {product.name}
+          </p>
           <p className="mt-0.5 text-xs tracking-wide text-muted">{product.line}</p>
         </div>
-        <p className="shrink-0 tabular-nums text-sm text-ink">{formatMoney(product.price)}</p>
+        <p className="shrink-0 text-sm tabular-nums text-ink">{formatMoney(product.price)}</p>
       </div>
     </Link>
   );

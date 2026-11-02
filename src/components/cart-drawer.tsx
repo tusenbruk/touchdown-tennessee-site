@@ -4,7 +4,8 @@ import { Minus, Plus, X } from "lucide-react";
 import { cartCount, cartTotals, useCart } from "@/lib/cart";
 import { SHIP_FREE_AT } from "@/lib/catalog";
 import { formatMoney } from "@/lib/format";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/cn";
 
 export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -17,6 +18,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
   const toFree = Math.max(0, SHIP_FREE_AT - (totals.subtotal - totals.discount));
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const prevPath = useRef(pathname);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (prevPath.current !== pathname) {
@@ -25,26 +27,54 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
     }
   }, [pathname, onClose]);
 
+  // While open: Escape closes, focus moves into the drawer, background scroll
+  // locks, and focus returns to whatever opened it (the header cart button).
+  useEffect(() => {
+    if (!open) return;
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      opener?.focus?.();
+    };
+  }, [open, onClose]);
+
   return (
+    // `inert` keeps the closed drawer out of the tab order and the a11y tree.
     <div
       className={`fixed inset-0 z-50 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
-      aria-hidden={!open}
+      inert={!open}
     >
       <button
         type="button"
         aria-label="Close cart"
+        tabIndex={-1}
         onClick={onClose}
         className={`absolute inset-0 bg-ink/40 transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0"}`}
       />
       <aside
         className={`absolute top-0 right-0 flex h-full w-full max-w-md flex-col bg-paper text-ink shadow-border transition-transform duration-200 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
         role="dialog"
+        aria-modal="true"
         aria-label="Cart"
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
           <h2 className="text-xl">Cart {count ? `(${count})` : ""}</h2>
-          <button type="button" onClick={onClose} className="grid size-11 place-items-center" aria-label="Close">
-            <X className="size-5" />
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="grid size-11 place-items-center"
+            aria-label="Close cart"
+          >
+            <X className="size-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -61,8 +91,17 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="border-b border-ink/10 px-5 py-3">
               <div className="h-1.5 overflow-hidden bg-bone">
                 <div
+                  role="progressbar"
+                  aria-label="Progress to free shipping"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(
+                    Math.min(100, ((SHIP_FREE_AT - toFree) / SHIP_FREE_AT) * 100),
+                  )}
                   className="h-full bg-brand transition-[width] duration-200"
-                  style={{ width: `${Math.min(100, ((SHIP_FREE_AT - toFree) / SHIP_FREE_AT) * 100)}%` }}
+                  style={{
+                    width: `${Math.min(100, ((SHIP_FREE_AT - toFree) / SHIP_FREE_AT) * 100)}%`,
+                  }}
                 />
               </div>
               <p className="mt-2 text-xs text-muted">
@@ -74,7 +113,15 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
             <ul className="flex-1 overflow-y-auto px-5 py-4">
               {items.map((item) => (
                 <li key={item.key} className="flex gap-3 border-b border-ink/10 py-4">
-                  <img src={item.image} alt="" className="size-20 shrink-0 object-cover" />
+                  <img
+                    src={item.image}
+                    alt=""
+                    width={80}
+                    height={80}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-20 shrink-0 object-cover"
+                  />
                   <div className="min-w-0 flex-1">
                     <div className="flex justify-between gap-2">
                       <p className="font-display text-sm uppercase tracking-wide">{item.name}</p>
@@ -88,23 +135,24 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                         type="button"
                         className="grid size-11 place-items-center shadow-[inset_0_0_0_1px_rgba(22,18,14,0.15)]"
                         onClick={() => setQty(item.key, item.qty - 1)}
-                        aria-label="Decrease"
+                        aria-label={`Decrease quantity of ${item.name}`}
                       >
-                        <Minus className="size-3.5" />
+                        <Minus className="size-3.5" aria-hidden="true" />
                       </button>
                       <span className="w-6 text-center tabular-nums text-sm">{item.qty}</span>
                       <button
                         type="button"
                         className="grid size-11 place-items-center shadow-[inset_0_0_0_1px_rgba(22,18,14,0.15)]"
                         onClick={() => setQty(item.key, item.qty + 1)}
-                        aria-label="Increase"
+                        aria-label={`Increase quantity of ${item.name}`}
                       >
-                        <Plus className="size-3.5" />
+                        <Plus className="size-3.5" aria-hidden="true" />
                       </button>
                       <button
                         type="button"
                         className="ml-auto min-h-11 text-xs text-muted underline"
                         onClick={() => remove(item.key)}
+                        aria-label={`Remove ${item.name}`}
                       >
                         Remove
                       </button>
@@ -119,7 +167,10 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
               {totals.discount > 0 ? (
                 <Row label="WELCOME10" value={`−${formatMoney(totals.discount)}`} />
               ) : null}
-              <Row label="Shipping" value={totals.shipping === 0 ? "Free" : formatMoney(totals.shipping)} />
+              <Row
+                label="Shipping"
+                value={totals.shipping === 0 ? "Free" : formatMoney(totals.shipping)}
+              />
               <Row label="Total" value={formatMoney(totals.total)} strong />
               <Link
                 to="/checkout"
@@ -173,7 +224,7 @@ function Promo() {
       <input
         name="code"
         placeholder="WELCOME10"
-        className="h-11 flex-1 bg-cream px-3 text-xs uppercase tracking-wide outline-none shadow-[inset_0_0_0_1px_rgba(22,18,14,0.14)]"
+        className="h-11 flex-1 bg-cream px-3 text-xs uppercase tracking-wide outline-none shadow-[inset_0_0_0_1px_rgba(22,18,14,0.3)]"
         aria-label="Promo code"
       />
       <Button type="submit" variant="outline" size="sm" className="h-11">

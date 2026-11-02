@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getOrder, type PlacedOrder } from "@/lib/orders";
 import { formatMoney } from "@/lib/format";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/order/$id")({ component: OrderPage });
@@ -34,19 +34,31 @@ function OrderPage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 py-14 sm:px-6">
-      <p className="font-display text-xs tracking-[0.22em] text-brand">Order {order.id}</p>
+      <span className="title-rule" aria-hidden="true" />
+      <p className="kicker mt-4">Order {order.id}</p>
       <h1 className="mt-2 text-4xl">It is in the truck</h1>
       <p className="mt-3 text-muted">
         Preview confirmation for {order.name}. Nothing was charged. This is how the live shop should
         feel after checkout. Questions:{" "}
-        <a href="mailto:touchdowntennessee@gmail.com" className="text-ink underline">
+        <a
+          href="mailto:touchdowntennessee@gmail.com"
+          className="text-ink underline decoration-brand decoration-2 underline-offset-4"
+        >
           touchdowntennessee@gmail.com
         </a>
       </p>
       <ul className="mt-8 divide-y divide-ink/10 border-y border-ink/10">
         {order.items.map((item, i) => (
           <li key={i} className="flex items-center gap-3 py-3 text-sm">
-            <img src={item.image} alt="" className="size-14 object-cover" />
+            <img
+              src={item.image}
+              alt=""
+              width={56}
+              height={56}
+              loading="lazy"
+              decoding="async"
+              className="size-14 object-cover"
+            />
             <div className="flex-1">
               <p className="font-display uppercase">{item.name}</p>
               <p className="text-xs text-muted">

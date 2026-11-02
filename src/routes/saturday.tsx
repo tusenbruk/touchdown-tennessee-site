@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/cn";
 import { KickoffCountdown } from "@/components/saturday/countdown";
+import { PageHeader } from "@/components/page-header";
 
 export const Route = createFileRoute("/saturday")({
   component: SaturdayLayout,
@@ -30,20 +31,23 @@ function SaturdayLayout() {
     <div>
       <div className="bg-ink text-cream">
         {isHub ? (
-          <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
-            <p className="font-display text-xs tracking-[0.22em] text-brand">Game week</p>
-            <h1 className="mt-2 text-4xl sm:text-6xl">Saturday</h1>
-            <p className="mt-3 max-w-xl text-sm text-cream/70">
-              The shop is merch. This is why you come back. Gossip and the board for game week.
-            </p>
+          <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14">
+            <PageHeader
+              kicker="Game week"
+              title="Saturday"
+              tone="ink"
+              lede="The shop is merch. This is why you come back. Gossip and the board for game week."
+            />
           </div>
         ) : (
           <div className="mx-auto flex max-w-6xl items-end justify-between gap-4 px-4 py-5 sm:px-6">
-            <p className="font-display text-2xl uppercase tracking-[0.08em]">Saturday</p>
+            <p className="font-display text-2xl uppercase tracking-[0.08em]" aria-hidden="true">
+              Saturday
+            </p>
             <KickoffCountdown compact />
           </div>
         )}
-        <nav className="border-t border-cream/10">
+        <nav aria-label="Saturday sections" className="border-t border-cream/10">
           <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-2 sm:px-4">
             {links.map((l) => {
               const active = l.exact
@@ -53,9 +57,12 @@ function SaturdayLayout() {
                 <Link
                   key={l.to}
                   to={l.to}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "shrink-0 px-4 py-3 font-display text-sm uppercase tracking-[0.16em] transition-colors duration-150",
-                    active ? "text-brand" : "text-cream/70 hover:text-cream",
+                    "shrink-0 border-b-2 px-4 py-3 font-display text-sm uppercase tracking-[0.16em] transition-colors duration-150",
+                    active
+                      ? "border-brand text-brand"
+                      : "border-transparent text-cream/75 hover:text-cream",
                   )}
                 >
                   {l.label}

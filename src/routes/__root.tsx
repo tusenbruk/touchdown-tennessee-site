@@ -18,7 +18,7 @@ export const Route = createRootRoute({
         content:
           "Original Tennessee football goods. Independent and unlicensed on purpose. Knoxville.",
       },
-      { name: "theme-color", content: "#16120E" },
+      { name: "theme-color", content: "#FF8200" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -50,7 +50,7 @@ export const Route = createRootRoute({
             toastOptions={{
               style: {
                 background: "#16120E",
-                color: "#FFF8F0",
+                color: "#FFFFFF",
                 border: "none",
                 borderRadius: 0,
                 fontFamily: "Oswald, sans-serif",

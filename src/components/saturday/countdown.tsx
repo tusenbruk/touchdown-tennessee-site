@@ -55,9 +55,7 @@ export function KickoffCountdown({
 
   return (
     <div>
-      <p className="font-display text-xs tracking-[0.22em] text-brand">
-        {t?.live ? "It is Saturday" : `Until ${NEXT_OPPONENT}`}
-      </p>
+      <p className="kicker">{t?.live ? "It is Saturday" : `Until ${NEXT_OPPONENT}`}</p>
       <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
         {cells.map(([n, label]) => (
           <div
@@ -73,7 +71,7 @@ export function KickoffCountdown({
             <p
               className={cn(
                 "mt-1 font-display text-[10px] uppercase tracking-[0.18em]",
-                tone === "ink" ? "text-cream/55" : "text-cream/55",
+                "text-cream/70",
               )}
             >
               {label}

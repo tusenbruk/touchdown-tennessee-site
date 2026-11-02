@@ -3,8 +3,10 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { cartTotals, useCart } from "@/lib/cart";
 import { formatMoney } from "@/lib/format";
 import { saveOrder } from "@/lib/orders";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/page-header";
 import { cn } from "@/lib/cn";
 
 export const Route = createFileRoute("/checkout")({ component: CheckoutPage });
@@ -21,6 +23,7 @@ function CheckoutPage() {
     return (
       <div className="mx-auto max-w-lg px-4 py-20 text-center">
         <h1 className="text-4xl">Nothing to check out</h1>
+        <p className="mt-3 text-muted">The truck is empty.</p>
         <Link to="/shop" className={cn(buttonVariants({ variant: "ink" }), "mt-6 inline-flex")}>
           Shop
         </Link>
@@ -60,32 +63,40 @@ function CheckoutPage() {
   return (
     <div className="mx-auto grid max-w-5xl gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_20rem]">
       <form onSubmit={onSubmit} className="space-y-4">
-        <h1 className="text-4xl">Checkout</h1>
-        <p className="text-sm text-muted">
-          Preview catalog — this places a local order so you can walk the flow. No card is charged.
-        </p>
-        <label className="block text-xs font-medium text-muted">
+        <PageHeader
+          kicker="Almost there"
+          title="Checkout"
+          lede="Preview catalog — this places a local order so you can walk the flow. No card is charged."
+          className="mb-8"
+        />
+        <label className="block text-sm font-medium text-ink">
           Name
           <Input name="name" required className="mt-1" autoComplete="name" />
         </label>
-        <label className="block text-xs font-medium text-muted">
+        <label className="block text-sm font-medium text-ink">
           Email
           <Input name="email" type="email" required className="mt-1" autoComplete="email" />
         </label>
-        <label className="block text-xs font-medium text-muted">
+        <label className="block text-sm font-medium text-ink">
           Address
           <Input name="address" required className="mt-1" autoComplete="street-address" />
         </label>
         <div className="grid grid-cols-6 gap-3">
-          <label className="col-span-3 block text-xs font-medium text-muted">
+          <label className="col-span-3 block text-sm font-medium text-ink">
             City
             <Input name="city" required className="mt-1" autoComplete="address-level2" />
           </label>
-          <label className="col-span-1 block text-xs font-medium text-muted">
+          <label className="col-span-1 block text-sm font-medium text-ink">
             State
-            <Input name="state" defaultValue="TN" required className="mt-1" autoComplete="address-level1" />
+            <Input
+              name="state"
+              defaultValue="TN"
+              required
+              className="mt-1"
+              autoComplete="address-level1"
+            />
           </label>
-          <label className="col-span-2 block text-xs font-medium text-muted">
+          <label className="col-span-2 block text-sm font-medium text-ink">
             ZIP
             <Input name="zip" required className="mt-1" autoComplete="postal-code" />
           </label>
@@ -94,12 +105,20 @@ function CheckoutPage() {
           Place order · {formatMoney(totals.total)}
         </Button>
       </form>
-      <aside className="h-fit bg-bone p-5">
+      <aside aria-label="Order summary" className="h-fit border-t-4 border-brand bg-bone p-5">
         <p className="font-display text-sm uppercase tracking-[0.16em]">In the truck</p>
         <ul className="mt-4 space-y-3">
           {items.map((i) => (
             <li key={i.key} className="flex gap-3 text-sm">
-              <img src={i.image} alt="" className="size-14 object-cover" />
+              <img
+                src={i.image}
+                alt=""
+                width={56}
+                height={56}
+                loading="lazy"
+                decoding="async"
+                className="size-14 object-cover"
+              />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display uppercase">{i.name}</p>
                 <p className="text-xs text-muted">
