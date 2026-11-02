@@ -11,6 +11,7 @@ import {
 } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { formatMoney } from "@/lib/format";
+import { ResponsiveImg } from "@/components/responsive-img";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
@@ -130,8 +131,9 @@ function ProductDetail({ product }: { product: Product }) {
       <div className="mt-6 grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
         <div className="min-w-0">
           <div className="overflow-hidden bg-bone">
-            <img
+            <ResponsiveImg
               src={activeSrc}
+              sizes="(min-width: 1024px) 560px, 100vw"
               alt={`${product.name}${color && product.colors.length > 1 ? `, ${color.name}` : ""}`}
               width={900}
               height={1200}
@@ -154,8 +156,9 @@ function ProductDetail({ product }: { product: Product }) {
                     c.id === colorId ? "shadow-[inset_0_0_0_3px_#16120E]" : "hover:opacity-80",
                   )}
                 >
-                  <img
+                  <ResponsiveImg
                     src={c.image}
+                    sizes="(min-width: 1024px) 140px, 22vw"
                     alt=""
                     width={900}
                     height={1200}

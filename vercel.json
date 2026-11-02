@@ -3,7 +3,43 @@
   "framework": null,
   "buildCommand": "npm run build",
   "redirects": [
-    { "source": "/games", "destination": "/saturday", "permanent": false },
-    { "source": "/saturday/six", "destination": "/saturday", "permanent": false }
+    {
+      "source": "/games",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/saturday/six",
+      "destination": "/saturday",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(products|heroes|brand)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
   ]
 }

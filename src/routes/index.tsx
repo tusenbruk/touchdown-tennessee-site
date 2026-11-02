@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { collections, getByCollection, SHIP_FREE_AT } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
+import { ResponsiveImg } from "@/components/responsive-img";
 import { BrandStamp } from "@/components/brand-mark";
 import { SectionHeading } from "@/components/page-header";
 import { KickoffCountdown } from "@/components/saturday/countdown";
@@ -30,8 +31,9 @@ function Home() {
   return (
     <div>
       <section className="relative isolate min-h-[72svh] overflow-hidden bg-ink text-cream">
-        <img
+        <ResponsiveImg
           src="/heroes/tailgate.jpg"
+          sizes="100vw"
           alt="East Tennessee river tailgate at golden hour"
           width={1792}
           height={1008}

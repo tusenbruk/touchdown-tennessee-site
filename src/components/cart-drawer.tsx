@@ -1,3 +1,4 @@
+import { ResponsiveImg } from "@/components/responsive-img";
 import { useEffect, useRef } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Minus, Plus, X } from "lucide-react";
@@ -113,8 +114,9 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
             <ul className="flex-1 overflow-y-auto px-5 py-4">
               {items.map((item) => (
                 <li key={item.key} className="flex gap-3 border-b border-ink/10 py-4">
-                  <img
+                  <ResponsiveImg
                     src={item.image}
+                    sizes="80px"
                     alt=""
                     width={80}
                     height={80}

@@ -1,3 +1,4 @@
+import { ResponsiveImg } from "@/components/responsive-img";
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getOrder, type PlacedOrder } from "@/lib/orders";
@@ -54,8 +55,9 @@ function OrderPage() {
       <ul className="mt-8 divide-y divide-ink/10 border-y border-ink/10">
         {order.items.map((item, i) => (
           <li key={i} className="flex items-center gap-3 py-3 text-sm">
-            <img
+            <ResponsiveImg
               src={item.image}
+              sizes="56px"
               alt=""
               width={56}
               height={56}

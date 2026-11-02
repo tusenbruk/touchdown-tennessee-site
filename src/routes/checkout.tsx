@@ -1,3 +1,4 @@
+import { ResponsiveImg } from "@/components/responsive-img";
 import { useState, type FormEvent } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { cartTotals, useCart } from "@/lib/cart";
@@ -114,8 +115,9 @@ function CheckoutPage() {
         <ul className="mt-4 space-y-3">
           {items.map((i) => (
             <li key={i.key} className="flex gap-3 text-sm">
-              <img
+              <ResponsiveImg
                 src={i.image}
+                sizes="56px"
                 alt=""
                 width={56}
                 height={56}
