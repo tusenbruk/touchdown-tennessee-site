@@ -4,8 +4,12 @@ import { getOrder, type PlacedOrder } from "@/lib/orders";
 import { formatMoney } from "@/lib/format";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/cn";
+import { seo } from "@/lib/seo";
 
-export const Route = createFileRoute("/order/$id")({ component: OrderPage });
+export const Route = createFileRoute("/order/$id")({
+  component: OrderPage,
+  head: ({ params }) => seo({ title: "Your order", path: `/order/${params.id}`, noindex: true }),
+});
 
 function OrderPage() {
   const { id } = Route.useParams();

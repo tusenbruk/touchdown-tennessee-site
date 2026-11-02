@@ -3,9 +3,14 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { PageHeader } from "@/components/page-header";
 import { products } from "@/lib/catalog";
 import { numberWord } from "@/lib/format";
+import { seo } from "@/lib/seo";
 import { cn } from "@/lib/cn";
 
-export const Route = createFileRoute("/drops")({ component: DropsPage });
+// Duplicates /shop and is not linked anywhere: keep it out of the index.
+export const Route = createFileRoute("/drops")({
+  component: DropsPage,
+  head: () => seo({ title: "Limited runs", path: "/drops", noindex: true }),
+});
 
 function DropsPage() {
   return (

@@ -16,6 +16,7 @@ import { Route as GamesRouteImport } from './routes/games'
 import { Route as IndependentRouteImport } from './routes/independent'
 import { Route as SaturdayRouteImport } from './routes/saturday'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
 import { Route as OrderIdRouteImport } from './routes/order.$id'
 import { Route as SaturdayIndexRouteImport } from './routes/saturday.index'
@@ -58,6 +59,11 @@ const SaturdayRoute = SaturdayRouteImport.update({
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionSlugRoute = CollectionSlugRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
   '/shop': typeof ShopRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/drops': typeof DropsRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
   '/shop': typeof ShopRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/independent'
     | '/saturday'
     | '/shop'
+    | '/sitemap.xml'
     | '/collection/$slug'
     | '/order/$id'
     | '/saturday/board'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/drops'
     | '/games'
     | '/independent'
+    | '/sitemap.xml'
     | '/collection/$slug'
     | '/order/$id'
     | '/saturday/board'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/independent'
     | '/saturday'
     | '/shop'
+    | '/sitemap.xml'
     | '/collection/$slug'
     | '/order/$id'
     | '/saturday/board'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   IndependentRoute: typeof IndependentRoute
   SaturdayRoute: typeof SaturdayRouteWithChildren
   ShopRoute: typeof ShopRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CollectionSlugRoute: typeof CollectionSlugRoute
   OrderIdRoute: typeof OrderIdRoute
 }
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collection/$slug': {
@@ -363,6 +383,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndependentRoute: IndependentRoute,
   SaturdayRoute: SaturdayRouteWithChildren,
   ShopRoute: ShopRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CollectionSlugRoute: CollectionSlugRoute,
   OrderIdRoute: OrderIdRoute,
 }

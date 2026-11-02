@@ -4,8 +4,18 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { wire } from "@/lib/saturday/wire";
 import { games, leanLabel, nextGame, pulse, saturdayCard } from "@/lib/saturday/schedule";
 import { cn } from "@/lib/cn";
+import { seo } from "@/lib/seo";
 
-export const Route = createFileRoute("/saturday/")({ component: SaturdayHome });
+export const Route = createFileRoute("/saturday/")({
+  component: SaturdayHome,
+  head: () =>
+    seo({
+      title: "Saturday",
+      path: "/saturday",
+      description:
+        "The Knoxville clubhouse: the countdown to kickoff, a satirical wire and our season board. Independent Tennessee football spirit.",
+    }),
+});
 
 function SaturdayHome() {
   const featured = wire[0]!;

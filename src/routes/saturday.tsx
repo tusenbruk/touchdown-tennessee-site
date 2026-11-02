@@ -5,16 +5,6 @@ import { PageHeader } from "@/components/page-header";
 
 export const Route = createFileRoute("/saturday")({
   component: SaturdayLayout,
-  head: () => ({
-    meta: [
-      { title: "Saturday — Touchdown Tennessee" },
-      {
-        name: "description",
-        content:
-          "The Knoxville clubhouse: rumor mill and the board. Independent Tennessee football spirit.",
-      },
-    ],
-  }),
 });
 
 const links = [

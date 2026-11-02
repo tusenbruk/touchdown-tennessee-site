@@ -8,8 +8,12 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { wire } from "@/lib/saturday/wire";
 import { nextGame, saturdayCard } from "@/lib/saturday/schedule";
 import { formatMoney } from "@/lib/format";
+import { seo } from "@/lib/seo";
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+  component: Home,
+  head: () => seo({ path: "/", image: "/og.jpg" }),
+});
 
 /** Facts the site already states elsewhere (product page, footer, cart). */
 const promises = [

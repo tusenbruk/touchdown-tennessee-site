@@ -8,8 +8,12 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import { cn } from "@/lib/cn";
+import { seo } from "@/lib/seo";
 
-export const Route = createFileRoute("/checkout")({ component: CheckoutPage });
+export const Route = createFileRoute("/checkout")({
+  component: CheckoutPage,
+  head: () => seo({ title: "Checkout", path: "/checkout", noindex: true }),
+});
 
 function CheckoutPage() {
   const items = useCart((s) => s.items);

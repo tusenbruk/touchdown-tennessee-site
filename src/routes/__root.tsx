@@ -3,23 +3,20 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { SiteShell } from "@/components/site-shell";
+import { DEFAULT_DESCRIPTION, jsonLd, organizationLd, pageTitle, websiteLd } from "@/lib/seo";
 import appCss from "../styles.css?url";
-
-const APP_NAME = "Touchdown Tennessee";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: APP_NAME },
-      {
-        name: "description",
-        content:
-          "Original Tennessee football goods. Independent and unlicensed on purpose. Knoxville.",
-      },
+      { title: pageTitle() },
+      { name: "description", content: DEFAULT_DESCRIPTION },
       { name: "theme-color", content: "#FF8200" },
     ],
+    // Site-wide structured data: who we are, and the site itself.
+    scripts: [jsonLd(organizationLd), jsonLd(websiteLd)],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },

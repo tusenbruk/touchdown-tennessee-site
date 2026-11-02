@@ -14,9 +14,55 @@ import { formatMoney } from "@/lib/format";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
+import { absoluteUrl, breadcrumbLd, jsonLd, seo, SITE_NAME } from "@/lib/seo";
 
 export const Route = createFileRoute("/shop/$slug")({
   component: ProductPage,
+  head: ({ params }) => {
+    const product = getProduct(params.slug);
+    if (!product) return {};
+    const path = `/shop/${product.slug}`;
+    const prices = product.variants.map((v) => v.price);
+    const low = Math.min(...prices) / 100;
+    const high = Math.max(...prices) / 100;
+    const base = seo({
+      title: product.name,
+      path,
+      image: product.images[0],
+      type: "product",
+      description: `${product.blurb} ${product.story}`.slice(0, 300),
+    });
+    return {
+      ...base,
+      scripts: [
+        // Product + price range across sizes (larger sizes cost more).
+        jsonLd({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          sku: product.id,
+          description: `${product.blurb} ${product.story}`,
+          image: product.images.map((i) => absoluteUrl(i)),
+          brand: { "@type": "Brand", name: SITE_NAME },
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "USD",
+            lowPrice: low.toFixed(2),
+            highPrice: high.toFixed(2),
+            offerCount: product.variants.length,
+            availability: "https://schema.org/InStock",
+            url: absoluteUrl(path),
+          },
+        }),
+        jsonLd(
+          breadcrumbLd([
+            { name: "Shop", path: "/shop" },
+            { name: product.name, path },
+          ]),
+        ),
+      ],
+    };
+  },
 });
 
 function ProductPage() {

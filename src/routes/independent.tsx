@@ -3,8 +3,19 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { PageHeader } from "@/components/page-header";
 import { CONTACT_EMAIL } from "@/components/nav-links";
 import { cn } from "@/lib/cn";
+import { seo } from "@/lib/seo";
 
-export const Route = createFileRoute("/independent")({ component: IndependentPage });
+export const Route = createFileRoute("/independent")({
+  component: IndependentPage,
+  head: () =>
+    seo({
+      title: "What independent actually means",
+      path: "/independent",
+      type: "article",
+      description:
+        "Licensed gear pays a school for its marks. Independent gear pays for the drawing. What Touchdown Tennessee will and will not print, and why.",
+    }),
+});
 
 function IndependentPage() {
   return (

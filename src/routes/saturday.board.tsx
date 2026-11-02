@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { games, leanLabel, pulse, OUR_RECORD_PICK, SEASON_LINE } from "@/lib/saturday/schedule";
+import { seo } from "@/lib/seo";
 import { PageHeader } from "@/components/page-header";
 import { cn } from "@/lib/cn";
 

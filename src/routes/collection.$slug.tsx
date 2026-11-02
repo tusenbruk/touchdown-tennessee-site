@@ -3,9 +3,31 @@ import { collections, getByCollection, type CollectionId } from "@/lib/catalog";
 import { ProductCard } from "@/components/product-card";
 import { BrandStamp } from "@/components/brand-mark";
 import { PageHeader } from "@/components/page-header";
+import { breadcrumbLd, jsonLd, seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/collection/$slug")({
   component: CollectionPage,
+  head: ({ params }) => {
+    const meta = collections[params.slug as CollectionId];
+    if (!meta) return {};
+    const path = `/collection/${params.slug}`;
+    const base = seo({
+      title: `${meta.title} collection`,
+      path,
+      description: `${meta.kicker} ${meta.lede}`,
+    });
+    return {
+      ...base,
+      scripts: [
+        jsonLd(
+          breadcrumbLd([
+            { name: "Shop", path: "/shop" },
+            { name: meta.title, path },
+          ]),
+        ),
+      ],
+    };
+  },
 });
 
 function CollectionPage() {

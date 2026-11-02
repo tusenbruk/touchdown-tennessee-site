@@ -1,10 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { collections, getByCollection, products } from "@/lib/catalog";
 import { numberWord } from "@/lib/format";
+import { seo } from "@/lib/seo";
 import { ProductCard } from "@/components/product-card";
 import { PageHeader, SectionHeading } from "@/components/page-header";
 
-export const Route = createFileRoute("/shop/")({ component: ShopPage });
+export const Route = createFileRoute("/shop/")({
+  component: ShopPage,
+  head: () =>
+    seo({
+      title: "Shop",
+      path: "/shop",
+      description:
+        "Limited runs of original Tennessee football goods: tees, a hoodie, hats and a phone case, plus the 1794 collection. Independent and unlicensed, printed to order.",
+    }),
+});
 
 function ShopPage() {
   const classics = getByCollection("classics");

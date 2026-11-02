@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TakeMachine } from "@/components/saturday/take-machine";
+import { seo } from "@/lib/seo";
 import { PageHeader } from "@/components/page-header";
 import { kindLabel, wire, disclaimer } from "@/lib/saturday/wire";
 
