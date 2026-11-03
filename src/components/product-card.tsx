@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { Product } from "@/lib/catalog";
 import { formatMoney } from "@/lib/format";
-import { ResponsiveImg } from "@/components/responsive-img";
+import { FramedImage } from "@/components/framed-image";
 
 export function ProductCard({
   product,
@@ -12,8 +12,8 @@ export function ProductCard({
 }) {
   return (
     <Link to="/shop/$slug" params={{ slug: product.slug }} className="group block">
-      <div className="relative overflow-hidden bg-bone">
-        <ResponsiveImg
+      <div className="relative">
+        <FramedImage
           src={product.images[0]!}
           sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
           alt={product.name}

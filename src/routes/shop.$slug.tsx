@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
@@ -7,11 +7,12 @@ import {
   getProduct,
   relatedProducts,
   sizesForColor,
+  SHIP_FREE_AT,
   type Product,
 } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { formatMoney } from "@/lib/format";
-import { ResponsiveImg } from "@/components/responsive-img";
+import { FramedImage } from "@/components/framed-image";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
@@ -115,8 +116,28 @@ function ProductDetail({ product }: { product: Product }) {
 
   const related = relatedProducts(product);
 
+  // Phones: show a sticky buy bar while the main button is off screen, but not
+  // once the footer is on screen (it would just cover the newsletter form).
+  const ctaRef = useRef<HTMLButtonElement>(null);
+  const [ctaVisible, setCtaVisible] = useState(true);
+  const [footerVisible, setFooterVisible] = useState(false);
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const cta = ctaRef.current;
+    const footer = document.querySelector("footer");
+    const ctaIo = new IntersectionObserver(([e]) => setCtaVisible(e!.isIntersecting));
+    const footerIo = new IntersectionObserver(([e]) => setFooterVisible(e!.isIntersecting));
+    if (cta) ctaIo.observe(cta);
+    if (footer) footerIo.observe(footer);
+    return () => {
+      ctaIo.disconnect();
+      footerIo.disconnect();
+    };
+  }, []);
+  const showBar = !ctaVisible && !footerVisible;
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div className="mx-auto max-w-6xl px-4 pt-6 pb-24 sm:px-6 sm:pt-10 lg:pb-10">
       <nav aria-label="Breadcrumb" className="text-xs text-muted">
         <ol className="flex flex-wrap items-center gap-x-2">
           <li>
@@ -130,20 +151,21 @@ function ProductDetail({ product }: { product: Product }) {
       </nav>
       <div className="mt-6 grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
         <div className="min-w-0">
-          <div className="overflow-hidden bg-bone">
-            <ResponsiveImg
-              src={activeSrc}
-              sizes="(min-width: 1024px) 560px, 100vw"
-              alt={`${product.name}${color && product.colors.length > 1 ? `, ${color.name}` : ""}`}
-              width={900}
-              height={1200}
-              fetchPriority="high"
-              decoding="async"
-              className="aspect-3/4 w-full object-cover"
-            />
-          </div>
+          {/* capped at 52% of the viewport height on phones so the title and
+              price stay on screen; full 3:4 on desktop. */}
+          <FramedImage
+            src={activeSrc}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            alt={`${product.name}${color && product.colors.length > 1 ? `, ${color.name}` : ""}`}
+            width={900}
+            height={1200}
+            fetchPriority="high"
+            decoding="async"
+            frameClassName="grid place-items-center"
+            className="h-auto max-h-[52svh] w-auto max-w-full object-contain lg:aspect-3/4 lg:max-h-none lg:w-full lg:object-cover"
+          />
           {product.colors.length > 1 ? (
-            <div className="mt-3 grid grid-cols-4 gap-2">
+            <div className="mt-3 hidden grid-cols-4 gap-2 lg:grid">
               {product.colors.map((c) => (
                 <button
                   key={c.id}
@@ -156,9 +178,9 @@ function ProductDetail({ product }: { product: Product }) {
                     c.id === colorId ? "shadow-[inset_0_0_0_3px_#16120E]" : "hover:opacity-80",
                   )}
                 >
-                  <ResponsiveImg
+                  <FramedImage
                     src={c.image}
-                    sizes="(min-width: 1024px) 140px, 22vw"
+                    sizes="140px"
                     alt=""
                     width={900}
                     height={1200}
@@ -235,7 +257,13 @@ function ProductDetail({ product }: { product: Product }) {
             </fieldset>
           ) : null}
 
-          <Button size="lg" variant="primary" className="mt-8 w-full sm:w-72" onClick={addToCart}>
+          <Button
+            ref={ctaRef}
+            size="lg"
+            variant="primary"
+            className="mt-8 w-full sm:w-72"
+            onClick={addToCart}
+          >
             Add to truck
           </Button>
           <dl className="mt-8 space-y-2 text-sm">
@@ -248,7 +276,7 @@ function ProductDetail({ product }: { product: Product }) {
               <dd>3–5 business days</dd>
             </div>
             <div className="flex justify-between border-t border-ink/10 py-3">
-              <dt className="text-muted">Over $75</dt>
+              <dt className="text-muted">Over {formatMoney(SHIP_FREE_AT)}</dt>
               <dd>Free US shipping</dd>
             </div>
           </dl>
@@ -264,6 +292,27 @@ function ProductDetail({ product }: { product: Product }) {
           </div>
         </section>
       ) : null}
+      <div
+        // Hidden (and inert) while the main button or the footer is visible, and on desktop.
+        inert={!showBar}
+        className={cn(
+          "fixed inset-x-0 bottom-0 z-30 border-t border-ink/10 bg-paper/95 px-4 pt-3 backdrop-blur-sm transition-transform duration-200 ease-out lg:hidden",
+          "pb-[max(0.75rem,env(safe-area-inset-bottom))]",
+          showBar ? "translate-y-0" : "translate-y-full",
+        )}
+      >
+        <div className="mx-auto flex max-w-6xl items-center gap-4">
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-display text-sm uppercase tracking-[0.08em]">
+              {product.name}
+            </p>
+            <p className="text-sm tabular-nums text-muted">{formatMoney(price)}</p>
+          </div>
+          <Button variant="primary" size="lg" onClick={addToCart}>
+            Add to truck
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { generateTake, SUBJECTS, type Subject, type TakeResult } from "@/lib/saturday/takes";
+import {
+  generateTake,
+  subjectForOpponent,
+  SUBJECTS,
+  type Subject,
+  type TakeResult,
+} from "@/lib/saturday/takes";
+import { nextGame } from "@/lib/saturday/schedule";
 import { pushTake } from "@/lib/saturday/scores";
 import { cn } from "@/lib/cn";
 
 export function TakeMachine() {
-  const [subject, setSubject] = useState<Subject>("Furman week");
+  const [subject, setSubject] = useState<Subject>(() => subjectForOpponent(nextGame()?.opponent));
   const [busy, setBusy] = useState(false);
   const [take, setTake] = useState<TakeResult | null>(null);
   const [lockedUntil, setLockedUntil] = useState(0);

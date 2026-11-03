@@ -1,4 +1,4 @@
-import type { ImgHTMLAttributes } from "react";
+import type { ImgHTMLAttributes, Ref } from "react";
 import { webpSrcSet } from "@/lib/image";
 
 /**
@@ -10,6 +10,10 @@ export function ResponsiveImg({
   src,
   alt,
   ...rest
-}: ImgHTMLAttributes<HTMLImageElement> & { src: string; alt: string }) {
+}: ImgHTMLAttributes<HTMLImageElement> & {
+  src: string;
+  alt: string;
+  ref?: Ref<HTMLImageElement>;
+}) {
   return <img src={src} srcSet={webpSrcSet(src)} alt={alt} {...rest} />;
 }

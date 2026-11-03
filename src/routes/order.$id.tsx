@@ -5,6 +5,7 @@ import { getOrder, type PlacedOrder } from "@/lib/orders";
 import { formatMoney } from "@/lib/format";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/cn";
+import { PreviewBanner } from "@/components/preview-banner";
 import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/order/$id")({
@@ -42,6 +43,7 @@ function OrderPage() {
       <span className="title-rule" aria-hidden="true" />
       <p className="kicker mt-4">Order {order.id}</p>
       <h1 className="mt-2 text-4xl">It is in the truck</h1>
+      <PreviewBanner className="mt-6" />
       <p className="mt-3 text-muted">
         Preview confirmation for {order.name}. Nothing was charged. This is how the live shop should
         feel after checkout. Questions:{" "}

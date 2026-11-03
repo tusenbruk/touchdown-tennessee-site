@@ -61,3 +61,15 @@ See the PR description for the section-by-section list.
 - The platform head injector (`scripts/grok-pwa-shared.mjs`) **strips and re-emits all `og:*` / `twitter:*` metas** on every deployed HTML response, sourcing title, description and image from `src/lib/og/site.json` and `public/og.jpg`. Page-level share tags therefore have to flow through `<title>` and `site.json`, not through route `head()` alone.
 - Orange (#FF8200) fails WCAG on white (2.49:1) and passes on ink (7.49:1). Orange text on light surfaces uses a deeper shade (#A84C00, 5.49:1).
 - The brand is deliberately unlicensed. New copy avoids school marks, slogans and nicknames.
+
+## Round 2 status (2026-11-03)
+
+| Round 1 item | Status |
+|---|---|
+| Newsletter collects nothing | Replaced: hidden until enabled; dry-run-by-default Buttondown stub (`docs/NEWSLETTER.md`). Provider request shape still needs verifying against Buttondown's docs. |
+| Checkout is a preview | Clear "Preview only" banner on cart, checkout and confirmation. Real payments and Printful submission are still not built. |
+| Stale editorial content | Lead notice, countdown, board, pulse card, take-machine default and its AI prompt all derive from the schedule. Wire items about played games move to "Earlier this season". |
+| Dead code | Moved to `_deprecated/` with a README (nothing deleted). |
+| Lockfile | Regenerated; `npm ci` verified in a clean directory. |
+
+Still open: the 38 unreferenced original product JPEGs in `public/products/` (about 20 MB, still publicly served); the schedule dates and networks in `schedule.ts` were not checked against an official source; the 7 platform script tests that need `.grok/skills/**`.

@@ -7,6 +7,7 @@ import { SHIP_FREE_AT } from "@/lib/catalog";
 import { formatMoney } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
+import { PreviewBanner } from "@/components/preview-banner";
 import { cn } from "@/lib/cn";
 
 export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -174,6 +175,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 value={totals.shipping === 0 ? "Free" : formatMoney(totals.shipping)}
               />
               <Row label="Total" value={formatMoney(totals.total)} strong />
+              <PreviewBanner compact className="mt-3" />
               <Link
                 to="/checkout"
                 onClick={onClose}

@@ -1,3 +1,12 @@
+import {
+  games,
+  isPlayed,
+  leanLabel,
+  nextGame,
+  saturdayCard,
+  type Game,
+} from "./schedule.ts";
+
 export type WireKind = "whisper" | "take" | "notice" | "rumor";
 
 export type WireItem = {
@@ -6,6 +15,12 @@ export type WireItem = {
   stamped: string;
   line: string;
   body: string;
+  /**
+   * Schedule id (see schedule.ts) of the game this item is about. Once that
+   * game has been played the item moves to "Earlier this season". Items with
+   * no gameId are evergreen.
+   */
+  gameId?: string;
 };
 
 export const kindLabel: Record<WireKind, string> = {
@@ -18,6 +33,7 @@ export const kindLabel: Record<WireKind, string> = {
 export const wire: WireItem[] = [
   {
     id: "w1",
+    gameId: "texas",
     kind: "notice",
     stamped: "Saturday · Knoxville",
     line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
@@ -25,6 +41,7 @@ export const wire: WireItem[] = [
   },
   {
     id: "w2",
+    gameId: "kennesaw",
     kind: "take",
     stamped: "Mon",
     line: "The freshman is starting. The takes will write themselves. Ours already did.",
@@ -32,6 +49,7 @@ export const wire: WireItem[] = [
   },
   {
     id: "w3",
+    gameId: "texas",
     kind: "whisper",
     stamped: "Last week",
     line: "Somebody called Kennesaw a trap game.",
@@ -46,6 +64,7 @@ export const wire: WireItem[] = [
   },
   {
     id: "w5",
+    gameId: "kennesaw",
     kind: "take",
     stamped: "Sat",
     line: "Night in Knoxville. Score it, then sit the pride.",
@@ -60,6 +79,7 @@ export const wire: WireItem[] = [
   },
   {
     id: "w7",
+    gameId: "texas",
     kind: "notice",
     stamped: "Thu",
     line: "Texas week is here and living in the group chat.",
@@ -74,6 +94,7 @@ export const wire: WireItem[] = [
   },
   {
     id: "w9",
+    gameId: "alabama",
     kind: "rumor",
     stamped: "Wed",
     line: "Somebody heard Alabama is a home game this year and started clearing the calendar in October.",
@@ -90,3 +111,33 @@ export const wire: WireItem[] = [
 
 export const disclaimer =
   "Satire and opinion, written in Knoxville, not a newsroom. Not affiliated with the university. If it sounds like reporting, it is not.";
+
+/**
+ * The lead item: a notice generated from the schedule so it is never stale.
+ * With no upcoming game (season over, or schedule not yet released) it falls
+ * back to a generic "Next game" notice.
+ */
+export function leadNotice(now = Date.now()): WireItem {
+  const g: Game | undefined = nextGame(now);
+  const card = saturdayCard(g, now);
+  return {
+    id: "lead",
+    kind: "notice",
+    stamped: g ? `${card.label} · ${g.city}` : "Next game",
+    line: g ? `Our lean on ${g.opponent}: ${leanLabel[g.lean]}` : card.line,
+    body: g ? g.take : card.note,
+    gameId: g?.id,
+  };
+}
+
+/**
+ * The wire as the site shows it: the generated lead, then evergreen items and
+ * items about games still to come. Items about games already played are kept
+ * (nothing is deleted) but listed separately as "Earlier this season".
+ */
+export function wireFeed(now = Date.now()): { current: WireItem[]; earlier: WireItem[] } {
+  const played = new Set(games.filter((g) => isPlayed(g, now)).map((g) => g.id));
+  const earlier = wire.filter((w) => w.gameId && played.has(w.gameId));
+  const current = wire.filter((w) => !w.gameId || !played.has(w.gameId));
+  return { current: [leadNotice(now), ...current], earlier };
+}

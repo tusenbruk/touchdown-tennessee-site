@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { formatGameDate, nextGame, SEASON_LINE } from "@/lib/saturday/schedule";
 
 export const SUBJECTS = [
   "Furman week",
@@ -14,6 +15,19 @@ export const SUBJECTS = [
 ] as const;
 
 export type Subject = (typeof SUBJECTS)[number];
+
+/** Which canned subject matches an opponent; evergreen "The over/under" when none does. */
+const OPPONENT_SUBJECT: Record<string, Subject> = {
+  Furman: "Furman week",
+  "Georgia Tech": "Night in Atlanta",
+  Texas: "Texas",
+  Alabama: "Alabama",
+  Vanderbilt: "Vanderbilt",
+};
+
+export function subjectForOpponent(opponent?: string): Subject {
+  return (opponent && OPPONENT_SUBJECT[opponent]) || "The over/under";
+}
 
 export type TakeResult = {
   kicker: "TAKE" | "WHISPER" | "NOTICE" | "RUMOR";
@@ -198,6 +212,14 @@ let windowCount = 0;
 const WINDOW_MS = 60_000;
 const WINDOW_MAX = 24;
 
+/** What the model is told about timing, derived from the schedule so it is never stale. */
+function scheduleContext() {
+  const g = nextGame();
+  if (!g)
+    return "The regular-season schedule is complete or not yet announced; do not name a specific upcoming opponent.";
+  return `Tennessee's next game is ${g.location === "away" ? "at" : "against"} ${g.opponent} on ${formatGameDate(g.date)}. Do not mention games already played.`;
+}
+
 export const generateTake = createServerFn({ method: "POST" })
   .validator((input: unknown) => {
     const subject =
@@ -240,11 +262,11 @@ export const generateTake = createServerFn({ method: "POST" })
             {
               role: "system",
               content:
-                "You write one dry Knoxville sports take for Touchdown Tennessee, an independent unlicensed merch brand. Voice: newspaper column, slightly mean, never cute, never hype-man. Say Tennessee, Knoxville, the orange, the hill, the river — never mascots, never song titles, never checkerboard, never 'Vols' as a brand, never player names, never coach names, never university trademarks. JSON only: {\"kicker\":\"TAKE\"|\"WHISPER\"|\"NOTICE\"|\"RUMOR\",\"line\":\"one sentence\",\"aside\":\"optional short second sentence\"}. Line max 140 characters. Aside max 100.",
+                'You write one dry Knoxville sports take for Touchdown Tennessee, an independent unlicensed merch brand. Voice: newspaper column, slightly mean, never cute, never hype-man. Say Tennessee, Knoxville, the orange, the hill, the river — never mascots, never song titles, never checkerboard, never \'Vols\' as a brand, never player names, never coach names, never university trademarks. JSON only: {"kicker":"TAKE"|"WHISPER"|"NOTICE"|"RUMOR","line":"one sentence","aside":"optional short second sentence"}. Line max 140 characters. Aside max 100.',
             },
             {
               role: "user",
-              content: `Subject: ${data.subject}. Make it specific to this Saturday, September 2026, freshman quarterback, Furman this week, Georgia Tech next, Texas on the horizon, over/under 7.5.`,
+              content: `Subject: ${data.subject}. ${scheduleContext()} Season over/under ${SEASON_LINE}.`,
             },
           ],
         }),

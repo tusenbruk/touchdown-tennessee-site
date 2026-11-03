@@ -12,6 +12,11 @@
       "source": "/saturday/six",
       "destination": "/saturday",
       "permanent": false
+    },
+    {
+      "source": "/drops",
+      "destination": "/shop",
+      "permanent": false
     }
   ],
   "headers": [

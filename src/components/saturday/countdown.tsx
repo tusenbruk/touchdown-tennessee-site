@@ -29,6 +29,22 @@ export function KickoffCountdown({
   }, []);
 
   const game = nextGame(now ?? Date.now());
+  // No upcoming game (season over, or schedule not released): generic state.
+  if (!game) {
+    return compact ? (
+      <p className="font-display text-sm uppercase tracking-[0.16em] text-brand">
+        Next game · to be announced
+      </p>
+    ) : (
+      <div>
+        <p className="kicker">Next game</p>
+        <p className="mt-3 font-display text-3xl uppercase tracking-[0.06em] sm:text-4xl">
+          To be announced
+        </p>
+      </div>
+    );
+  }
+
   const opponent = game.opponent;
   // Most future games have no confirmed kickoff yet. Do not invent one:
   // show the date and say the time is pending.

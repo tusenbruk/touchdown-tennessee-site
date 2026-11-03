@@ -9,8 +9,10 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "brand-check": "node scripts/brand-check.mjs",
-    "test": "node --test 'scripts/**/*.test.mjs'",
+    "test:site": "node --experimental-strip-types --test src/lib/saturday/schedule.test.ts src/lib/newsletter-core.test.ts",
+    "test": "node --experimental-strip-types --test src/lib/saturday/schedule.test.ts src/lib/newsletter-core.test.ts && node --test 'scripts/**/*.test.mjs'",
     "lint": "eslint .",
+    "newsletter": "node --experimental-strip-types scripts/newsletter.ts",
     "format": "prettier --write ."
   },
   "dependencies": {
