@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
+import { PreviewBanner } from "@/components/preview-banner";
 import { cn } from "@/lib/cn";
 import { seo } from "@/lib/seo";
 
@@ -71,9 +72,10 @@ function CheckoutPage() {
         <PageHeader
           kicker="Almost there"
           title="Checkout"
-          lede="Preview catalog — this places a local order so you can walk the flow. No card is charged."
-          className="mb-8"
+          lede="Walk through the order flow. Nothing is charged or shipped."
+          className="mb-6"
         />
+        <PreviewBanner className="mb-4" />
         <label className="block text-sm font-medium text-ink">
           Name
           <Input name="name" required className="mt-1" autoComplete="name" />
@@ -107,7 +109,7 @@ function CheckoutPage() {
           </label>
         </div>
         <Button type="submit" variant="ink" size="lg" className="mt-4 w-full" disabled={busy}>
-          Place order · {formatMoney(totals.total)}
+          Place preview order · {formatMoney(totals.total)}
         </Button>
       </form>
       <aside aria-label="Order summary" className="h-fit border-t-4 border-brand bg-bone p-5">

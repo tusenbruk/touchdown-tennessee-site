@@ -113,6 +113,27 @@
     color: var(--color-brand);
   }
 
+  /* Placeholder shimmer behind images that are still loading. */
+  .img-skeleton {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-bone) 30%,
+      color-mix(in oklab, var(--color-bone) 55%, white) 50%,
+      var(--color-bone) 70%
+    );
+    background-size: 200% 100%;
+    animation: img-shimmer 1.4s linear infinite;
+  }
+
+  @keyframes img-shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
   /* First tab stop on every page. Hidden until focused. */
   .skip-link {
     position: absolute;
