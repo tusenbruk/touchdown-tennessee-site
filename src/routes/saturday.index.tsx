@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { leadNotice } from "@/lib/saturday/wire";
-import { games, leanLabel, nextGame, pulse, saturdayCard } from "@/lib/saturday/schedule";
+import { games, isPlayed, leanLabel, nextUpPulse, nextGame, pulse } from "@/lib/saturday/schedule";
+import { NextGameCard, UpcomingGames } from "@/components/saturday/next-game";
 import { cn } from "@/lib/cn";
 import { seo } from "@/lib/seo";
 
@@ -19,16 +19,15 @@ export const Route = createFileRoute("/saturday/")({
 
 function SaturdayHome() {
   const featured = leadNotice();
-  const card = saturdayCard(nextGame());
-  const look = ["texas", "alabama", "lsu"].map((id) => games.find((g) => g.id === id)!);
+  // The next three unplayed games, not a fixed trio.
+  const look = games.filter((g) => !isPlayed(g)).slice(0, 3);
 
   return (
     <div>
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         <div>
-          <KickoffCountdown />
-          <p className="mt-4 text-base text-ink">{card.line}</p>
-          <p className="mt-2 max-w-lg text-base text-muted">{card.note}</p>
+          <NextGameCard tone="light" />
+          <UpcomingGames className="mt-8" />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/saturday/wire" className={buttonVariants({ size: "lg" })}>
               Read the wire
@@ -91,7 +90,7 @@ function SaturdayHome() {
           </Link>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {pulse.map((p) => (
+          {[...pulse, nextUpPulse(nextGame())].map((p) => (
             <div
               key={p.kicker}
               className="border border-ink/10 border-t-4 border-t-brand bg-cream p-5"
