@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as DropsRouteImport } from './routes/drops'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as IndependentRouteImport } from './routes/independent'
 import { Route as SaturdayRouteImport } from './routes/saturday'
@@ -34,11 +33,6 @@ const IndexRoute = IndexRouteImport.update({
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DropsRoute = DropsRouteImport.update({
-  id: '/drops',
-  path: '/drops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -110,7 +104,6 @@ const ShopSlugRoute = ShopSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
-  '/drops': typeof DropsRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
@@ -128,7 +121,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
-  '/drops': typeof DropsRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -145,7 +137,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
-  '/drops': typeof DropsRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
@@ -165,7 +156,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/checkout'
-    | '/drops'
     | '/games'
     | '/independent'
     | '/saturday'
@@ -183,7 +173,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/checkout'
-    | '/drops'
     | '/games'
     | '/independent'
     | '/sitemap.xml'
@@ -199,7 +188,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/checkout'
-    | '/drops'
     | '/games'
     | '/independent'
     | '/saturday'
@@ -218,7 +206,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckoutRoute: typeof CheckoutRoute
-  DropsRoute: typeof DropsRoute
   GamesRoute: typeof GamesRoute
   IndependentRoute: typeof IndependentRoute
   SaturdayRoute: typeof SaturdayRouteWithChildren
@@ -242,13 +229,6 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/drops': {
-      id: '/drops'
-      path: '/drops'
-      fullPath: '/drops'
-      preLoaderRoute: typeof DropsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -378,7 +358,6 @@ const ShopRouteWithChildren = ShopRoute._addFileChildren(ShopRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckoutRoute: CheckoutRoute,
-  DropsRoute: DropsRoute,
   GamesRoute: GamesRoute,
   IndependentRoute: IndependentRoute,
   SaturdayRoute: SaturdayRouteWithChildren,

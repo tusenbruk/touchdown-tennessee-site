@@ -17,18 +17,6 @@ export function PrimaryMark({ className }: { className?: string }) {
   );
 }
 
-export function TdtMark({ className }: { className?: string }) {
-  return (
-    <img
-      src="/brand/house-mark-ink.svg"
-      alt="Touchdown Tennessee"
-      width={MARK_W}
-      height={MARK_H}
-      className={cn("h-9 w-auto object-contain outline-none sm:h-11", className)}
-    />
-  );
-}
-
 export function BrandStamp({
   src,
   alt,
