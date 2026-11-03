@@ -15,22 +15,8 @@ export type Game = {
   featured?: boolean;
 };
 
-/**
- * @deprecated Hard-coded week-four values, kept for reference only. The site
- * now derives the featured game from `games` via `nextGame()` / `saturdayCard()`
- * so it no longer needs restaging every week.
- * Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4).
- */
-export const NEXT_KICKOFF = "2026-09-26T16:00:00.000Z";
-export const NEXT_OPPONENT = "Texas";
 export const SEASON_LINE = "7.5";
 export const OUR_RECORD_PICK = "8–4, leaning 9–3";
-
-export const THIS_SATURDAY = {
-  label: "This Saturday",
-  line: "Tennessee vs Texas · Sep 26 · 12:00 ET · Knoxville",
-  note: "Home noon kick. SEC Saturday on ABC. Visitors leave quietly.",
-} as const;
 
 export const games: Game[] = [
   {
@@ -213,30 +199,85 @@ export function formatGameDate(iso: string) {
   });
 }
 
-/** Copy for the "This Saturday" cards, built from the schedule entry. */
-export function saturdayCard(g: Game) {
-  const prefix = g.location === "away" ? "at" : "vs";
-  const when = g.kickoff ? g.kickoffLabel : `${g.kickoffLabel} · time to be announced`;
-  return {
-    line: `Tennessee ${prefix} ${g.opponent} · ${formatGameDate(g.date)} · ${when} · ${g.city}`,
-    note: g.take,
-  };
+const DAY_MS = 24 * 3600 * 1000;
+
+/** A game counts as finished at 12:00 UTC the day after its date (about 8 am ET Sunday). */
+function gameEnd(g: Game) {
+  return Date.parse(`${g.date}T23:59:59.000Z`) + 12 * 3600 * 1000;
+}
+
+export function isPlayed(g: Game, now = Date.now()) {
+  return gameEnd(g) <= now;
 }
 
 /**
- * First game that has not finished yet. A game stays "next" until noon ET the
- * day after, so the card does not flip off kickoff day. Falls back to the
- * final game once the season is over.
+ * First game that has not finished yet, or `undefined` once the season is over
+ * (callers show a generic "Next game" state rather than repeating the finale).
+ * A game stays "next" through the evening of kickoff day (see gameEnd).
  */
-export function nextGame(now = Date.now()) {
-  return (
-    games.find((g) => {
-      const end = Date.parse(`${g.date}T23:59:59.000Z`) + 12 * 3600 * 1000;
-      return end > now;
-    }) ?? games[games.length - 1]
-  );
+export function nextGame(now = Date.now()): Game | undefined {
+  return games.find((g) => !isPlayed(g, now));
 }
 
+/** "This Saturday" when the game is within a week, otherwise "Next game". */
+export function gameLabel(g: Game, now = Date.now()) {
+  const until = Date.parse(`${g.date}T00:00:00.000Z`) - now;
+  return until <= 7 * DAY_MS ? "This Saturday" : "Next game";
+}
+
+/** Copy for the "This Saturday" cards, built from the schedule entry. */
+export function saturdayCard(g: Game | undefined, now = Date.now()) {
+  if (!g) {
+    return {
+      label: "Next game",
+      line: "Next game: to be announced",
+      note: "The schedule is updated as the conference confirms it.",
+    };
+  }
+  const prefix = g.location === "away" ? "at" : "vs";
+  const when = g.kickoff ? g.kickoffLabel : `${g.kickoffLabel} · time to be announced`;
+  return {
+    label: gameLabel(g, now),
+    line: `Tennessee ${prefix} ${g.opponent} · ${formatGameDate(g.date)} · ${when} · ${g.city}`,
+    note: `${g.location === "away" ? "Away" : "Home"} game, ${
+      g.network === "TBD" ? "network to be announced" : `on ${g.network}`
+    }.`,
+  };
+}
+
+/** Dates of bye weeks: any two-week gap between consecutive games. */
+export function byeWeeks(): string[] {
+  const out: string[] = [];
+  for (let i = 1; i < games.length; i++) {
+    const prev = Date.parse(`${games[i - 1]!.date}T00:00:00.000Z`);
+    const cur = Date.parse(`${games[i]!.date}T00:00:00.000Z`);
+    if (cur - prev >= 14 * DAY_MS) {
+      out.push(new Date(prev + 7 * DAY_MS).toISOString().slice(0, 10));
+    }
+  }
+  return out;
+}
+
+/** The fourth "pulse" card: always about the next game, never a fixed opponent. */
+export function nextUpPulse(g: Game | undefined) {
+  if (!g) {
+    return {
+      kicker: "Next up",
+      value: "TBA",
+      label: "Schedule pending",
+      note: "Nothing on the calendar yet. Check back when the conference confirms it.",
+    };
+  }
+  const network = g.network === "TBD" ? "network to be announced" : `on ${g.network}`;
+  return {
+    kicker: "Next up",
+    value: g.city,
+    label: `Week ${g.week}, ${g.kickoffLabel}`,
+    note: `${g.location === "away" ? "At" : "Home against"} ${g.opponent}, ${network}. Our lean: ${leanLabel[g.lean]}.`,
+  };
+}
+
+/** Season-level cards. Pair with `nextUpPulse()` for the game-specific one. */
 export const pulse = [
   {
     kicker: "The number",
@@ -255,11 +296,5 @@ export const pulse = [
     value: "4",
     label: "Games they have us losing",
     note: "Texas, Alabama, Texas A&M, LSU. The whole season lives in whether one of those gets stubborn.",
-  },
-  {
-    kicker: "Noon kick",
-    value: "Knoxville",
-    label: "Week four, Noon ET",
-    note: "Texas at home on ABC. National window. Visitors leave quietly.",
   },
 ];

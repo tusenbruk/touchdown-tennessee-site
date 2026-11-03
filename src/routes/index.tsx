@@ -6,7 +6,7 @@ import { BrandStamp } from "@/components/brand-mark";
 import { SectionHeading } from "@/components/page-header";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { wire } from "@/lib/saturday/wire";
+import { leadNotice } from "@/lib/saturday/wire";
 import { nextGame, saturdayCard } from "@/lib/saturday/schedule";
 import { formatMoney } from "@/lib/format";
 import { seo } from "@/lib/seo";
@@ -26,7 +26,7 @@ const promises = [
 function Home() {
   const classics = getByCollection("classics");
   const heritage = getByCollection("heritage");
-  const featured = wire[0]!;
+  const featured = leadNotice();
   const card = saturdayCard(nextGame());
   return (
     <div>
@@ -91,7 +91,7 @@ function Home() {
       <section className="bg-ink text-cream">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="kicker">Saturday</p>
+            <p className="kicker">{card.label}</p>
             <h2 className="mt-2 text-3xl sm:text-5xl">The shop is merch. This is why you stay.</h2>
             <p className="mt-4 max-w-lg text-base text-cream/80">{card.line}</p>
             <p className="mt-2 max-w-lg text-base text-cream/80">{card.note}</p>

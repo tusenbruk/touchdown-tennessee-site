@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { KickoffCountdown } from "@/components/saturday/countdown";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { wire } from "@/lib/saturday/wire";
+import { leadNotice } from "@/lib/saturday/wire";
 import { games, leanLabel, nextGame, pulse, saturdayCard } from "@/lib/saturday/schedule";
 import { cn } from "@/lib/cn";
 import { seo } from "@/lib/seo";
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/saturday/")({
 });
 
 function SaturdayHome() {
-  const featured = wire[0]!;
+  const featured = leadNotice();
   const card = saturdayCard(nextGame());
   const look = ["texas", "alabama", "lsu"].map((id) => games.find((g) => g.id === id)!);
 
