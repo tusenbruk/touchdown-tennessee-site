@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Newsletter } from "@/components/newsletter";
 import { BrandStamp } from "@/components/brand-mark";
 import { CONTACT_EMAIL } from "@/components/nav-links";
 
@@ -10,7 +9,7 @@ export function Footer() {
   return (
     <footer className="on-ink bg-ink text-cream">
       <div className="h-1 bg-brand" aria-hidden="true" />
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div>
           <BrandStamp
             src="/brand/house-mark.svg"
@@ -21,28 +20,15 @@ export function Footer() {
           />
           <p className="mt-4 font-display text-3xl uppercase tracking-[0.08em]">Knoxville</p>
           <p className="mt-3 max-w-sm text-sm text-cream/75">
-            Original marks. No licensed logos, no bookstore markup. The shop is merch. Saturday is
-            why you stay.
+            Original marks. No licensed logos. Independent Tennessee football, from Knoxville.
           </p>
         </div>
-        <Newsletter dark />
       </div>
 
       <nav
         aria-label="Footer"
-        className="mx-auto grid max-w-6xl grid-cols-2 gap-8 border-t border-cream/10 px-4 py-10 text-sm sm:px-6 sm:grid-cols-3"
+        className="mx-auto grid max-w-6xl grid-cols-2 gap-8 border-t border-cream/10 px-4 py-10 text-sm sm:px-6 sm:grid-cols-2"
       >
-        <FooterColumn title="Shop">
-          <Link to="/shop" className={linkClass}>
-            All products
-          </Link>
-          <Link to="/collection/$slug" params={{ slug: "classics" }} className={linkClass}>
-            Classics
-          </Link>
-          <Link to="/collection/$slug" params={{ slug: "heritage" }} className={linkClass}>
-            1794
-          </Link>
-        </FooterColumn>
         <FooterColumn title="Saturday">
           <Link to="/saturday" className={linkClass}>
             Clubhouse

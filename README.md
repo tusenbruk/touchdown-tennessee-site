@@ -1,13 +1,23 @@
 # Touchdown Tennessee
 
-Independent Knoxville merch. No licensed marks.
+Independent Tennessee football, from Knoxville. A low-maintenance header site: the season record, the next game and kickoff, a satirical wire and a season board. No licensed marks.
 
-- **Classics** — tee, signature tee, hoodie, hat, MagSafe case
-- **1794** — Rifleman, Blount College, Crockett
+- **Saturday** (`/saturday`): clubhouse, countdown, next game
+- **The Board** (`/saturday/board`): the slate, final scores for played games, our pick on the rest
+- **The Wire** (`/saturday/wire`): satire and a take machine
+- A one-line status on every page: record, next game, kickoff. All of it is computed from `src/lib/saturday/schedule.ts`.
 
-Shop: [touchdowntennessee.com](https://touchdowntennessee.com)
+The shop, cart, checkout and newsletter were retired on 2026-11-03. The code is kept in `_deprecated/` (see its README); `public/products/` is untouched.
 
 Questions: touchdowntennessee@gmail.com
+
+## Develop
+
+```bash
+npm ci
+npm run dev        # http://localhost:8080
+npm run build && npm run typecheck && npm run lint && npm test
+```
 
 ## Weekly update
 

@@ -115,8 +115,8 @@ function IndependentPage() {
         </div>
       </section>
 
-      <Link to="/shop" className={cn(buttonVariants({ variant: "ink" }), "mt-10 inline-flex")}>
-        Back to the shop
+      <Link to="/saturday" className={cn(buttonVariants({ variant: "ink" }), "mt-10 inline-flex")}>
+        Back to Saturday
       </Link>
     </article>
   );

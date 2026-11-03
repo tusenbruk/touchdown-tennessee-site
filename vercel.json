@@ -15,7 +15,32 @@
     },
     {
       "source": "/drops",
-      "destination": "/shop",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/shop",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/shop/:slug*",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/collection/:slug*",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/checkout",
+      "destination": "/saturday",
+      "permanent": false
+    },
+    {
+      "source": "/order/:id*",
+      "destination": "/saturday",
       "permanent": false
     }
   ],

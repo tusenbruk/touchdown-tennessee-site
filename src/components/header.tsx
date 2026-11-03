@@ -1,24 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, ShoppingBag, X } from "lucide-react";
-import { cartCount, useCart } from "@/lib/cart";
+import { Menu, X } from "lucide-react";
 import { PrimaryMark } from "@/components/brand-mark";
-import { CartDrawer } from "@/components/cart-drawer";
 import { primaryNav, type NavItem } from "@/components/nav-links";
 import { cn } from "@/lib/cn";
 
 export function Header() {
-  const items = useCart((s) => s.items);
-  const count = cartCount(items);
-  const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuCloseRef = useRef<HTMLButtonElement>(null);
 
-  // Close any open overlay when the route changes.
+  // Close the menu when the route changes.
   useEffect(() => {
-    setCartOpen(false);
     setMenuOpen(false);
   }, [pathname]);
 
@@ -72,27 +66,10 @@ export function Header() {
             ))}
           </nav>
 
-          <button
-            type="button"
-            onClick={() => setCartOpen(true)}
-            className="relative grid size-11 place-items-center"
-            aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`}
-            aria-haspopup="dialog"
-          >
-            <ShoppingBag className="size-5" aria-hidden="true" />
-            {count > 0 ? (
-              <span
-                aria-hidden="true"
-                className="absolute top-1.5 right-1.5 grid min-w-4 place-items-center bg-brand px-1 font-display text-[10px] text-ink"
-              >
-                {count}
-              </span>
-            ) : null}
-          </button>
+          {/* Keeps the logo centred between the menu button and this spacer on phones. */}
+          <span className="size-11 lg:hidden" aria-hidden="true" />
         </div>
       </header>
-
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
 
       {/* `inert` removes the closed drawer from the tab order and the a11y tree. */}
       <div
@@ -149,16 +126,8 @@ const mobileLink = "border-b border-ink/10 py-4 font-display text-2xl uppercase 
 
 /** Renders one NavItem as a router Link with an orange underline when active. */
 export function NavAnchor({ item, className }: { item: NavItem; className?: string }) {
-  const active = { className: "!border-brand !text-ink" };
-  if (item.to === "/collection/$slug") {
-    return (
-      <Link to={item.to} params={item.params} className={className} activeProps={active}>
-        {item.label}
-      </Link>
-    );
-  }
   return (
-    <Link to={item.to} className={className} activeProps={active}>
+    <Link to={item.to} className={className} activeProps={{ className: "!border-brand !text-ink" }}>
       {item.label}
     </Link>
   );

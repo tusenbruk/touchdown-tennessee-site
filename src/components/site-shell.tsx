@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { CartHydrate } from "@/components/cart-hydrate";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
@@ -10,7 +9,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <CartHydrate />
       <Header />
       <main id="main" tabIndex={-1} className="flex-1 outline-none">
         {children}
