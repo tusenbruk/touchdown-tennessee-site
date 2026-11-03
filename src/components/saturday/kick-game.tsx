@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Volume2, VolumeX } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { loadKickSave, writeKickSave } from "@/lib/saturday/scores";
 import { cn } from "@/lib/cn";
 
@@ -9,7 +10,7 @@ type Phase = "title" | "ready" | "charging" | "flight" | "made" | "missed" | "ov
 
 const DISTANCES = [20, 27, 33, 39, 45, 50, 53, 58, 61, 64];
 const PAPER = "#f3ebe0";
-const BONE = "#e7d9c6";
+const _BONE = "#e7d9c6"; // unused; underscore marks it intentional for lint
 const CREAM = "#fff8f0";
 const INK = "#16120e";
 const BRAND = "#e85d04";

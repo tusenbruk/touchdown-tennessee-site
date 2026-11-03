@@ -15,7 +15,12 @@ export type Game = {
   featured?: boolean;
 };
 
-/** Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4). */
+/**
+ * @deprecated Hard-coded week-four values, kept for reference only. The site
+ * now derives the featured game from `games` via `nextGame()` / `saturdayCard()`
+ * so it no longer needs restaging every week.
+ * Texas, Saturday Sep 26 2026, Noon ET (EDT = UTC-4).
+ */
 export const NEXT_KICKOFF = "2026-09-26T16:00:00.000Z";
 export const NEXT_OPPONENT = "Texas";
 export const SEASON_LINE = "7.5";
@@ -198,11 +203,38 @@ export const leanLabel: Record<Lean, string> = {
   loss: "Likely L",
 };
 
+/** "Nov 7" from an ISO date. Parsed as UTC parts so the day never shifts with the viewer's timezone. */
+export function formatGameDate(iso: string) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y!, m! - 1, d!)).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/** Copy for the "This Saturday" cards, built from the schedule entry. */
+export function saturdayCard(g: Game) {
+  const prefix = g.location === "away" ? "at" : "vs";
+  const when = g.kickoff ? g.kickoffLabel : `${g.kickoffLabel} · time to be announced`;
+  return {
+    line: `Tennessee ${prefix} ${g.opponent} · ${formatGameDate(g.date)} · ${when} · ${g.city}`,
+    note: g.take,
+  };
+}
+
+/**
+ * First game that has not finished yet. A game stays "next" until noon ET the
+ * day after, so the card does not flip off kickoff day. Falls back to the
+ * final game once the season is over.
+ */
 export function nextGame(now = Date.now()) {
-  return games.find((g) => {
-    const end = Date.parse(`${g.date}T23:59:59.000Z`) + 12 * 3600 * 1000;
-    return end > now;
-  }) ?? games[games.length - 1];
+  return (
+    games.find((g) => {
+      const end = Date.parse(`${g.date}T23:59:59.000Z`) + 12 * 3600 * 1000;
+      return end > now;
+    }) ?? games[games.length - 1]
+  );
 }
 
 export const pulse = [

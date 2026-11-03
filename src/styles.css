@@ -1,13 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #f3ebe0;
-  --color-bone: #e7d9c6;
-  --color-cream: #fff8f0;
+  /* Palette: Tennessee orange and white, on a warm near-black ink.
+     Contrast (WCAG): brand on ink 7.5:1, ink on brand 7.5:1, brand-deep on paper 5.5:1.
+     Brand orange on white is only 2.5:1, so it is never used as text on light
+     surfaces; use brand-deep there (see .kicker). */
+  --color-paper: #fffcf8;
+  --color-bone: #f2ede6;
+  --color-cream: #ffffff;
   --color-ink: #16120e;
-  --color-muted: #7a6f64;
-  --color-brand: #e85d04;
-  --color-brand-dark: #c24a00;
+  --color-muted: #6b6055;
+  --color-brand: #ff8200;
+  --color-brand-dark: #e06f00;
+  --color-brand-deep: #a84c00;
   --color-rule: color-mix(in oklab, var(--color-ink) 12%, transparent);
 
   --font-display: "Oswald", "Arial Narrow", sans-serif;
@@ -20,8 +25,7 @@
   --radius-xl: 28px;
 
   --shadow-border:
-    0px 0px 0px 1px rgba(22, 18, 14, 0.06),
-    0px 1px 2px -1px rgba(22, 18, 14, 0.06),
+    0px 0px 0px 1px rgba(22, 18, 14, 0.06), 0px 1px 2px -1px rgba(22, 18, 14, 0.06),
     0px 8px 24px -12px rgba(22, 18, 14, 0.18);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -45,12 +49,14 @@
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     text-wrap: balance;
     font-family: var(--font-display);
     letter-spacing: 0.04em;
@@ -72,9 +78,70 @@
     outline-offset: -1px;
   }
 
+  /* Visible keyboard focus everywhere. Ink on light surfaces, brand orange on
+     dark ones; both clear the 3:1 non-text contrast minimum. */
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  .bg-ink :focus-visible,
+  .on-ink :focus-visible {
+    outline-color: var(--color-brand);
+  }
+
   ::selection {
     background: var(--color-brand);
     color: var(--color-cream);
+  }
+}
+
+@layer components {
+  /* Small-caps eyebrow above a heading. Deep orange on light surfaces (passes
+     AA); bright brand orange when it sits inside any dark (bg-ink) block. */
+  .kicker {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-brand-deep);
+  }
+
+  .bg-ink .kicker,
+  .on-ink .kicker {
+    color: var(--color-brand);
+  }
+
+  /* First tab stop on every page. Hidden until focused. */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transform: translateY(-120%);
+    transition: transform var(--motion-quick) var(--ease-out);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid var(--color-brand);
+    outline-offset: 0;
+  }
+
+  /* Short orange bar that anchors page titles. */
+  .title-rule {
+    display: block;
+    width: 3rem;
+    height: 0.25rem;
+    background: var(--color-brand);
   }
 }
 
