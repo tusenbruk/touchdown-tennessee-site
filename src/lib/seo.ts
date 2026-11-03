@@ -1,13 +1,8 @@
 /**
  * Per-route SEO helpers. Every route's `head()` calls `seo()` so titles,
- * descriptions, canonicals and share tags stay consistent.
- *
- * NOTE (deploy path): the platform head injector in `scripts/grok-pwa-shared.mjs`
- * strips every og:* / twitter:* meta from the HTML and re-emits its own from
- * `src/lib/og/site.json` + `public/og.jpg`, using the page <title> for og:title.
- * The tags below are still emitted (they are what dev, previews and any other
- * host see); on the deployed site, <title>, description, canonical and JSON-LD
- * are the parts this file fully controls.
+ * descriptions, canonicals and share tags stay consistent. This file fully
+ * controls <title>, description, canonical, og/twitter tags and JSON-LD —
+ * no platform head injector sits in front of it.
  */
 export const SITE_URL = "https://touchdowntennessee.com";
 export const SITE_NAME = "Touchdown Tennessee";
