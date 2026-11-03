@@ -11,6 +11,7 @@ import {
   resultLabel,
   saturdayCard,
   seasonRecord,
+  statusLine,
 } from "./schedule.ts";
 import { leadNotice, wireFeed } from "./wire.ts";
 
@@ -112,4 +113,22 @@ test("pulse cards report results, not predictions, for played games", () => {
   assert.equal(four.value, "1\u20131"); // Alabama W, Texas L
   assert.match(four.note, /Still ahead: Texas A&M, LSU/);
   assert.match(nextUpPulse(nextGame(at("2026-11-03T12:00:00Z"))).note, /Our pick:/);
+});
+
+test("status line: record, next game, kickoff, all from the schedule", () => {
+  assert.equal(
+    statusLine(at("2026-11-03T12:00:00Z")).text,
+    "6\u20132 \u00b7 Next: vs Kentucky \u00b7 Nov 7 \u00b7 Night window \u00b7 time TBA",
+  );
+  // A confirmed kickoff drops the "time TBA" suffix.
+  assert.equal(
+    statusLine(at("2026-09-26T12:00:00Z")).text,
+    "6\u20132 \u00b7 Next: vs Texas \u00b7 Sep 26 \u00b7 Noon ET",
+  );
+});
+
+test("status line: after the season it closes cleanly", () => {
+  const s = statusLine(at("2026-12-15T12:00:00Z"));
+  assert.equal(s.text, "Season closed, 6\u20132");
+  assert.equal(s.game, undefined);
 });

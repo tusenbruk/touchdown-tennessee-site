@@ -37,11 +37,6 @@ export function Header() {
 
   return (
     <>
-      <div role="region" aria-label="Announcement" className="bg-brand text-ink">
-        <p className="py-2 text-center font-display text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.22em]">
-          Saturday · Knoxville · Noon
-        </p>
-      </div>
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:h-[4.25rem] sm:px-6">
           <button
