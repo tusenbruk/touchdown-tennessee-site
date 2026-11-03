@@ -90,7 +90,7 @@ function SaturdayHome() {
           </Link>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[...pulse, nextUpPulse(nextGame())].map((p) => (
+          {[...pulse(), nextUpPulse(nextGame())].map((p) => (
             <div
               key={p.kicker}
               className="border border-ink/10 border-t-4 border-t-brand bg-cream p-5"
@@ -114,7 +114,7 @@ function SaturdayHome() {
               </p>
               <p className="text-sm text-muted sm:max-w-xl sm:text-right">{g.take}</p>
               <p className="font-display text-xs uppercase tracking-[0.16em] text-brand-deep">
-                {leanLabel[g.lean]}
+                Pick: {leanLabel[g.lean]}
               </p>
             </div>
           ))}

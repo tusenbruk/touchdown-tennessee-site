@@ -124,7 +124,7 @@ export function leadNotice(now = Date.now()): WireItem {
     id: "lead",
     kind: "notice",
     stamped: g ? `${card.label} · ${g.city}` : "Next game",
-    line: g ? `Our lean on ${g.opponent}: ${leanLabel[g.lean]}` : card.line,
+    line: g ? `Our pick on ${g.opponent}: ${leanLabel[g.lean]}` : card.line,
     body: g ? g.take : card.note,
     gameId: g?.id,
   };

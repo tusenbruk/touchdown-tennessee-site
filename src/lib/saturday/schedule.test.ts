@@ -1,6 +1,17 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { byeWeeks, games, nextGame, nextUpPulse, saturdayCard } from "./schedule.ts";
+import {
+  byeWeeks,
+  formatRecord,
+  gameStatus,
+  games,
+  nextGame,
+  nextUpPulse,
+  pulse,
+  resultLabel,
+  saturdayCard,
+  seasonRecord,
+} from "./schedule.ts";
 import { leadNotice, wireFeed } from "./wire.ts";
 
 const at = (iso: string) => Date.parse(iso);
@@ -53,4 +64,52 @@ test("wire: nothing is dropped", () => {
   const now = at("2026-11-03T12:00:00Z");
   const { current, earlier } = wireFeed(now);
   assert.equal(current.length - 1 + earlier.length, 10); // 10 authored items + generated lead
+});
+
+test("results: every game played by Nov 3 has a result, the rest have none", () => {
+  const now = at("2026-11-03T12:00:00Z");
+  for (const g of games) {
+    if (g.date < "2026-11-03") assert.ok(g.result?.final, `${g.id} should have a final result`);
+    else assert.equal(g.result, undefined, `${g.id} should not have a result yet`);
+  }
+  assert.equal(
+    gameStatus(
+      games.find((g) => g.id === "texas")!,
+      now,
+    ),
+    "final",
+  );
+  assert.equal(
+    gameStatus(
+      games.find((g) => g.id === "kentucky")!,
+      now,
+    ),
+    "upcoming",
+  );
+});
+
+test("results: outcome agrees with the score and the record is 6-2", () => {
+  for (const g of games.filter((x) => x.result)) {
+    const [ours, theirs] = g.result!.score.split("\u2013").map(Number) as [number, number];
+    assert.equal(g.result!.outcome, ours > theirs ? "W" : "L", g.id);
+  }
+  assert.deepEqual(seasonRecord(), { w: 6, l: 2 });
+  assert.equal(formatRecord(), "6\u20132");
+  assert.equal(resultLabel(games.find((g) => g.id === "texas")!.result!), "L 17\u201320");
+});
+
+test("a played game with no result yet is 'awaiting', not a pick", () => {
+  const kentucky = games.find((g) => g.id === "kentucky")!;
+  assert.equal(gameStatus(kentucky, at("2026-11-08T13:00:00Z")), "awaiting");
+});
+
+test("pulse cards report results, not predictions, for played games", () => {
+  const cards = pulse();
+  const record = cards.find((c) => c.kicker === "The record")!;
+  assert.equal(record.value, "6\u20132");
+  assert.match(record.note, /L 24\u201327 at South Carolina/);
+  const four = cards.find((c) => c.kicker === "The four")!;
+  assert.equal(four.value, "1\u20131"); // Alabama W, Texas L
+  assert.match(four.note, /Still ahead: Texas A&M, LSU/);
+  assert.match(nextUpPulse(nextGame(at("2026-11-03T12:00:00Z"))).note, /Our pick:/);
 });

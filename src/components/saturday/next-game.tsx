@@ -60,7 +60,7 @@ export function NextGameCard({
           <Fact label="Week" ink={ink}>
             {g.week}
           </Fact>
-          <Fact label="Our lean" ink={ink}>
+          <Fact label="Our pick" ink={ink}>
             {leanLabel[g.lean]}
           </Fact>
         </dl>
