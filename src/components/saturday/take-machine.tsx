@@ -46,7 +46,7 @@ export function TakeMachine() {
   return (
     <div className="w-full min-w-0 overflow-hidden border border-ink/10 bg-cream">
       <div className="border-b border-ink/10 px-5 py-4 sm:px-6">
-        <p className="font-display text-xs tracking-[0.22em] text-brand">The take machine</p>
+        <p className="kicker">The take machine</p>
         <h2 className="mt-1 text-2xl sm:text-3xl">Write me a take</h2>
         <p className="mt-2 max-w-xl text-sm text-muted">
           Pick a subject. We will write you something dry enough to post. Satire, not reporting.
@@ -59,6 +59,7 @@ export function TakeMachine() {
               key={s}
               type="button"
               onClick={() => setSubject(s)}
+              aria-pressed={subject === s}
               className={cn(
                 "h-10 px-3 font-display text-xs uppercase tracking-[0.14em] transition-colors duration-150",
                 subject === s ? "bg-ink text-cream" : "bg-paper text-ink hover:bg-bone",
@@ -79,19 +80,24 @@ export function TakeMachine() {
           ) : null}
         </div>
       </div>
-      {take ? (
-        <div className="bg-ink px-5 py-8 text-cream sm:px-8">
-          <p className="font-display text-xs tracking-[0.22em] text-brand">{take.kicker}</p>
-          <p className="mt-3 font-display text-2xl uppercase leading-tight tracking-[0.04em] sm:text-3xl">
-            {take.line}
-          </p>
-          {take.aside ? <p className="mt-4 max-w-xl text-sm text-cream/70">{take.aside}</p> : null}
-          <p className="mt-6 font-display text-[11px] uppercase tracking-[0.18em] text-cream/45">
-            {take.subject}
-            {take.canned ? " · House take" : " · Fresh off the wire"}
-          </p>
-        </div>
-      ) : null}
+      {/* Announce each new take to screen readers without moving focus. */}
+      <div role="status" aria-live="polite">
+        {take ? (
+          <div className="bg-ink px-5 py-8 text-cream sm:px-8">
+            <p className="kicker">{take.kicker}</p>
+            <p className="mt-3 font-display text-2xl uppercase leading-tight tracking-[0.04em] sm:text-3xl">
+              {take.line}
+            </p>
+            {take.aside ? (
+              <p className="mt-4 max-w-xl text-sm text-cream/80">{take.aside}</p>
+            ) : null}
+            <p className="mt-6 font-display text-[11px] uppercase tracking-[0.18em] text-cream/70">
+              {take.subject}
+              {take.canned ? " · House take" : " · Fresh off the wire"}
+            </p>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
