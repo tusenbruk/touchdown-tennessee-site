@@ -35,9 +35,7 @@ function WirePage() {
           <p className="mt-2 text-sm text-muted">
             About games already played. Kept for the record.
           </p>
-          <div className="opacity-80">
-            <WireList items={earlier} label="Earlier wire items" />
-          </div>
+          <WireList items={earlier} label="Earlier wire items" />
         </section>
       ) : null}
     </div>

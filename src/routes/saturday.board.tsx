@@ -62,7 +62,6 @@ function BoardPage() {
                 aria-current={isNext ? "true" : undefined}
                 className={cn(
                   "grid gap-3 py-6 md:grid-cols-[6rem_1fr_7rem] md:items-baseline",
-                  played && "opacity-70",
                   isNext && "border-l-4 border-brand bg-bone/60 pl-4",
                 )}
               >

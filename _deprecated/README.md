@@ -27,3 +27,9 @@ git mv _deprecated/src/components/state-mark.tsx src/components/state-mark.tsx
 ```
 
 Imports use the `@/` alias, which resolves again once the file is back under `src/`.
+
+## Unused image variants (`public/products/`)
+
+`_deprecated/public/products/*-600.webp` and `*-900.webp` (76 files, 6.2 MB): WebP variants generated in round 1 for product photos the catalog never references. `scripts/make-webp.sh` now builds variants only for images listed in `src/lib/catalog.ts`.
+
+The 38 matching *original* JPEGs (about 20 MB) are still in `public/products/` and are still served at their URLs. They were not moved because they are product art, not generated files. Worth a decision: archive them, or add the products they belong to.
