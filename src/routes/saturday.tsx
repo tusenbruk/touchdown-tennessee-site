@@ -26,7 +26,7 @@ function SaturdayLayout() {
               kicker="Game week"
               title="Saturday"
               tone="ink"
-              lede="The shop is merch. This is why you come back. Gossip and the board for game week."
+              lede="This is why you come back. Gossip and the board for game week."
             />
           </div>
         ) : (

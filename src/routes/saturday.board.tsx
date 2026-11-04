@@ -3,11 +3,13 @@ import {
   byeWeeks,
   formatGameDate,
   games,
-  isPlayed,
+  formatRecord,
+  gameStatus,
   leanLabel,
   nextGame,
   nextUpPulse,
   pulse,
+  resultLabel,
   OUR_RECORD_PICK,
   SEASON_LINE,
 } from "@/lib/saturday/schedule";
@@ -35,11 +37,11 @@ function BoardPage() {
       <PageHeader
         kicker="Opinionated, on purpose"
         title="The Board"
-        lede={`Vegas has the season at ${SEASON_LINE}. We have it at ${OUR_RECORD_PICK}. The computers do not sit in this weather. Neither do we pretend this is a spreadsheet.`}
+        lede={`Vegas has the season at ${SEASON_LINE}. Our preseason pick was ${OUR_RECORD_PICK}. The record so far is ${formatRecord()}. The computers do not sit in this weather. Neither do we pretend this is a spreadsheet.`}
       />
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[...pulse, nextUpPulse(next)].map((p) => (
+        {[...pulse(), nextUpPulse(next)].map((p) => (
           <div key={p.kicker} className="bg-ink p-5 text-cream">
             <p className="kicker">{p.kicker}</p>
             <p className="mt-2 font-display text-4xl tracking-wide">{p.value}</p>
@@ -54,7 +56,7 @@ function BoardPage() {
         <h2 className="mt-2 text-2xl sm:text-3xl">{numberWord(games.length)} Saturdays</h2>
         <ul className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
           {games.map((g) => {
-            const played = isPlayed(g);
+            const status = gameStatus(g);
             const isNext = g.id === next?.id;
             return (
               <li
@@ -68,7 +70,8 @@ function BoardPage() {
                 <p className="font-display text-xs uppercase tracking-[0.16em] text-muted">
                   {formatGameDate(g.date)}
                   {isNext ? <span className="mt-1 block text-brand-deep">Next up</span> : null}
-                  {played ? <span className="mt-1 block">Played</span> : null}
+                  {status === "final" ? <span className="mt-1 block">Final</span> : null}
+                  {status === "live" ? <span className="mt-1 block">Not final</span> : null}
                 </p>
                 <div>
                   <p className="font-display text-xl uppercase tracking-[0.05em]">
@@ -78,23 +81,45 @@ function BoardPage() {
                   <p className="mt-1 text-xs text-muted">
                     {g.city} · {g.kickoffLabel} · {g.network}
                   </p>
-                  <p className="mt-3 max-w-2xl text-sm text-ink/80">{g.take}</p>
+                  {/* Our preseason take is a prediction: only unplayed games keep it. */}
+                  {status === "upcoming" ? (
+                    <p className="mt-3 max-w-2xl text-sm text-ink/80">{g.take}</p>
+                  ) : null}
                 </div>
-                <p
-                  className={cn(
-                    "font-display text-xs uppercase tracking-[0.16em] md:text-right",
-                    g.lean === "lock" || g.lean === "lean-w" ? "text-brand-deep" : "text-muted",
-                  )}
-                >
-                  {leanLabel[g.lean]}
-                </p>
+                {g.result ? (
+                  <p
+                    className={cn(
+                      "font-display text-lg uppercase tracking-[0.08em] md:text-right",
+                      g.result.outcome === "W" ? "text-brand-deep" : "text-ink",
+                    )}
+                  >
+                    <span className="sr-only">
+                      {g.result.final ? "Final: " : "Score, not final: "}
+                    </span>
+                    {resultLabel(g.result)}
+                  </p>
+                ) : status === "awaiting" ? (
+                  <p className="font-display text-xs uppercase tracking-[0.16em] text-muted md:text-right">
+                    Result to come
+                  </p>
+                ) : (
+                  <p
+                    className={cn(
+                      "font-display text-xs uppercase tracking-[0.16em] md:text-right",
+                      g.lean === "lock" || g.lean === "lean-w" ? "text-brand-deep" : "text-muted",
+                    )}
+                  >
+                    <span className="block text-[10px] text-muted">Our pick</span>
+                    {leanLabel[g.lean]}
+                  </p>
+                )}
               </li>
             );
           })}
         </ul>
         <p className="mt-6 max-w-2xl text-xs text-muted">
-          {byes.length ? `Bye week: ${byes.join(", ")}. ` : ""}Leans are ours, updated when the
-          season actually happens. Not betting advice — we sell shirts.
+          {byes.length ? `Bye week: ${byes.join(", ")}. ` : ""}Played games show the final score.
+          Picks on the rest are ours, preseason opinion. Not betting advice — we sell shirts.
         </p>
       </div>
     </div>

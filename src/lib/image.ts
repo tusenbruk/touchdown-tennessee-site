@@ -1,7 +1,6 @@
 /**
  * Width variants generated next to each original (see scripts/make-webp.sh).
- * The JPEG stays as `src` because carts and orders persisted in visitors'
- * localStorage reference it, and as the fallback for anything without srcset.
+ * The JPEG stays as `src`: it is the fallback for anything without srcset.
  */
 const VARIANTS: { prefix: string; widths: number[] }[] = [
   { prefix: "/products/", widths: [600, 900] },

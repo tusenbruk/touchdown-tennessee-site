@@ -10,29 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as IndependentRouteImport } from './routes/independent'
 import { Route as SaturdayRouteImport } from './routes/saturday'
-import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
-import { Route as OrderIdRouteImport } from './routes/order.$id'
 import { Route as SaturdayIndexRouteImport } from './routes/saturday.index'
 import { Route as SaturdayBoardRouteImport } from './routes/saturday.board'
 import { Route as SaturdaySixRouteImport } from './routes/saturday.six'
 import { Route as SaturdayWireRouteImport } from './routes/saturday.wire'
-import { Route as ShopIndexRouteImport } from './routes/shop.index'
-import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -50,24 +39,9 @@ const SaturdayRoute = SaturdayRouteImport.update({
   path: '/saturday',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CollectionSlugRoute = CollectionSlugRouteImport.update({
-  id: '/collection/$slug',
-  path: '/collection/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrderIdRoute = OrderIdRouteImport.update({
-  id: '/order/$id',
-  path: '/order/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SaturdayIndexRoute = SaturdayIndexRouteImport.update({
@@ -90,129 +64,81 @@ const SaturdayWireRoute = SaturdayWireRouteImport.update({
   path: '/wire',
   getParentRoute: () => SaturdayRoute,
 } as any)
-const ShopIndexRoute = ShopIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ShopRoute,
-} as any)
-const ShopSlugRoute = ShopSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ShopRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/checkout': typeof CheckoutRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
-  '/shop': typeof ShopRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/collection/$slug': typeof CollectionSlugRoute
-  '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
   '/saturday/six': typeof SaturdaySixRoute
   '/saturday/wire': typeof SaturdayWireRoute
-  '/shop/$slug': typeof ShopSlugRoute
   '/saturday/': typeof SaturdayIndexRoute
-  '/shop/': typeof ShopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/checkout': typeof CheckoutRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/collection/$slug': typeof CollectionSlugRoute
-  '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
   '/saturday/six': typeof SaturdaySixRoute
   '/saturday/wire': typeof SaturdayWireRoute
-  '/shop/$slug': typeof ShopSlugRoute
   '/saturday': typeof SaturdayIndexRoute
-  '/shop': typeof ShopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/checkout': typeof CheckoutRoute
   '/games': typeof GamesRoute
   '/independent': typeof IndependentRoute
   '/saturday': typeof SaturdayRouteWithChildren
-  '/shop': typeof ShopRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/collection/$slug': typeof CollectionSlugRoute
-  '/order/$id': typeof OrderIdRoute
   '/saturday/board': typeof SaturdayBoardRoute
   '/saturday/six': typeof SaturdaySixRoute
   '/saturday/wire': typeof SaturdayWireRoute
-  '/shop/$slug': typeof ShopSlugRoute
   '/saturday/': typeof SaturdayIndexRoute
-  '/shop/': typeof ShopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/checkout'
     | '/games'
     | '/independent'
     | '/saturday'
-    | '/shop'
     | '/sitemap.xml'
-    | '/collection/$slug'
-    | '/order/$id'
     | '/saturday/board'
     | '/saturday/six'
     | '/saturday/wire'
-    | '/shop/$slug'
     | '/saturday/'
-    | '/shop/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/checkout'
     | '/games'
     | '/independent'
     | '/sitemap.xml'
-    | '/collection/$slug'
-    | '/order/$id'
     | '/saturday/board'
     | '/saturday/six'
     | '/saturday/wire'
-    | '/shop/$slug'
     | '/saturday'
-    | '/shop'
   id:
     | '__root__'
     | '/'
-    | '/checkout'
     | '/games'
     | '/independent'
     | '/saturday'
-    | '/shop'
     | '/sitemap.xml'
-    | '/collection/$slug'
-    | '/order/$id'
     | '/saturday/board'
     | '/saturday/six'
     | '/saturday/wire'
-    | '/shop/$slug'
     | '/saturday/'
-    | '/shop/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CheckoutRoute: typeof CheckoutRoute
   GamesRoute: typeof GamesRoute
   IndependentRoute: typeof IndependentRoute
   SaturdayRoute: typeof SaturdayRouteWithChildren
-  ShopRoute: typeof ShopRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  CollectionSlugRoute: typeof CollectionSlugRoute
-  OrderIdRoute: typeof OrderIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -222,13 +148,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -252,32 +171,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SaturdayRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/collection/$slug': {
-      id: '/collection/$slug'
-      path: '/collection/$slug'
-      fullPath: '/collection/$slug'
-      preLoaderRoute: typeof CollectionSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order/$id': {
-      id: '/order/$id'
-      path: '/order/$id'
-      fullPath: '/order/$id'
-      preLoaderRoute: typeof OrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/saturday/': {
@@ -308,20 +206,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SaturdayWireRouteImport
       parentRoute: typeof SaturdayRoute
     }
-    '/shop/': {
-      id: '/shop/'
-      path: '/'
-      fullPath: '/shop/'
-      preLoaderRoute: typeof ShopIndexRouteImport
-      parentRoute: typeof ShopRoute
-    }
-    '/shop/$slug': {
-      id: '/shop/$slug'
-      path: '/$slug'
-      fullPath: '/shop/$slug'
-      preLoaderRoute: typeof ShopSlugRouteImport
-      parentRoute: typeof ShopRoute
-    }
   }
 }
 
@@ -343,28 +227,12 @@ const SaturdayRouteWithChildren = SaturdayRoute._addFileChildren(
   SaturdayRouteChildren,
 )
 
-interface ShopRouteChildren {
-  ShopSlugRoute: typeof ShopSlugRoute
-  ShopIndexRoute: typeof ShopIndexRoute
-}
-
-const ShopRouteChildren: ShopRouteChildren = {
-  ShopSlugRoute: ShopSlugRoute,
-  ShopIndexRoute: ShopIndexRoute,
-}
-
-const ShopRouteWithChildren = ShopRoute._addFileChildren(ShopRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CheckoutRoute: CheckoutRoute,
   GamesRoute: GamesRoute,
   IndependentRoute: IndependentRoute,
   SaturdayRoute: SaturdayRouteWithChildren,
-  ShopRoute: ShopRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  CollectionSlugRoute: CollectionSlugRoute,
-  OrderIdRoute: OrderIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

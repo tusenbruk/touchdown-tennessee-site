@@ -7,7 +7,7 @@
 export const SITE_URL = "https://touchdowntennessee.com";
 export const SITE_NAME = "Touchdown Tennessee";
 export const DEFAULT_DESCRIPTION =
-  "Original Tennessee football goods, drawn in Knoxville. Independent and unlicensed on purpose. Tees, hoodies, hats and cases, plus a Saturday clubhouse.";
+  "Independent Tennessee football, from Knoxville. The record, the next game, a satirical wire and our season board. Unlicensed on purpose.";
 export const DEFAULT_IMAGE = "/og.jpg";
 
 type SeoInput = {
@@ -18,7 +18,7 @@ type SeoInput = {
   path: string;
   /** Site-relative or absolute image URL. */
   image?: string;
-  /** Keep the page out of search results (cart, orders, duplicates). */
+  /** Keep the page out of search results (duplicates, drafts). */
   noindex?: boolean;
   type?: "website" | "article" | "product";
 };
@@ -28,7 +28,9 @@ export function absoluteUrl(path: string) {
 }
 
 export function pageTitle(title?: string) {
-  return title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Original Tennessee football goods`;
+  return title
+    ? `${title} — ${SITE_NAME}`
+    : `${SITE_NAME} — Independent Tennessee football, from Knoxville`;
 }
 
 export function seo({

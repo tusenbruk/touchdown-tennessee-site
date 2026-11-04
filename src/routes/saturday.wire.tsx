@@ -3,6 +3,7 @@ import { TakeMachine } from "@/components/saturday/take-machine";
 import { seo } from "@/lib/seo";
 import { PageHeader } from "@/components/page-header";
 import { kindLabel, wireFeed, disclaimer, type WireItem } from "@/lib/saturday/wire";
+import { games, resultLabel, versus } from "@/lib/saturday/schedule";
 
 export const Route = createFileRoute("/saturday/wire")({
   component: WirePage,
@@ -35,14 +36,22 @@ function WirePage() {
           <p className="mt-2 text-sm text-muted">
             About games already played. Kept for the record.
           </p>
-          <WireList items={earlier} label="Earlier wire items" />
+          <WireList items={earlier} label="Earlier wire items" showResult />
         </section>
       ) : null}
     </div>
   );
 }
 
-function WireList({ items, label }: { items: WireItem[]; label: string }) {
+function WireList({
+  items,
+  label,
+  showResult = false,
+}: {
+  items: WireItem[];
+  label: string;
+  showResult?: boolean;
+}) {
   return (
     <ol className="mt-8 divide-y divide-ink/10 border-y border-ink/10" aria-label={label}>
       {items.map((item) => (
@@ -57,10 +66,22 @@ function WireList({ items, label }: { items: WireItem[]; label: string }) {
             <p className="font-display text-xl uppercase leading-tight tracking-[0.04em] sm:text-2xl">
               {item.line}
             </p>
+            {showResult ? <ResultTag gameId={item.gameId} /> : null}
             <p className="mt-3 max-w-2xl text-base text-muted">{item.body}</p>
           </div>
         </li>
       ))}
     </ol>
+  );
+}
+
+/** What actually happened in the game an older wire item was written about. */
+function ResultTag({ gameId }: { gameId?: string }) {
+  const g = games.find((x) => x.id === gameId);
+  if (!g?.result) return null;
+  return (
+    <p className="mt-2 font-display text-xs uppercase tracking-[0.16em] text-brand-deep">
+      {g.result.final ? "Final" : "Not final"}: {versus(g)}, {resultLabel(g.result)}
+    </p>
   );
 }
