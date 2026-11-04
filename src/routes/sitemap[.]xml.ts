@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { absoluteUrl } from "@/lib/seo";
 
 /** Static, indexable pages. */
-const STATIC_PATHS = ["/", "/saturday", "/saturday/wire", "/saturday/board", "/independent"];
+const STATIC_PATHS = ["/"];
 
 /**
  * sitemap.xml. No <lastmod>: we have no honest per-page timestamp, and

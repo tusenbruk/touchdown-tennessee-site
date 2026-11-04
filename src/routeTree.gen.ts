@@ -10,33 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as GamesRouteImport } from './routes/games'
-import { Route as IndependentRouteImport } from './routes/independent'
-import { Route as SaturdayRouteImport } from './routes/saturday'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SaturdayIndexRouteImport } from './routes/saturday.index'
-import { Route as SaturdayBoardRouteImport } from './routes/saturday.board'
-import { Route as SaturdaySixRouteImport } from './routes/saturday.six'
-import { Route as SaturdayWireRouteImport } from './routes/saturday.wire'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GamesRoute = GamesRouteImport.update({
-  id: '/games',
-  path: '/games',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndependentRoute = IndependentRouteImport.update({
-  id: '/independent',
-  path: '/independent',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SaturdayRoute = SaturdayRouteImport.update({
-  id: '/saturday',
-  path: '/saturday',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -44,100 +22,30 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SaturdayIndexRoute = SaturdayIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SaturdayRoute,
-} as any)
-const SaturdayBoardRoute = SaturdayBoardRouteImport.update({
-  id: '/board',
-  path: '/board',
-  getParentRoute: () => SaturdayRoute,
-} as any)
-const SaturdaySixRoute = SaturdaySixRouteImport.update({
-  id: '/six',
-  path: '/six',
-  getParentRoute: () => SaturdayRoute,
-} as any)
-const SaturdayWireRoute = SaturdayWireRouteImport.update({
-  id: '/wire',
-  path: '/wire',
-  getParentRoute: () => SaturdayRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/games': typeof GamesRoute
-  '/independent': typeof IndependentRoute
-  '/saturday': typeof SaturdayRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/saturday/board': typeof SaturdayBoardRoute
-  '/saturday/six': typeof SaturdaySixRoute
-  '/saturday/wire': typeof SaturdayWireRoute
-  '/saturday/': typeof SaturdayIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/games': typeof GamesRoute
-  '/independent': typeof IndependentRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/saturday/board': typeof SaturdayBoardRoute
-  '/saturday/six': typeof SaturdaySixRoute
-  '/saturday/wire': typeof SaturdayWireRoute
-  '/saturday': typeof SaturdayIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/games': typeof GamesRoute
-  '/independent': typeof IndependentRoute
-  '/saturday': typeof SaturdayRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/saturday/board': typeof SaturdayBoardRoute
-  '/saturday/six': typeof SaturdaySixRoute
-  '/saturday/wire': typeof SaturdayWireRoute
-  '/saturday/': typeof SaturdayIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/games'
-    | '/independent'
-    | '/saturday'
-    | '/sitemap.xml'
-    | '/saturday/board'
-    | '/saturday/six'
-    | '/saturday/wire'
-    | '/saturday/'
+  fullPaths: '/' | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/games'
-    | '/independent'
-    | '/sitemap.xml'
-    | '/saturday/board'
-    | '/saturday/six'
-    | '/saturday/wire'
-    | '/saturday'
-  id:
-    | '__root__'
-    | '/'
-    | '/games'
-    | '/independent'
-    | '/saturday'
-    | '/sitemap.xml'
-    | '/saturday/board'
-    | '/saturday/six'
-    | '/saturday/wire'
-    | '/saturday/'
+  to: '/' | '/sitemap.xml'
+  id: '__root__' | '/' | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  GamesRoute: typeof GamesRoute
-  IndependentRoute: typeof IndependentRoute
-  SaturdayRoute: typeof SaturdayRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -150,27 +58,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/games': {
-      id: '/games'
-      path: '/games'
-      fullPath: '/games'
-      preLoaderRoute: typeof GamesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/independent': {
-      id: '/independent'
-      path: '/independent'
-      fullPath: '/independent'
-      preLoaderRoute: typeof IndependentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/saturday': {
-      id: '/saturday'
-      path: '/saturday'
-      fullPath: '/saturday'
-      preLoaderRoute: typeof SaturdayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -178,60 +65,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/saturday/': {
-      id: '/saturday/'
-      path: '/'
-      fullPath: '/saturday/'
-      preLoaderRoute: typeof SaturdayIndexRouteImport
-      parentRoute: typeof SaturdayRoute
-    }
-    '/saturday/board': {
-      id: '/saturday/board'
-      path: '/board'
-      fullPath: '/saturday/board'
-      preLoaderRoute: typeof SaturdayBoardRouteImport
-      parentRoute: typeof SaturdayRoute
-    }
-    '/saturday/six': {
-      id: '/saturday/six'
-      path: '/six'
-      fullPath: '/saturday/six'
-      preLoaderRoute: typeof SaturdaySixRouteImport
-      parentRoute: typeof SaturdayRoute
-    }
-    '/saturday/wire': {
-      id: '/saturday/wire'
-      path: '/wire'
-      fullPath: '/saturday/wire'
-      preLoaderRoute: typeof SaturdayWireRouteImport
-      parentRoute: typeof SaturdayRoute
-    }
   }
 }
 
-interface SaturdayRouteChildren {
-  SaturdayBoardRoute: typeof SaturdayBoardRoute
-  SaturdaySixRoute: typeof SaturdaySixRoute
-  SaturdayWireRoute: typeof SaturdayWireRoute
-  SaturdayIndexRoute: typeof SaturdayIndexRoute
-}
-
-const SaturdayRouteChildren: SaturdayRouteChildren = {
-  SaturdayBoardRoute: SaturdayBoardRoute,
-  SaturdaySixRoute: SaturdaySixRoute,
-  SaturdayWireRoute: SaturdayWireRoute,
-  SaturdayIndexRoute: SaturdayIndexRoute,
-}
-
-const SaturdayRouteWithChildren = SaturdayRoute._addFileChildren(
-  SaturdayRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  GamesRoute: GamesRoute,
-  IndependentRoute: IndependentRoute,
-  SaturdayRoute: SaturdayRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport

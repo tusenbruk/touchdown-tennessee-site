@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /checkout
-Disallow: /order/
-Disallow: /drops
 
 Sitemap: https://touchdowntennessee.com/sitemap.xml
