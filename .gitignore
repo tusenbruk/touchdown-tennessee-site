@@ -17,3 +17,5 @@ attachments
 
 .node_modules.lock
 .project_id
+__pycache__/
+*.pyc

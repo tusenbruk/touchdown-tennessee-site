@@ -1,0 +1,535 @@
+{
+ "season": {
+  "year": 2026,
+  "type": 2,
+  "name": "Regular Season",
+  "displayName": "2026",
+  "half": 1
+ },
+ "team": {
+  "id": "2633"
+ },
+ "events": [
+  {
+   "date": "2026-09-05T19:30Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "SECN+"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 56.0,
+        "displayValue": "56"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "231",
+        "location": "Furman"
+       },
+       "score": {
+        "value": 9.0,
+        "displayValue": "9"
+       },
+       "winner": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-12T23:00Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "59",
+        "location": "Georgia Tech"
+       },
+       "score": {
+        "value": 24.0,
+        "displayValue": "24"
+       },
+       "winner": false
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 45.0,
+        "displayValue": "45"
+       },
+       "winner": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19T23:45Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "SECN+"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 42.0,
+        "displayValue": "42"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "338",
+        "location": "Kennesaw State"
+       },
+       "score": {
+        "value": 9.0,
+        "displayValue": "9"
+       },
+       "winner": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-09-26T16:00Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ABC"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 17.0,
+        "displayValue": "17"
+       },
+       "winner": false
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "251",
+        "location": "Texas"
+       },
+       "score": {
+        "value": 20.0,
+        "displayValue": "20"
+       },
+       "winner": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-03T19:30Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      },
+      {
+       "media": {
+        "shortName": "ERADM"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 24.0,
+        "displayValue": "24"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2",
+        "location": "Auburn"
+       },
+       "score": {
+        "value": 14.0,
+        "displayValue": "14"
+       },
+       "winner": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10T20:15Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "SEC Network"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "8",
+        "location": "Arkansas"
+       },
+       "score": {
+        "value": 17.0,
+        "displayValue": "17"
+       },
+       "winner": false
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 24.0,
+        "displayValue": "24"
+       },
+       "winner": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-17T19:30Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ABC"
+       }
+      },
+      {
+       "media": {
+        "shortName": "ERADM"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 26.0,
+        "displayValue": "26"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "333",
+        "location": "Alabama"
+       },
+       "score": {
+        "value": 10.0,
+        "displayValue": "10"
+       },
+       "winner": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-10-24T19:30Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": true,
+       "name": "STATUS_FINAL"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      },
+      {
+       "media": {
+        "shortName": "Disney+"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2579",
+        "location": "South Carolina"
+       },
+       "score": {
+        "value": 27.0,
+        "displayValue": "27"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       },
+       "score": {
+        "value": 24.0,
+        "displayValue": "24"
+       },
+       "winner": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-07T23:15Z",
+   "timeValid": true,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": false,
+       "name": "STATUS_SCHEDULED"
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "96",
+        "location": "Kentucky"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-14T05:00Z",
+   "timeValid": false,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": false,
+       "name": "STATUS_SCHEDULED"
+      }
+     },
+     "broadcasts": [],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "245",
+        "location": "Texas A&M"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-21T05:00Z",
+   "timeValid": false,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": false,
+       "name": "STATUS_SCHEDULED"
+      }
+     },
+     "broadcasts": [],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "99",
+        "location": "LSU"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-28T05:00Z",
+   "timeValid": false,
+   "competitions": [
+    {
+     "status": {
+      "type": {
+       "completed": false,
+       "name": "STATUS_SCHEDULED"
+      }
+     },
+     "broadcasts": [],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "238",
+        "location": "Vanderbilt"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "2633",
+        "location": "Tennessee"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

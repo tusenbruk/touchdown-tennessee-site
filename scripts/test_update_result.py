@@ -1,4 +1,9 @@
-"""Tests for scripts/update_result.py. Run: python3 -m unittest discover -s scripts -p 'test_*.py'"""
+"""Tests for scripts/update_result.py. Run: python3 -m unittest discover -s scripts -p 'test_*.py'
+
+Runs against a frozen copy of the schedule (fixtures/schedule.seed.ts, as it
+stood on 3 Nov 2026), so the suite does not go red when the live schedule.ts
+is updated each week.
+"""
 import io
 import shutil
 import sys
@@ -10,13 +15,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import update_result as ur  # noqa: E402
 
+SEED = Path(__file__).resolve().parent / "fixtures" / "schedule.seed.ts"
+
 
 class UpdateResultTests(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, self.tmp, True)
         self.file = self.tmp / "schedule.ts"
-        shutil.copy(ur.SCHEDULE, self.file)
+        shutil.copy(SEED, self.file)
 
     def run_cli(self, *args):
         out, err = io.StringIO(), io.StringIO()
