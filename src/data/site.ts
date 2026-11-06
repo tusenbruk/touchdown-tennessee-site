@@ -8,7 +8,6 @@
  * 5. games — result, score as "ours–theirs", line and ats from Tennessee's side.
  *    Negative line = favorite. Positive ats = the number was covered.
  * 6. notes
- * Shop only if a shirt, price, or picture changes.
  */
 
 export type Ranking = {
@@ -32,14 +31,6 @@ export type Note = {
   date: string;
   title: string;
   body: string;
-};
-
-export type Product = {
-  name: string;
-  line: string;
-  blurb: string;
-  cents: number;
-  image: string;
 };
 
 export const lastUpdated = "November 6, 2026";
@@ -126,65 +117,6 @@ export const notes: Note[] = [
   },
 ];
 
-export const products: Product[] = [
-  {
-    name: "The Tee",
-    line: "Bella + Canvas 3001",
-    blurb: "The outline, on a staple tee.",
-    cents: 1350,
-    image: "/products/tee-touchdown-white.jpg",
-  },
-  {
-    name: "The Signature Tee",
-    line: "Bella + Canvas 3001",
-    blurb: "The mark, small, on the chest.",
-    cents: 1900,
-    image: "/products/tee-signature-white.jpg",
-  },
-  {
-    name: "The Hoodie",
-    line: "Eco raglan",
-    blurb: "Same mark. Heavier cloth.",
-    cents: 4050,
-    image: "/products/sweat-touchdown-white.jpg",
-  },
-  {
-    name: "The Hat",
-    line: "Dad hat",
-    blurb: "The outline, embroidered.",
-    cents: 4050,
-    image: "/products/hat-touchdown-white.jpg",
-  },
-  {
-    name: "The Case",
-    line: "MagSafe",
-    blurb: "The mark, in a pocket.",
-    cents: 2800,
-    image: "/products/case-touchdown-glossy.jpg",
-  },
-  {
-    name: "Rifleman 1794",
-    line: "Bella + Canvas 3001",
-    blurb: "A frontier drawing. Not a mascot.",
-    cents: 2900,
-    image: "/products/tee-rifleman-white.jpg",
-  },
-  {
-    name: "Class of 1794",
-    line: "Bella + Canvas 3001",
-    blurb: "Blount College. The year, not the letters.",
-    cents: 2200,
-    image: "/products/tee-blount-white.jpg",
-  },
-  {
-    name: "Crockett ’94",
-    line: "Bella + Canvas 3001",
-    blurb: "A name from the frontier.",
-    cents: 3350,
-    image: "/products/tee-crockett-white.jpg",
-  },
-];
-
 export const orderEmail = "touchdowntennessee@gmail.com";
 
 export function points(n: number): string {
@@ -194,11 +126,6 @@ export function points(n: number): string {
   const half = Math.abs(abs - whole - 0.5) < 0.001;
   if (half) return whole === 0 ? `${sign}½` : `${sign}${whole}½`;
   return Number.isInteger(abs) ? `${sign}${abs}` : `${sign}${abs.toFixed(1)}`;
-}
-
-export function money(cents: number): string {
-  const dollars = cents / 100;
-  return Number.isInteger(dollars) ? `$${dollars}` : `$${dollars.toFixed(2)}`;
 }
 
 export function atsRecord(list: Game[]): string {

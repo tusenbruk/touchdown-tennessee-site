@@ -5,12 +5,10 @@ import {
   commentary,
   games,
   lastUpdated,
-  money,
   nextGame,
   notes,
   orderEmail,
   points,
-  products,
   rank,
   rankings,
   record,
@@ -24,7 +22,6 @@ const contents = [
   { href: "#chances", label: "II. The Chances" },
   { href: "#ledger", label: "III. The Ledger" },
   { href: "#wire", label: "IV. The Wire" },
-  { href: "#shop", label: "V. Mail Order" },
 ];
 
 function Program() {
@@ -172,39 +169,6 @@ function Program() {
               </article>
             ))}
           </div>
-        </Section>
-
-        <Section id="shop" numeral="V" title="Mail Order">
-          <p className="mb-5 max-w-2xl text-sm text-muted italic">
-            Write for a size and a color. Original drawings. Not a licensed mark.
-          </p>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <li key={product.name} className="flex flex-col border border-ink bg-plate">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="aspect-square w-full object-cover outline-none"
-                />
-                <div className="flex flex-1 flex-col border-t border-ink p-3">
-                  <h3 className="font-cond text-xl font-semibold tracking-wide uppercase">
-                    {product.name}
-                  </h3>
-                  <p className="text-sm text-muted">{product.line}</p>
-                  <p className="mt-2 flex-1 text-sm leading-snug">{product.blurb}</p>
-                  <p className="mt-3 font-cond text-2xl font-semibold tabular-nums">
-                    {money(product.cents)}
-                  </p>
-                  <a
-                    href={`mailto:${orderEmail}?subject=${encodeURIComponent(`Order — ${product.name}`)}`}
-                    className="mt-3 inline-flex min-h-11 items-center justify-center border border-ink bg-ink px-3 font-cond text-base font-semibold tracking-widest text-paper uppercase"
-                  >
-                    Write to order
-                  </a>
-                </div>
-              </li>
-            ))}
-          </ul>
         </Section>
       </main>
 
