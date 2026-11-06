@@ -5,42 +5,42 @@
   "redirects": [
     {
       "source": "/games",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/saturday/six",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/drops",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/shop",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/shop/:slug*",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/collection/:slug*",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/checkout",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/order/:id*",
-      "destination": "/saturday",
+      "destination": "/",
       "permanent": false
     }
   ],
