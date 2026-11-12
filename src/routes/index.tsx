@@ -9,6 +9,8 @@ import {
   notes,
   orderEmail,
   points,
+  pollDate,
+  pollSource,
   rank,
   rankings,
   record,
@@ -43,7 +45,7 @@ function Program() {
         </div>
         <div className="thin-thick" />
         <p className="mt-4 text-center font-cond text-base font-semibold tracking-[0.22em] text-ink uppercase sm:text-lg">
-          Neyland Stadium · November 7, 2026
+          Knoxville · Updated {lastUpdated}
         </p>
         <nav className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2">
           {contents.map((item) => (
@@ -61,9 +63,9 @@ function Program() {
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
         <section className="grid gap-3 border border-ink bg-sheet sm:grid-cols-3">
           <Fact kicker="The record" value={record} detail={`${secRecord} in the conference`} />
-          <Fact kicker="The committee" value={`No. ${rank}`} detail="First ranking · November 3" />
+          <Fact kicker="The committee" value={`No. ${rank}`} detail={`CFP · ${pollDate}`} />
           <Fact
-            kicker="Tomorrow"
+            kicker="Next game"
             value={nextGame.opponent}
             detail={`${nextGame.when} · ${nextGame.tv}`}
           />
@@ -74,7 +76,8 @@ function Program() {
 
         <Section id="poll" numeral="I" title="The Poll">
           <p className="mb-4 text-sm text-muted italic">
-            College Football Playoff, first ranking. Tennessee marked. Sheet dated {lastUpdated}.
+            College Football Playoff · {pollDate}. Tennessee marked. Sheet updated {lastUpdated}.{" "}
+            <a href={pollSource} className="underline underline-offset-2">Ranking source</a>.
           </p>
           <ol className="grid border-t border-ink sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-13">
             {rankings.map((row) => (
@@ -104,7 +107,8 @@ function Program() {
         <Section id="ledger" numeral="III" title="The Ledger">
           <p className="mb-4 text-sm text-muted italic">
             Score is ours, then theirs. The line is Tennessee’s number. Against the line, a plus
-            covered. Through South Carolina: {against}. Open date was October 31.
+            covered. Verified lines through South Carolina: {against}. Kentucky’s final is recorded; its
+            closing line is not yet verified and is excluded from that tally.
           </p>
           <div className="overflow-x-auto border border-ink">
             <table className="w-full min-w-[640px] border-collapse text-left">

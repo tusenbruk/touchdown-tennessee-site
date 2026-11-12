@@ -33,50 +33,51 @@ export type Note = {
   body: string;
 };
 
-export const lastUpdated = "November 6, 2026";
+export const lastUpdated = "November 12, 2026";
 
-export const record = "6–2";
-export const secRecord = "3–2";
-export const rank = 13;
+export const record = "7–2";
+export const secRecord = "4–2";
+export const rank = 8;
+export const pollDate = "November 10, 2026";
+export const pollSource = "https://utsports.com/news/2026/11/10/vols-vault-to-8-in-nov-10-college-football-playoff-rankings";
 
 export const nextGame = {
-  opponent: "Kentucky",
-  rank: 6,
-  when: "Saturday, November 7 · 6:15 p.m. ET",
-  where: "Neyland Stadium · Knoxville",
+  opponent: "Texas A&M",
+  when: "Saturday, November 14 · 3 p.m. ET / 2 p.m. CT",
+  where: "Kyle Field · College Station",
   tv: "ESPN",
-  note: "Homecoming. Sold out. Favored by about 6½.",
+  note: "Next stop after the 34–6 win over Kentucky.",
 };
 
 export const commentary =
-  "No. 13 in the first committee ranking, put out November 3. Alabama, beaten here 26–10, sits at No. 5. The chair’s reason: the Alabama win is real, and the rest of the résumé is thin. Tomorrow is the chance to thicken it. Kentucky is No. 6, 7–1, and in Neyland at 6:15. Both losses this year were by three points. Win the rest and the argument gets simple. As the sheet stands, the bid is still work.";
+  "Kentucky came to Neyland ranked sixth by the committee. Tennessee sent the Wildcats home with a 34–6 loss, then moved from No. 13 to No. 8 in the November 10 CFP ranking. The Vols are also ninth in the AP and Coaches polls. Alabama is now No. 3; Kentucky is No. 11. Tennessee has beaten both by double digits. The case is stronger, but this is a weekly ranking, not a playoff invitation. Texas A&M is next, on the road.";
 
 export const rankings: Ranking[] = [
-  { rank: 1, team: "Miami", record: "8–0" },
-  { rank: 2, team: "Georgia", record: "7–1" },
-  { rank: 3, team: "Utah", record: "8–0" },
-  { rank: 4, team: "Indiana", record: "8–1" },
-  { rank: 5, team: "Alabama", record: "6–2" },
-  { rank: 6, team: "Kentucky", record: "7–1" },
-  { rank: 7, team: "Texas", record: "6–2" },
-  { rank: 8, team: "UCLA", record: "8–0" },
-  { rank: 9, team: "BYU", record: "7–1" },
-  { rank: 10, team: "Ole Miss", record: "6–2" },
-  { rank: 11, team: "Notre Dame", record: "7–1" },
-  { rank: 12, team: "Ohio State", record: "6–2" },
-  { rank: 13, team: "Tennessee", record: "6–2", ours: true },
-  { rank: 14, team: "LSU", record: "6–2" },
-  { rank: 15, team: "Texas Tech", record: "7–1" },
-  { rank: 16, team: "Wake Forest", record: "7–1" },
-  { rank: 17, team: "Houston", record: "6–2" },
-  { rank: 18, team: "Missouri", record: "6–2" },
-  { rank: 19, team: "Iowa", record: "6–2" },
-  { rank: 20, team: "USC", record: "7–2" },
-  { rank: 21, team: "South Carolina", record: "5–3" },
-  { rank: 22, team: "Arizona", record: "6–2" },
-  { rank: 23, team: "Oregon", record: "5–3" },
-  { rank: 24, team: "Florida", record: "5–3" },
-  { rank: 25, team: "Boise State", record: "7–1" },
+  { rank: 1, team: "Georgia", record: "8–1" },
+  { rank: 2, team: "Utah", record: "9–0" },
+  { rank: 3, team: "Alabama", record: "7–2" },
+  { rank: 4, team: "UCLA", record: "9–0" },
+  { rank: 5, team: "Notre Dame", record: "8–1" },
+  { rank: 6, team: "Texas", record: "7–2" },
+  { rank: 7, team: "Miami", record: "8–1" },
+  { rank: 8, team: "Tennessee", record: "7–2", ours: true },
+  { rank: 9, team: "Indiana", record: "8–1" },
+  { rank: 10, team: "BYU", record: "7–2" },
+  { rank: 11, team: "Kentucky", record: "7–2" },
+  { rank: 12, team: "Texas Tech", record: "8–1" },
+  { rank: 13, team: "Wake Forest", record: "8–1" },
+  { rank: 14, team: "Houston", record: "7–2" },
+  { rank: 15, team: "Iowa", record: "7–2" },
+  { rank: 16, team: "Oregon", record: "6–3" },
+  { rank: 17, team: "South Carolina", record: "6–3" },
+  { rank: 18, team: "USC", record: "7–2" },
+  { rank: 19, team: "Ole Miss", record: "6–3" },
+  { rank: 20, team: "Ohio State", record: "6–3" },
+  { rank: 21, team: "LSU", record: "6–3" },
+  { rank: 22, team: "Missouri", record: "6–3" },
+  { rank: 23, team: "Arizona", record: "7–2" },
+  { rank: 24, team: "Boise State", record: "8–1" },
+  { rank: 25, team: "Oklahoma State", record: "6–3" },
 ];
 
 export const games: Game[] = [
@@ -88,7 +89,7 @@ export const games: Game[] = [
   { date: "Oct 10", opponent: "Arkansas", site: "Away", result: "W", score: "24–17", line: -13.5, ats: -6.5 },
   { date: "Oct 17", opponent: "Alabama", site: "Home", result: "W", score: "26–10", line: 7.5, ats: 23.5 },
   { date: "Oct 24", opponent: "South Carolina", site: "Away", result: "L", score: "24–27", line: 2.5, ats: -0.5 },
-  { date: "Nov 7", opponent: "Kentucky", site: "Home", result: null, score: null, line: null, ats: null },
+  { date: "Nov 7", opponent: "Kentucky", site: "Home", result: "W", score: "34–6", line: null, ats: null },
   { date: "Nov 14", opponent: "Texas A&M", site: "Away", result: null, score: null, line: null, ats: null },
   { date: "Nov 21", opponent: "LSU", site: "Home", result: null, score: null, line: null, ats: null },
   { date: "Nov 28", opponent: "Vanderbilt", site: "Away", result: null, score: null, line: null, ats: null },
@@ -96,24 +97,24 @@ export const games: Game[] = [
 
 export const notes: Note[] = [
   {
-    date: "Nov 3",
-    title: "First ranking",
-    body: "No. 13. Ten SEC teams made the first sheet. Alabama is No. 5, Kentucky No. 6, Texas No. 7, LSU No. 14, South Carolina No. 21.",
+    date: "Nov 10",
+    title: "Five places higher",
+    body: "Tennessee is No. 8 in the second CFP ranking, up from No. 13. Kentucky falls to No. 11. The committee now has Alabama third.",
   },
   {
-    date: "Nov 3",
-    title: "The chair, on the gap",
-    body: "Hunter Yurachek said the Alabama win counts, and that you have to look harder to find another quality win. That is the whole argument against No. 5.",
+    date: "Nov 8",
+    title: "Back in the top ten",
+    body: "The AP and Coaches polls both put Tennessee ninth. Those Sunday polls are separate from Tuesday’s CFP ranking.",
   },
   {
-    date: "Nov 4",
-    title: "Lombardi",
-    body: "Gilliam was named a semifinalist for the Lombardi Award.",
+    date: "Nov 7",
+    title: "Kentucky, settled",
+    body: "Tennessee 34, Kentucky 6. The Vols scored 24 unanswered points after halftime and held the Wildcats scoreless in the second half. The record is 7–2, with four wins and two losses in the SEC.",
   },
   {
-    date: "Nov 6",
-    title: "Tomorrow night",
-    body: "Kentucky, Neyland, 6:15, ESPN. Homecoming. The stadium is sold out for the 33rd game in a row.",
+    date: "Nov 14",
+    title: "Next: College Station",
+    body: "Texas A&M at Kyle Field. Saturday, 3 p.m. ET / 2 p.m. CT, on ESPN. The road comes before any talk of December.",
   },
 ];
 
